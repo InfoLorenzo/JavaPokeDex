@@ -22,8 +22,8 @@ public class main {
 			
 			PreparedStatement statement = connection.prepareStatement(sql);
 			
-			statement.setString(1, "lorenzo");
-			statement.setString(2, "cajamar1");
+			statement.setString(1, "test");
+			statement.setString(2, "test1");
 
 			int rows = statement.executeUpdate();
 			
