@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import views.WelcomeWindow;
+
 public class main {
 
 	public static void main(String[] args) {
@@ -37,6 +39,15 @@ public class main {
 			
 		} catch (SQLException e) {
 			System.out.println("Oops algo salio mal...");
+			e.printStackTrace();
+		}
+		
+		WelcomeWindow welcomewindow = new WelcomeWindow();
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
