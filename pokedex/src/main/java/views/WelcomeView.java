@@ -43,7 +43,7 @@ public class WelcomeView extends JPanel {
 			e.printStackTrace();
 		}
 		
-		lblBackground.setBounds(0, 0, 718, 472);
+		lblBackground.setBounds(0, 0, 718, 469);
 		
 		//End -- Background
 

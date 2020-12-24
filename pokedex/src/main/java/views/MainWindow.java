@@ -54,17 +54,17 @@ public class MainWindow {
 	private void initialize() {
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 720, 480);
+		frame.setBounds(100, 100, 724, 481);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		final JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 0, 706, 443);
+		layeredPane.setBounds(0, 0, 710, 444);
 		
 		frame.getContentPane().add(layeredPane);
 		
-		JPanel panel = new WelcomeView();
-		panel.setBounds(0, 0, 706, 443);
+		JPanel panel = new LoginView();
+		panel.setBounds(0, 0, 710, 444);
 		layeredPane.add(panel);
 		
 	}

@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import views.Login;
-import views.WelcomeWindow;
 
 public class main {
 
@@ -43,7 +41,7 @@ public class main {
 			e.printStackTrace();
 		}
 		
-		WelcomeWindow welcomewindow = new WelcomeWindow();
+		
 		
 		try {
 			Thread.sleep(5000);
@@ -52,8 +50,7 @@ public class main {
 			e.printStackTrace();
 		}
 		
-		Login login = new Login();
-		
+
 		
 		System.out.println("Hola");
 	}
