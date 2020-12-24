@@ -53,22 +53,19 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		
-
-		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 720, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		
-		
 		final JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 0, 436, 263);
+		layeredPane.setBounds(0, 0, 706, 443);
+		
 		frame.getContentPane().add(layeredPane);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 436, 263);
+		JPanel panel = new WelcomeView();
+		panel.setBounds(0, 0, 706, 443);
 		layeredPane.add(panel);
-		panel.setLayout(new CardLayout(0, 0));
+		
 	}
 }
