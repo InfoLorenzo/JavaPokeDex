@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import AppPackage.AnimationClass;
+import controller.controller;
 
 public class WelcomeView extends JPanel {
 
@@ -93,6 +94,8 @@ public class WelcomeView extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnLogin.setEnabled(false);
+				
+
 				System.out.println("Botón login pulsado");
 
 			}
@@ -123,12 +126,13 @@ public class WelcomeView extends JPanel {
 		btnRegister.setToolTipText("");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+ 
 				btnRegister.setEnabled(false);
 
 				System.out.println("Botón registro pulsado");
 			}
 		});
+		
 		btnRegister.setPreferredSize(new Dimension(78, 76));
 		btnRegister.setOpaque(false);
 		btnRegister.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -136,7 +140,7 @@ public class WelcomeView extends JPanel {
 		btnRegister.setBorderPainted(false);
 		btnRegister.setFocusable(false);
 		btnRegister.setBounds(409, 241, 210, 76);
-		add(btnRegister);
+		
 
 		animator.jButtonYDown(btnRegister.getY(), btnRegister.getY()+40, 15, 2, btnRegister);
 		
@@ -145,6 +149,7 @@ public class WelcomeView extends JPanel {
 		//Start -- Views order
 		
 		add(lblWelcomeTitle);
+		add(btnRegister);
 		add(btnLogin);
 		add(lblBackground);
 		
