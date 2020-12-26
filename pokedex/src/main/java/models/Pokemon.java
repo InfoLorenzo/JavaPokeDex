@@ -1,12 +1,24 @@
 package models;
 
-public class Pokemons {
+public class Pokemon {
 
 	private String pokemonName;
 	private String pokemonURL;
+	private int pokemonExpBase;
+	
+	
+	public int getPokemonExpBase() {
+		return pokemonExpBase;
+	}
 
-	public Pokemons() {
-		// TODO Auto-generated constructor stub
+	public void setPokemonExpBase(int pokemonExpBase) {
+		this.pokemonExpBase = pokemonExpBase;
+	}
+
+	public Pokemon(String pokemon_name, String pokemon_url ,  int pokemon_exp_base) {
+		this.pokemonName = pokemon_name;
+		this.pokemonURL = pokemon_url;
+		this.pokemonExpBase = pokemon_exp_base;
 	}
 
 	public static void main(String[] args) {
