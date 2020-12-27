@@ -6,13 +6,16 @@ import java.util.ResourceBundle.Control;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import models.Pokemon;
 import views.MainWindow;
 import controller.HttpRequests;
 
-public class controller {
+public class Controller {
 
-	public controller() {
+	public Controller() {
 
 	}
 
@@ -28,11 +31,12 @@ public class controller {
 	public static ArrayList<Pokemon> generatePokemons(String apilistofPokemons) {
 
 		ArrayList<Pokemon> PokeLista = new ArrayList<Pokemon>();
-
+		Pokemon poke;
+		
 		for (String pokemonProfileApiUrl : HttpRequests.getPokemonURLs(apilistofPokemons)) {
 			System.out.println("Url a usar: " + pokemonProfileApiUrl);
 
-			Pokemon poke = new Pokemon(
+			poke = new Pokemon(
 
 					HttpRequests.getPokemonName(pokemonProfileApiUrl), pokemonProfileApiUrl,
 					HttpRequests.getPokemonAbilities(pokemonProfileApiUrl),
@@ -48,15 +52,25 @@ public class controller {
 			);
 
 			System.out.println("Pokemon creado");
+			
 			System.out.println("Sus datos son: ");
+			
 			System.out.println("Nombre: " + poke.getPokemonName());
+			
 			System.out.println("Perfil API: " + poke.getPokemonURL());
+			
 			System.out.println("Experiencia básica: " + poke.getPokemonExpBase());
+			
 			System.out.println("Altura: " + poke.getPokemonHeight());
+			
 			System.out.println("Peso: " + poke.getPokemonWeight());
+			
 			System.out.println("Habilidades: " + poke.getPokemonAbilities());
+			
 			System.out.println("Fotos: " + poke.getPokemonPicsURL());
+			
 			System.out.println("Punto de Spawn: " + poke.getPokemonSpawnPoints());
+			
 			int[] arr = poke.getPokemonStats();
 			for (int i = 0; i < poke.getPokemonStats().length; i++) {
 				switch (i) {
@@ -89,7 +103,31 @@ public class controller {
 		
 		PokeLista.add(poke);
 		
+		
 		System.out.println("\n\n\n\n\n\n\n\n\n");
+		
+
+		
+		
+		
+		JSONArray jsonPokeAbilities = new JSONArray();
+		
+		for (String abilities : poke.getPokemonAbilities()) {
+			jsonPokeAbilities.put(urlPics);
+		}
+		
+		System.out.println(jsonPokeAbilities.toString());
+		
+		JSONArray jsonPokePics = new JSONArray();
+		
+		for (String urlPics : poke.getPokemonPicsURL()) {
+			jsonPokePics.put(urlPics);
+		}
+		
+		System.out.println(jsonPokePics.toString());
+
+		
+		
 	}
 
 	return PokeLista;

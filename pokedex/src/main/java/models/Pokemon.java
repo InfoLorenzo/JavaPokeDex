@@ -74,11 +74,11 @@ public class Pokemon {
 	
 	@Override
 	public String toString() {
-		return "Pokemon [pokemonName=" + pokemonName + ", pokemonURL=" + pokemonURL + ", pokemonAbilities="
-				+ pokemonAbilities + ", pokemonSpawnPoints=" + pokemonSpawnPoints + ", pokemonPicsURL=" + pokemonPicsURL
-				+ ", pokemonTypes=" + pokemonTypes + ", pokemonForms=" + pokemonForms + ", pokemonStats="
-				+ Arrays.toString(pokemonStats) + ", pokemonExpBase=" + pokemonExpBase + ", pokemonHeight="
-				+ pokemonHeight + ", pokemonWeight=" + pokemonWeight + ", pokemonForms= " + pokemonForms +"]";
+		return "Pokemon [pokemonName:" + pokemonName + ", pokemonURL:" + pokemonURL + ", pokemonAbilities:"
+				+ pokemonAbilities + ", pokemonSpawnPoints:" + pokemonSpawnPoints + ", pokemonPicsURL:" + pokemonPicsURL
+				+ ", pokemonTypes:" + pokemonTypes + ", pokemonForms:" + pokemonForms + ", pokemonStats:"
+				+ Arrays.toString(pokemonStats) + ", pokemonExpBase:" + pokemonExpBase + ", pokemonHeight:"
+				+ pokemonHeight + ", pokemonWeight:" + pokemonWeight + ", pokemonForms: " + pokemonForms +"]";
 	}
 	
 	public int getPokemonExpBase() {
