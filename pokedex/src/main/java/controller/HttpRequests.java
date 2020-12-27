@@ -29,20 +29,28 @@ public class HttpRequests {
 	}
 
 	public static void main(String args[]) {
-		System.out.println("HTTP Request Example ");
+		//System.out.println("HTTP Request Example ");
 		// Making Get Request
-		System.out.println(sendGetRequest(mainApiUrl).toString());
+		//System.out.println(sendGetRequest(mainApiUrl).toString());
 		// Making Post Request
 		// sendPOSTRequest();
 		// Parse Json Reponse
-		getBasicPokemonData();
-		System.out.println("\n\n\n\n\n\n");
+		//System.out.println(getPokemonName(pokemonApiUrl));
+		//System.out.println("\n\n\n\n\n\n");
 		getPokemonAbilities(pokemonApiUrl);
 		getPokemonExp(pokemonApiUrl);
 		getPokemonForms(pokemonApiUrl);
 		getPokemonSpawnPlaces(pokemonApiUrl);
 		getPokemonHeight(pokemonApiUrl);
 		getPokemonbasicSprites(pokemonApiUrl);
+		//System.out.println("Las stats del pokemon son:");
+		for (int i : getPokemonStats(pokemonApiUrl)) {
+			//System.out.println(i);
+		}
+		for (String string : getPokemonTypes(pokemonApiUrl)) {
+			//System.out.println(string);
+		}
+
 	}
 
 	public static String sendGetRequest(String apiURL) { // Me ha obligado a hacerla estática y no se el porqué
@@ -105,7 +113,9 @@ public class HttpRequests {
 		}
 	}
 
-	public static void getBasicPokemonData() {
+	public static String[] getPokemonBasicData() {
+
+		String[] basicData = new String[2];
 
 		try {
 
@@ -117,18 +127,66 @@ public class HttpRequests {
 
 			{
 
-				String pokemon_name = arr.getJSONObject(i).getString("name");
-				String pokemon_url = arr.getJSONObject(i).getString("url");
-
-				Pokemon poke = new Pokemon(pokemon_name, pokemon_url, i);
-				listaPokemons.add(poke);
+				basicData[0] = arr.getJSONObject(i).getString("name");
+				basicData[1] = arr.getJSONObject(i).getString("url");
 
 			}
 
+			return basicData;
 		} catch (Exception e) {
 			System.out.println("Error in Making Get Request");
 			System.out.println("The error is: " + e);
 		}
+		
+		return basicData;
+
+	}
+	public static ArrayList<String> getPokemonURLs(String url) {
+
+		ArrayList<String> urlsArray = new ArrayList<String>();
+
+		try {
+
+			String jsonString = sendGetRequest(url);
+			JSONObject obj = new JSONObject(jsonString);
+			JSONArray arr = obj.getJSONArray("results");
+			
+			for (int i = 0; i < arr.length(); i++)
+				
+			{
+
+				
+				urlsArray.add(arr.getJSONObject(i).getString("url"));
+
+			}
+
+			return urlsArray;
+		} catch (Exception e) {
+			System.out.println("Error in Making Get Request");
+			System.out.println("The error is: " + e);
+		}
+		
+		return urlsArray;
+
+	}
+	
+	public static String getPokemonName(String url) {
+
+		String Pokemonname = null;
+
+		try {
+
+			String jsonString = sendGetRequest(url);
+			JSONObject obj = new JSONObject(jsonString);
+			Pokemonname = obj.getString("name");
+
+			return Pokemonname;
+		} catch (Exception e) {
+			System.out.println("Error in Making Get Request");
+			System.out.println("The error is: " + e);
+		}
+		
+		return Pokemonname;
 
 	}
 
@@ -201,7 +259,7 @@ public class HttpRequests {
 
 			{
 				form = arr.getJSONObject(i).getString("name");
-				System.out.println(form);
+				//System.out.println(form);
 				forms.add(form);
 			}
 
@@ -230,7 +288,7 @@ public class HttpRequests {
 
 			{
 				version = arr.getJSONObject(i).getJSONObject("version").getString("name");
-				System.out.println(version);
+				//System.out.println(version);
 				versions.add("Pokemon " + version);
 			}
 
@@ -262,7 +320,7 @@ public class HttpRequests {
 
 			{
 				ecounterPlace = encountersJSON.getJSONObject(i).getJSONObject("location_area").getString("name");
-				System.out.println(ecounterPlace);
+				//System.out.println(ecounterPlace);
 				ecounterPlaces.add("Pokemon " + ecounterPlace);
 			}
 
@@ -286,7 +344,7 @@ public class HttpRequests {
 			String jsonString = sendGetRequest(url);
 			JSONObject obj = new JSONObject(jsonString);
 
-			System.out.println("La altura del pokemon introducido es: " + obj.get("height"));
+			//System.out.println("La altura del pokemon introducido es: " + obj.get("height"));
 
 			return (int) obj.getInt("base_experience");
 
@@ -347,10 +405,9 @@ public class HttpRequests {
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-			
 
 			for (String s : Sprites) {
-				System.out.println(s);
+				//System.out.println(s);
 			}
 
 			return Sprites;
@@ -361,6 +418,87 @@ public class HttpRequests {
 		}
 
 		return null;
+	}
+
+	public static int[] getPokemonStats(String url) {
+
+		int[] pokemonStats = new int[6];
+		
+		try {
+
+			String jsonString = sendGetRequest(url);
+
+			JSONObject obj = new JSONObject(jsonString);
+			JSONArray arr = obj.getJSONArray("stats");
+
+			for (int i = 0; i < arr.length(); i++) {
+
+				pokemonStats[i] = arr.getJSONObject(i).getInt("base_stat");
+			}
+
+			return pokemonStats;
+
+		} catch (Exception e) {
+			System.out.println("Error in Making Get Request");
+			System.out.println("The error is: " + e);
+		}
+
+		return pokemonStats;
+	}
+
+	public static ArrayList<String> getPokemonTypes(String url) {
+
+		ArrayList<String> pokemonTypes = new ArrayList<String>();
+
+		// pokemonStats[0] = HP
+		// pokemonStats[1] = Attack
+		// pokemonStats[2] = Defense
+		// pokemonStats[3] = Special - Attack
+		// pokemonStats[4] = Special - Defense
+		// pokemonStats[5] = Speed
+
+		try {
+
+			String jsonString = sendGetRequest(url);
+
+			JSONObject obj = new JSONObject(jsonString);
+			JSONArray arr = obj.getJSONArray("types");
+
+			for (int i = 0; i < arr.length(); i++) {
+
+				pokemonTypes.add((String) arr.getJSONObject(i).getJSONObject("type").get("name"));
+			}
+
+			return pokemonTypes;
+
+		} catch (Exception e) {
+			System.out.println("Error in Making Get Request");
+			System.out.println("The error is: " + e);
+		}
+
+		return pokemonTypes;
+	}
+
+	public static int getPokemonWeight(String url) {
+
+		int pokemonWeight = 0;
+
+		try {
+
+			String jsonString = sendGetRequest(url);
+
+			JSONObject obj = new JSONObject(jsonString);
+
+			pokemonWeight = obj.getInt("weight");
+
+			return pokemonWeight;
+
+		} catch (Exception e) {
+			System.out.println("Error in Making Get Request");
+			System.out.println("The error is: " + e);
+		}
+
+		return pokemonWeight;
 	}
 
 }
