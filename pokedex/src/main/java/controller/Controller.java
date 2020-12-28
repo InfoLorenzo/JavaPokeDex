@@ -183,7 +183,7 @@ public class Controller {
 
 	public static void main(String[] args) {
 		
-		for (Pokemon P : generatePokemons("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1")) {
+		for (Pokemon P : generatePokemons("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200")) {
 			
 			addPokemonToDatabase(
 					P.getPokemonName(),
@@ -201,8 +201,7 @@ public class Controller {
 					P.getPokemonForms().toString(),
 					P.getPokemonSpawnPoints().toString(),
 					P.getPokemonTypes().toString()
-					);
-
+			);
 		}
 	
 	}

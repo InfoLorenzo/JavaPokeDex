@@ -47,6 +47,7 @@ public class MainWindow {
 	
 	public MainWindow() {
 		initialize();
+		
 	}
 	
 
@@ -55,7 +56,6 @@ public class MainWindow {
 	 */
 	
 	private void initialize() {
-		
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 724, 481);
@@ -67,26 +67,27 @@ public class MainWindow {
 		
 		frame.getContentPane().add(layeredPane);
 		
-		
-		JPanel welcomeview = new WelcomeView();
-		welcomeview.setBounds(0, 0, 710, 444);
-		
 		JPanel loginview = new LoginView();
 		loginview.setBounds(0, 0, 710, 444);
 		
 		JPanel registerview = new RegisterView();
 		registerview.setBounds(0, 0, 710, 444);
 		
+		
+		JPanel welcomeview = new WelcomeView();
+		welcomeview.setBounds(0, 0, 710, 444);
+		
 		layeredPane.add(welcomeview);
+		
 		layeredPane.add(loginview);
+		
 		layeredPane.add(registerview);
 		
+		welcomeview.setVisible(true);
+		
 		loginview.setVisible(false);
+		
 		registerview.setVisible(false);
 		
-		
 	}
-	
-	
-	
 }
