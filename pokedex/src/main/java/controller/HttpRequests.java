@@ -346,7 +346,7 @@ public class HttpRequests {
 
 			//System.out.println("La altura del pokemon introducido es: " + obj.get("height"));
 
-			return (int) obj.getInt("base_experience");
+			return (int) obj.getInt("height");
 
 		} catch (Exception e) {
 			System.out.println("Error in Making Get Request");
@@ -424,6 +424,13 @@ public class HttpRequests {
 
 		int[] pokemonStats = new int[6];
 		
+		// pokemonStats[0] = HP
+		// pokemonStats[1] = Attack
+		// pokemonStats[2] = Defense
+		// pokemonStats[3] = Special - Attack
+		// pokemonStats[4] = Special - Defense
+		// pokemonStats[5] = Speed
+		
 		try {
 
 			String jsonString = sendGetRequest(url);
@@ -450,12 +457,7 @@ public class HttpRequests {
 
 		ArrayList<String> pokemonTypes = new ArrayList<String>();
 
-		// pokemonStats[0] = HP
-		// pokemonStats[1] = Attack
-		// pokemonStats[2] = Defense
-		// pokemonStats[3] = Special - Attack
-		// pokemonStats[4] = Special - Defense
-		// pokemonStats[5] = Speed
+
 
 		try {
 

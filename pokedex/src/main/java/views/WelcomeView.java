@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import AppPackage.AnimationClass;
-import controller.controller;
+
 
 public class WelcomeView extends JPanel {
 
