@@ -23,7 +23,7 @@ import javax.swing.JButton;
 public class LoginView extends JPanel {
 	private JTextField inputusername;
 	private JTextField inputPassword;
-	
+
 	/**
 	 * Create the panel.
 	 */
@@ -56,7 +56,8 @@ public class LoginView extends JPanel {
 		JLabel lblWelcomeTitle = new JLabel("No hay foto");
 
 		try {
-			lblWelcomeTitle = new JLabel(new ImageIcon(ImageIO.read(new URL("https://fontmeme.com/permalink/201224/b2c3d8668251fdfe9230d4155786026e.png"))));
+			lblWelcomeTitle = new JLabel(new ImageIcon(ImageIO
+					.read(new URL("https://fontmeme.com/permalink/201224/b2c3d8668251fdfe9230d4155786026e.png"))));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,9 +66,7 @@ public class LoginView extends JPanel {
 			e.printStackTrace();
 		}
 
-		lblWelcomeTitle.setVerticalAlignment(SwingConstants.BOTTOM);
-
-		lblWelcomeTitle.setBounds(69, -31, 599, 189);
+		lblWelcomeTitle.setBounds(68, 10, 599, 133);
 
 		// End -- Welcome Title
 
@@ -88,7 +87,7 @@ public class LoginView extends JPanel {
 
 		lblUsername.setVerticalAlignment(SwingConstants.BOTTOM);
 
-		lblUsername.setBounds(121, 200, 221, 51);
+		lblUsername.setBounds(122, 169, 221, 51);
 
 		// End -- Username Label
 
@@ -107,9 +106,9 @@ public class LoginView extends JPanel {
 			e.printStackTrace();
 		}
 
-		lblPassword.setVerticalAlignment(SwingConstants.BOTTOM); 
+		lblPassword.setVerticalAlignment(SwingConstants.BOTTOM);
 
-		lblPassword.setBounds(121, 261, 221, 70);
+		lblPassword.setBounds(122, 230, 221, 70);
 
 		// End -- Password Label
 
@@ -119,8 +118,8 @@ public class LoginView extends JPanel {
 		inputusername.setText("Test1");
 		inputusername.setForeground(Color.WHITE);
 		inputusername.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
-		inputusername.setBackground(new Color(255,205,0));
-		inputusername.setBounds(352, 200, 228, 51);
+		inputusername.setBackground(new Color(255, 205, 0));
+		inputusername.setBounds(353, 169, 228, 51);
 
 		inputusername.setColumns(10);
 
@@ -132,12 +131,14 @@ public class LoginView extends JPanel {
 		inputPassword.setText("Test1");
 		inputPassword.setForeground(Color.WHITE);
 		inputPassword.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
-		inputPassword.setBackground(new Color(255,205,0));
-		inputPassword.setBounds(352, 280, 228, 51);
+		inputPassword.setBackground(new Color(255, 205, 0));
+		inputPassword.setBounds(353, 249, 228, 51);
 
 		inputPassword.setColumns(10);
 
 		// End -- Password Input
+
+		// Start -- Login Button
 
 		ImageIcon imageForLogin = null;
 		try {
@@ -149,9 +150,9 @@ public class LoginView extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		final JButton btnLogin = new JButton("", imageForLogin);
-		btnLogin.setBackground(new Color(53,106,188));
+		btnLogin.setBackground(new Color(53, 106, 188));
 		btnLogin.setOpaque(false);
 		btnLogin.setContentAreaFilled(false);
 		btnLogin.setBorderPainted(false);
@@ -166,25 +167,72 @@ public class LoginView extends JPanel {
 			}
 		});
 
-		btnLogin.setBounds(272, 353, 173, 83);
+		btnLogin.setBounds(271, 330, 173, 83);
+
+		// End -- Login Button
+
+		// Start -- Return Button
+
+		ImageIcon imageforReturn = null;
+		try {
+			imageforReturn = new ImageIcon(ImageIO
+					.read(new URL("https://fontmeme.com/permalink/210102/938402012117d7cf010c59421d232540.png")));
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		final JButton btnreturn = new JButton("", imageforReturn);
+		btnreturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Botón de vuelta pulsado");
+
+				setInvisible();
+				MainWindow.getLayeredPanel().getComponent(0).setVisible(true);
+				MainWindow.getLayeredPanel().revalidate();
+				MainWindow.getLayeredPanel().repaint();
+
+			}
+		});
 		
-		
-		
-		
+		btnreturn.setPreferredSize(new Dimension(78, 76));
+		btnreturn.setOpaque(false);
+		btnreturn.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnreturn.setFocusable(false);
+		btnreturn.setContentAreaFilled(false);
+		btnreturn.setBorderPainted(false);
+		btnreturn.setBackground(new Color(53, 106, 188));
+		btnreturn.setBounds(10, 10, 151, 76);
+
+		// End -- Return Button
+
 		// Start -- Views order
-		
+
 		add(btnLogin);
-		
+		add(btnreturn);
 		add(lblPassword);
 		add(lblUsername);
-		
+
 		add(inputPassword);
 		add(inputusername);
-	
+
 		add(lblWelcomeTitle);
 		add(lblBackground);
-		
+
 		// End -- Views order
 
+		setInvisible();
 	}
+
+	public void setInvisible() {
+		this.setVisible(false);
+	}
+
+	public void setVisible() {
+		this.setVisible(true);
+	}
+
 }

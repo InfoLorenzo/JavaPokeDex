@@ -10,14 +10,27 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.CardLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainWindow {
 
 	private JFrame frame;
 
+	JPanel loginview;
+	JPanel registerview;
+	JPanel welcomeview;
+
+	static JLayeredPane layeredPane;
+
+	public static JLayeredPane getLayeredPanel() {
+		return layeredPane;
+	}
+
 	/**
 	 * Launch the application.
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -30,64 +43,55 @@ public class MainWindow {
 			}
 		});
 	}
-	
-	public void switchPanels(JLayeredPane layeredPane,JPanel panel) {
-		
-		layeredPane.removeAll();
-		layeredPane.add(panel);
-		layeredPane.repaint();
-		layeredPane.revalidate();
-		
-	};
-	
-	
 	/**
 	 * Create the application.
 	 */
-	
+
 	public MainWindow() {
 		initialize();
+		System.out.println("Hola main window iniciada");
+		
 		
 	}
-	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	
+
 	private void initialize() {
-		
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 724, 481);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		final JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 0, 710, 444); 
-		
+
+		layeredPane = new JLayeredPane();
+
+		layeredPane.setBounds(0, 0, 710, 444);
+
 		frame.getContentPane().add(layeredPane);
-		
-		JPanel loginview = new LoginView();
-		loginview.setBounds(0, 0, 710, 444);
-		
-		JPanel registerview = new RegisterView();
-		registerview.setBounds(0, 0, 710, 444);
-		
-		
-		JPanel welcomeview = new WelcomeView();
+
+		welcomeview = new WelcomeView();
+
 		welcomeview.setBounds(0, 0, 710, 444);
 		
 		layeredPane.add(welcomeview);
 		
-		layeredPane.add(loginview);
-		
+		registerview = new RegisterView();
+
+		registerview.setBounds(0, 0, 710, 444);
+
 		layeredPane.add(registerview);
 		
-		welcomeview.setVisible(true);
 		
-		loginview.setVisible(false);
+		loginview = new LoginView();
+
+		loginview.setBounds(0, 0, 710, 444);
+
+		layeredPane.add(loginview);
+
 		
-		registerview.setVisible(false);
-		
+		 
+
 	}
 }

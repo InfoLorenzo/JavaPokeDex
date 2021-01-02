@@ -34,7 +34,7 @@ public class main {
 		  try { Connection connection =
 		  DriverManager.getConnection(url,username,password);
 		  
-		  System.out.println("La conexión fue correcta");
+		  
 		  
 		 // String sql = "INSERT INTO users (username,password) VALUES (?, ?)";
 		  

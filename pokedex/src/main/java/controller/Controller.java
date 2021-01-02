@@ -3,6 +3,7 @@ package controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle.Control;
@@ -14,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import models.Pokemon;
+import views.LoginView;
 import views.MainWindow;
 import controller.HttpRequests;
 
@@ -23,14 +25,108 @@ public class Controller {
 
 	}
 
-	public static void switchPanels(JLayeredPane layeredPane, JPanel panel) {
+	private static Connection connectToDatabase() {
 
-		layeredPane.removeAll();
-		layeredPane.add(panel);
-		layeredPane.repaint();
-		layeredPane.revalidate();
+		String databaseURL = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_414700429a65082";
+		String databaseUsername = "b0124af284507d";
+		String databasePassword = "c7610f50";
 
-	};
+		Connection connection;
+
+		try {
+			connection = DriverManager.getConnection(databaseURL, databaseUsername, databasePassword);
+
+			System.out.println("La conexión fue correcta");
+			return connection;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			System.out.println("Hubo un error");
+		}
+
+		return null;
+
+	}
+
+	public static void RegisterUser(String nickname, String username, String password) {
+
+		String sqlPokemon = "INSERT INTO `heroku_414700429a65082`.`users` (`username`, `password`, `nickname`) VALUES (?, ?,?);";
+
+		PreparedStatement statement = null;
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			statement.setString(1, username);
+			statement.setString(2, password);
+			statement.setString(3, nickname);
+		} catch (Exception e) {
+			System.out.println("Oops algo salio mal...");
+			e.printStackTrace();
+		}
+
+		try {
+			int rows = statement.executeUpdate();
+			System.out.println("El usuario ha sido insertado correctamente");
+		} catch (SQLException e) {
+			System.out.println("Oops algo salio mal...");
+			e.printStackTrace();
+		}
+	}
+	
+	public static boolean checkUserExist( String username) {
+
+		String sqlPokemon = "SELECT `username`, `nickname` FROM `heroku_414700429a65082`.`users` WHERE `username`='"
+				+ username + "';";
+
+		PreparedStatement statement = null;
+
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			ResultSet rs = statement.executeQuery();
+			
+			if (rs.next()) {
+				System.out.println("El usuario existe en la base de datos");
+				System.out.println();
+				
+				while(rs.next()){
+					System.out.println("---------------");
+					System.out.println(rs.getString("username"));
+					System.out.println("---------------");
+
+				}
+				return true;
+			}else {
+				System.out.println("El usuario no existe en la base de datos");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Oops algo salio mal...");
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
+	public static boolean isEmpty(String textInput) {
+
+		if (textInput.equalsIgnoreCase("") || textInput.equalsIgnoreCase(" ") || textInput == null) {
+			return false;
+		}
+
+		return true;
+	}
 
 	public static ArrayList<Pokemon> generatePokemons(String apilistofPokemons) {
 
@@ -130,8 +226,10 @@ public class Controller {
 
 	}
 
-	public static void addPokemonToDatabase(String name, String pokeprofileURL,int healthPoints, int attackPoints, int specialAttackPoints, int specialDefensePoints, int speed, int height, int weight, int basicExp, String abilities, String sprites, String forms, String spawnPoints, String types) {
-		
+	public static void addPokemonToDatabase(String name, String pokeprofileURL, int healthPoints, int attackPoints,
+			int specialAttackPoints, int specialDefensePoints, int speed, int height, int weight, int basicExp,
+			String abilities, String sprites, String forms, String spawnPoints, String types) {
+
 		String url = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_414700429a65082";
 		String username = "b0124af284507d";
 		String password = "c7610f50";
@@ -140,11 +238,6 @@ public class Controller {
 			Connection connection = DriverManager.getConnection(url, username, password);
 
 			System.out.println("La conexión fue correcta");
-
-			// String sql = "INSERT INTO users (username,password) VALUES (?, ?)";
-
-			// statement.setString(1, "test");
-			// statement.setString(2, "test1");
 
 			String sqlPokemon = "INSERT INTO `heroku_414700429a65082`.`pokemon` (`name`, `profileUrl`, `healthpoints`, `attackpoints`, `specialattackpoints`, `specialdefensepoints`, `speed`, `height`, `weight`, `basicexp`, `abilities`, `sprites`, `forms`, `spawnpoints`, `types`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -182,28 +275,22 @@ public class Controller {
 	}
 
 	public static void main(String[] args) {
-		
-		for (Pokemon P : generatePokemons("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200")) {
-			
-			addPokemonToDatabase(
-					P.getPokemonName(),
-					P.getPokemonURL(),
-					P.getPokemonStats()[0],
-					P.getPokemonStats()[1],
-					P.getPokemonStats()[2],
-					P.getPokemonStats()[3],
-					P.getPokemonStats()[4],
-					P.getPokemonExpBase(),
-					P.getPokemonHeight(),
-					P.getPokemonWeight(),
-					P.getPokemonAbilities().toString(),
-					P.getPokemonPicsURL().toString(),
-					P.getPokemonForms().toString(),
-					P.getPokemonSpawnPoints().toString(),
-					P.getPokemonTypes().toString()
-			);
-		}
-	
+
+		System.out.println("Main del controller iniciado");
+		checkUserExist("loren");
+		/*
+		 * for (Pokemon P :
+		 * generatePokemons("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200")) {
+		 * 
+		 * addPokemonToDatabase( P.getPokemonName(), P.getPokemonURL(),
+		 * P.getPokemonStats()[0], P.getPokemonStats()[1], P.getPokemonStats()[2],
+		 * P.getPokemonStats()[3], P.getPokemonStats()[4], P.getPokemonExpBase(),
+		 * P.getPokemonHeight(), P.getPokemonWeight(),
+		 * P.getPokemonAbilities().toString(), P.getPokemonPicsURL().toString(),
+		 * P.getPokemonForms().toString(), P.getPokemonSpawnPoints().toString(),
+		 * P.getPokemonTypes().toString() ); }
+		 */
+
 	}
 
 }

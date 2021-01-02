@@ -15,24 +15,24 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import AppPackage.AnimationClass;
-
+import controller.Controller;
 
 public class WelcomeView extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	
+
 	public WelcomeView() {
 
 		AnimationClass animator = new AnimationClass(); // Clase Animaciones
-		
+
 		setLayout(null); // Layout
-		
-		//Start -- Background
-		
+
+		// Start -- Background
+
 		JLabel lblBackground = new JLabel("No hay foto");
-		
+
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
 			lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -43,15 +43,15 @@ public class WelcomeView extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		lblBackground.setBounds(0, 0, 718, 469);
-		
-		//End -- Background
 
-		//Start -- Welcome Title
+		lblBackground.setBounds(0, 0, 718, 469);
+
+		// End -- Background
+
+		// Start -- Welcome Title
 
 		JLabel lblWelcomeTitle = new JLabel("No hay foto");
-		
+
 		try {
 			lblWelcomeTitle = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/sefSdO8.png"))));
 		} catch (MalformedURLException e) {
@@ -61,18 +61,17 @@ public class WelcomeView extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		lblWelcomeTitle.setVerticalAlignment(SwingConstants.BOTTOM);
-		
+
 		lblWelcomeTitle.setBounds(-10, 0, 718, 140);
-		
+
 		animator.jLabelYDown(lblWelcomeTitle.getY(), (lblWelcomeTitle.getY() + 60), 15, 2, lblWelcomeTitle);
-		
-		//End -- Welcome Title
-		
-		
-		//Start -- Login Button
-		
+
+		// End -- Welcome Title
+
+		// Start -- Login Button
+
 		ImageIcon imageForLogin = null;
 		try {
 			imageForLogin = new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/ieD3eRV.png")));
@@ -83,7 +82,7 @@ public class WelcomeView extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		final JButton btnLogin = new JButton("", imageForLogin);
 		btnLogin.setOpaque(false);
 		btnLogin.setContentAreaFilled(false);
@@ -93,24 +92,24 @@ public class WelcomeView extends JPanel {
 		btnLogin.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnLogin.setEnabled(false);
-				
 
-				System.out.println("Botón login pulsado");
+				MainWindow.getLayeredPanel().getComponent(0).setVisible(false);
+				MainWindow.getLayeredPanel().getComponent(2).setVisible(true);
+				MainWindow.getLayeredPanel().revalidate();
+				MainWindow.getLayeredPanel().repaint();
 
+				System.out.println("Botón de login pulsado");
 			}
 		});
 
 		btnLogin.setBounds(116, 241, 158, 76);
-		
-		animator.jButtonYDown(btnLogin.getY(), btnLogin.getY()+40, 15, 2, btnLogin);
-		
-		
-		//End -- Login Button
-		
-		
-		//Start -- Register Button
-		
+
+		animator.jButtonYDown(btnLogin.getY(), btnLogin.getY() + 40, 15, 2, btnLogin);
+
+		// End -- Login Button
+
+		// Start -- Register Button
+
 		ImageIcon imageForRegister = null;
 		try {
 			imageForRegister = new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/bVt0BOa.png")));
@@ -121,18 +120,21 @@ public class WelcomeView extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		final JButton btnRegister = new JButton("", imageForRegister);
 		btnRegister.setToolTipText("");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
- 
-				btnRegister.setEnabled(false);
 
-				System.out.println("Botón registro pulsado");
+				MainWindow.getLayeredPanel().getComponent(0).setVisible(false);
+				MainWindow.getLayeredPanel().getComponent(1).setVisible(true);
+				MainWindow.getLayeredPanel().revalidate();
+				MainWindow.getLayeredPanel().repaint();
+
+				System.out.println("Botón de register pulsado");
 			}
 		});
-		
+
 		btnRegister.setPreferredSize(new Dimension(78, 76));
 		btnRegister.setOpaque(false);
 		btnRegister.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -140,19 +142,30 @@ public class WelcomeView extends JPanel {
 		btnRegister.setBorderPainted(false);
 		btnRegister.setFocusable(false);
 		btnRegister.setBounds(409, 241, 210, 76);
-		
 
-		animator.jButtonYDown(btnRegister.getY(), btnRegister.getY()+40, 15, 2, btnRegister);
-		
-		//End -- Register Button
-		
-		//Start -- Views order
-		
+		animator.jButtonYDown(btnRegister.getY(), btnRegister.getY() + 40, 15, 2, btnRegister);
+
+		// End -- Register Button
+
+		// Start -- Views order
+
 		add(lblWelcomeTitle);
 		add(btnRegister);
 		add(btnLogin);
 		add(lblBackground);
-		
-		//End -- Views order
+
+		// End -- Views order
+		MainWindow.getLayeredPanel().revalidate();
+
+		MainWindow.getLayeredPanel().repaint();
+
+	}
+
+	public void setInvisible() {
+		this.setVisible(false);
+	}
+
+	public void setVisible() {
+		this.setVisible(true);
 	}
 }

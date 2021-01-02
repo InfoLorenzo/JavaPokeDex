@@ -18,13 +18,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import AppPackage.AnimationClass;
+import controller.Controller;
 
 public class RegisterView extends JPanel {
 
 	private JTextField inputusername;
 	private JTextField inputPassword;
 	private JTextField inputNickname;
-	
+	private JButton btnreturn;
+
 	/**
 	 * Create the panel.
 	 */
@@ -140,7 +142,7 @@ public class RegisterView extends JPanel {
 
 		inputNickname = new JTextField();
 		inputNickname.setText("Test1");
-		inputNickname.setForeground(Color.WHITE); 
+		inputNickname.setForeground(Color.WHITE);
 		inputNickname.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
 		inputNickname.setBackground(new Color(255, 205, 0));
 		inputNickname.setBounds(352, 157, 221, 43);
@@ -197,22 +199,74 @@ public class RegisterView extends JPanel {
 		btnLogin.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnLogin.setEnabled(false);
+
+				if (Controller.isEmpty(inputusername.getText()) && Controller.isEmpty(inputPassword.getText())
+						&& Controller.isEmpty(inputNickname.getText())) {
+					
+					System.out.println("Los inputs no están vacios");
+
+					if (Controller.checkUserInDatabase(inputusername.getText())) {
+						
+					}
+					
+				}
+
 				System.out.println("Botón login pulsado");
 
+				//btnLogin.setEnabled(false);
+
+				
 			}
 		});
 
 		btnLogin.setBounds(273, 363, 173, 83);
 
+		// Start -- Return Button
+
+		ImageIcon imageforReturn = null;
+		try {
+			imageforReturn = new ImageIcon(ImageIO
+					.read(new URL("https://fontmeme.com/permalink/210102/938402012117d7cf010c59421d232540.png")));
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		final JButton btnreturn = new JButton("", imageforReturn);
+		btnreturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Botón de vuelta pulsado");
+
+				setInvisible();
+				MainWindow.getLayeredPanel().getComponent(0).setVisible(true);
+				MainWindow.getLayeredPanel().revalidate();
+				MainWindow.getLayeredPanel().repaint();
+
+			}
+		});
+		btnreturn.setPreferredSize(new Dimension(78, 76));
+		btnreturn.setOpaque(false);
+		btnreturn.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnreturn.setFocusable(false);
+		btnreturn.setContentAreaFilled(false);
+		btnreturn.setBorderPainted(false);
+		btnreturn.setBackground(new Color(53, 106, 188));
+		btnreturn.setBounds(10, 10, 151, 76);
+
+		// End -- Return Button
+
 		// Start -- Views order
 
+		add(btnreturn);
 		add(btnLogin);
 
 		add(lblNickname);
 		add(lblPassword);
 		add(lblUsername);
-		
+
 		add(inputNickname);
 		add(inputPassword);
 		add(inputusername);
@@ -222,6 +276,15 @@ public class RegisterView extends JPanel {
 
 		// End -- Views order
 
+		setInvisible();
+	}
+
+	public void setInvisible() {
+		this.setVisible(false);
+	}
+
+	public void setVisible() {
+		this.setVisible(true);
 	}
 
 }
