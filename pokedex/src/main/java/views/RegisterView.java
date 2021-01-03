@@ -19,6 +19,8 @@ import javax.swing.SwingConstants;
 
 import AppPackage.AnimationClass;
 import controller.Controller;
+import views.modals.RegisterSuccessful;
+import views.modals.RegisterUnsuccessful;
 
 public class RegisterView extends JPanel {
 
@@ -26,6 +28,8 @@ public class RegisterView extends JPanel {
 	private JTextField inputPassword;
 	private JTextField inputNickname;
 	private JButton btnreturn;
+	private RegisterUnsuccessful failedRegModal;
+	private RegisterSuccessful SuccessfulRegModal;
 
 	/**
 	 * Create the panel.
@@ -141,7 +145,7 @@ public class RegisterView extends JPanel {
 		// Start -- Nickname Input
 
 		inputNickname = new JTextField();
-		inputNickname.setText("Test1");
+		inputNickname.setText("");
 		inputNickname.setForeground(Color.WHITE);
 		inputNickname.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
 		inputNickname.setBackground(new Color(255, 205, 0));
@@ -154,7 +158,7 @@ public class RegisterView extends JPanel {
 		// Start -- Username Input
 
 		inputusername = new JTextField();
-		inputusername.setText("Test1");
+		inputusername.setText("");
 		inputusername.setForeground(Color.WHITE);
 		inputusername.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
 		inputusername.setBackground(new Color(255, 205, 0));
@@ -167,7 +171,7 @@ public class RegisterView extends JPanel {
 		// Start -- Password Input
 
 		inputPassword = new JTextField();
-		inputPassword.setText("Test1");
+		inputPassword.setText("");
 		inputPassword.setForeground(Color.WHITE);
 		inputPassword.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
 		inputPassword.setBackground(new Color(255, 205, 0));
@@ -199,23 +203,33 @@ public class RegisterView extends JPanel {
 		btnLogin.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				if (!Controller.isEmpty(inputusername.getText()) && !Controller.isEmpty(inputPassword.getText())
+						&& !Controller.isEmpty(inputNickname.getText())) {
 
-				if (Controller.isEmpty(inputusername.getText()) && Controller.isEmpty(inputPassword.getText())
-						&& Controller.isEmpty(inputNickname.getText())) {
-					
 					System.out.println("Los inputs no están vacios");
 
-					if (Controller.checkUserInDatabase(inputusername.getText())) {
+					if (!Controller.checkUserExist(inputusername.getText())) {
+
+						Controller.registerUser(inputNickname.getText(), inputusername.getText(),
+								inputPassword.getText());
+						SuccessfulRegModal = new RegisterSuccessful();
+						SuccessfulRegModal.newScreen();
+					}else {
+						
+						failedRegModal = new RegisterUnsuccessful();
+						failedRegModal.newScreen();
 						
 					}
-					
+
 				}
 
-				System.out.println("Botón login pulsado");
+				System.out.println("Botón Register pulsado");
 
-				//btnLogin.setEnabled(false);
+				// btnLogin.setEnabled(false);
 
-				
 			}
 		});
 
@@ -239,6 +253,9 @@ public class RegisterView extends JPanel {
 		btnreturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Botón de vuelta pulsado");
+				inputNickname.setText("");
+				inputPassword.setText("");
+				inputusername.setText("");
 
 				setInvisible();
 				MainWindow.getLayeredPanel().getComponent(0).setVisible(true);

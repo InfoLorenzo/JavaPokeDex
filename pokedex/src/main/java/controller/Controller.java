@@ -24,6 +24,7 @@ public class Controller {
 	public Controller() {
 
 	}
+	public static String[] userlogin = new String[2];
 
 	private static Connection connectToDatabase() {
 
@@ -49,7 +50,7 @@ public class Controller {
 
 	}
 
-	public static void RegisterUser(String nickname, String username, String password) {
+	public static void registerUser(String nickname, String username, String password) {
 
 		String sqlPokemon = "INSERT INTO `heroku_414700429a65082`.`users` (`username`, `password`, `nickname`) VALUES (?, ?,?);";
 
@@ -119,13 +120,55 @@ public class Controller {
 		return false;
 	}
 
+	public static boolean checkUserLogin( String username,String password) {
+
+		String sqlPokemon = "SELECT `username`, `password` FROM `heroku_414700429a65082`.`users` WHERE `username`='"
+				+ username + "' AND `password`='"+password+"';";
+
+		PreparedStatement statement = null;
+
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			ResultSet rs = statement.executeQuery();
+			
+			if (rs.next()) {
+				System.out.println("El usuario existe en la base de datos");
+				System.out.println();
+				
+				userlogin[0] = rs.getString("username");
+				//userlogin[1] = rs.getString("nickname");
+
+	
+				System.out.println("Username: " + userlogin[0]);
+				//System.out.println("Nickname: " + userlogin[1]);
+
+				return true;
+			}else {
+				System.out.println("El usuario no existe en la base de datos");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Oops algo salio mal...");
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
+	
 	public static boolean isEmpty(String textInput) {
 
 		if (textInput.equalsIgnoreCase("") || textInput.equalsIgnoreCase(" ") || textInput == null) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	public static ArrayList<Pokemon> generatePokemons(String apilistofPokemons) {
@@ -277,7 +320,9 @@ public class Controller {
 	public static void main(String[] args) {
 
 		System.out.println("Main del controller iniciado");
-		checkUserExist("loren");
+		
+		
+		
 		/*
 		 * for (Pokemon P :
 		 * generatePokemons("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200")) {

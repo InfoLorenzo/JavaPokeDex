@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import AppPackage.AnimationClass;
+import controller.Controller;
+
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -161,7 +163,11 @@ public class LoginView extends JPanel {
 		btnLogin.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnLogin.setEnabled(false);
+				
+				if (!Controller.isEmpty(inputPassword.getText()) && !Controller.isEmpty(inputusername.getText())) {
+					Controller.checkUserLogin(inputusername.getText(), inputPassword.getText());
+				}
+				
 				System.out.println("Botón login pulsado");
 
 			}
@@ -189,7 +195,9 @@ public class LoginView extends JPanel {
 		btnreturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Botón de vuelta pulsado");
-
+				
+				inputPassword.setText("");
+				inputusername.setText("");
 				setInvisible();
 				MainWindow.getLayeredPanel().getComponent(0).setVisible(true);
 				MainWindow.getLayeredPanel().revalidate();
