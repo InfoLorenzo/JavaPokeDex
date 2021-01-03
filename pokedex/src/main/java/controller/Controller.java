@@ -17,9 +17,12 @@ import org.json.JSONObject;
 import models.Pokemon;
 import views.LoginView;
 import views.MainWindow;
+import views.modals.LoginUnsuccessful;
 import controller.HttpRequests;
 
 public class Controller {
+	
+	private static LoginUnsuccessful failedRequestDataModal;
 
 	public Controller() {
 
@@ -72,7 +75,7 @@ public class Controller {
 		}
 
 		try {
-			int rows = statement.executeUpdate();
+			statement.executeUpdate();
 			System.out.println("El usuario ha sido insertado correctamente");
 		} catch (SQLException e) {
 			System.out.println("Oops algo salio mal...");
@@ -122,40 +125,49 @@ public class Controller {
 
 	public static boolean checkUserLogin( String username,String password) {
 
-		String sqlPokemon = "SELECT `username`, `password` FROM `heroku_414700429a65082`.`users` WHERE `username`='"
-				+ username + "' AND `password`='"+password+"';";
-
-		PreparedStatement statement = null;
-
-		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		try {
-			ResultSet rs = statement.executeQuery();
+		if (checkUserExist(username)) {
 			
-			if (rs.next()) {
-				System.out.println("El usuario existe en la base de datos");
-				System.out.println();
-				
-				userlogin[0] = rs.getString("username");
-				//userlogin[1] = rs.getString("nickname");
+			String sqlPokemon = "SELECT `username`, `password`,`nickname` FROM `heroku_414700429a65082`.`users` WHERE `username`='"
+					+ username + "' AND `password`='"+password+"';";
 
-	
-				System.out.println("Username: " + userlogin[0]);
-				//System.out.println("Nickname: " + userlogin[1]);
+			PreparedStatement statement = null;
 
-				return true;
-			}else {
-				System.out.println("El usuario no existe en la base de datos");
+			try {
+				statement = connectToDatabase().prepareStatement(sqlPokemon);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			
-		} catch (SQLException e) {
-			System.out.println("Oops algo salio mal...");
-			e.printStackTrace();
+
+			try {
+				ResultSet rs = statement.executeQuery();
+				
+				if (rs.next()) {
+					System.out.println("Los datos son correctos");
+					System.out.println();
+					
+					userlogin[0] = rs.getString("username");
+					userlogin[1] = rs.getString("nickname");
+					
+		
+					System.out.println("Username: " + userlogin[0]);
+					System.out.println("Nickname: " + userlogin[1]);
+
+					return true;
+				}else {
+					failedRequestDataModal = new LoginUnsuccessful();
+					failedRequestDataModal.newScreen();
+					System.out.println("Los datos no son correctos");
+					return false;
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("Oops algo salio mal...");
+				e.printStackTrace();
+			}
+		}else {
+			failedRequestDataModal = new LoginUnsuccessful();
+			failedRequestDataModal.newScreen();
 		}
 		
 		return false;

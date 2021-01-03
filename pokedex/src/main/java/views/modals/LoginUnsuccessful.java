@@ -4,11 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 
-public class RegisterUnsuccessful {
+public class LoginUnsuccessful {
 
 	private JFrame frame;
 
@@ -19,7 +18,7 @@ public class RegisterUnsuccessful {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegisterUnsuccessful window = new RegisterUnsuccessful();
+					LoginUnsuccessful window = new LoginUnsuccessful();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +30,7 @@ public class RegisterUnsuccessful {
 	/**
 	 * Create the application.
 	 */
-	public RegisterUnsuccessful() {
+	public LoginUnsuccessful() {
 		initialize();
 	}
 
@@ -44,16 +43,10 @@ public class RegisterUnsuccessful {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblMainMessage = new JLabel("El usuario ya existe en la base de datos");
-		lblMainMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblMainMessage = new JLabel("Los datos introducidos no son correctos");
 		lblMainMessage.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblMainMessage.setBounds(0, 20, 436, 123);
+		lblMainMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMainMessage.setBounds(0, 84, 436, 63);
 		frame.getContentPane().add(lblMainMessage);
-
-		JLabel lblSolveTip = new JLabel("Introduce un usuario diferente");
-		lblSolveTip.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSolveTip.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblSolveTip.setBounds(0, 142, 436, 55);
-		frame.getContentPane().add(lblSolveTip);
 	}
 }

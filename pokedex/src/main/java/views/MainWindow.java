@@ -50,8 +50,6 @@ public class MainWindow {
 	public MainWindow() {
 		initialize();
 		System.out.println("Hola main window iniciada");
-		
-		
 	}
 
 	/**
@@ -89,9 +87,5 @@ public class MainWindow {
 		loginview.setBounds(0, 0, 710, 444);
 
 		layeredPane.add(loginview);
-
-		
-		 
-
 	}
 }

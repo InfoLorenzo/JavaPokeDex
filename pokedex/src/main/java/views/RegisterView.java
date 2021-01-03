@@ -204,8 +204,6 @@ public class RegisterView extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				
 				if (!Controller.isEmpty(inputusername.getText()) && !Controller.isEmpty(inputPassword.getText())
 						&& !Controller.isEmpty(inputNickname.getText())) {
 
@@ -224,6 +222,9 @@ public class RegisterView extends JPanel {
 						
 					}
 
+				}else {
+					failedRegModal = new RegisterUnsuccessful();
+					failedRegModal.newScreen();
 				}
 
 				System.out.println("Botón Register pulsado");
