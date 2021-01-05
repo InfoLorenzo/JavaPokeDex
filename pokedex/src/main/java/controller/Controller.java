@@ -135,7 +135,6 @@ public class Controller {
 			try {
 				statement = connectToDatabase().prepareStatement(sqlPokemon);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -328,26 +327,77 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+	
+	public static String[] getPokemonDatafromDB(int id) {
+		String sqlPokemon = "SELECT `name`, `healthpoints`, `attackpoints`, `specialattackpoints`, `specialdefensepoints`, `speed`, `height`, `weight`, `basicexp`, `abilities`, `types`, `sprites` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='"
+				+ id + "';";
+
+		PreparedStatement statement = null;
+		String[] pokemonData = new String[12];
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			ResultSet rs = statement.executeQuery();
+			
+			if (rs.next()) {
+				System.out.println("El pokemon existe en la base de datos");
+				System.out.println();
+				
+				
+					
+
+					
+					pokemonData[0] = rs.getString("name");
+					pokemonData[1] = rs.getString("healthpoints");
+					pokemonData[2] = rs.getString("attackpoints");
+					pokemonData[3] = rs.getString("specialattackpoints");
+					pokemonData[4] = rs.getString("specialdefensepoints");
+					pokemonData[5] = rs.getString("speed");
+					pokemonData[6] = rs.getString("height");
+					pokemonData[7] = rs.getString("weight");
+					pokemonData[8] = rs.getString("basicexp");
+					pokemonData[9] = rs.getString("abilities");
+					pokemonData[10] = rs.getString("types");
+					pokemonData[11] = rs.getString("sprites");
+					
+					System.out.println("---------------");
+					System.out.println("Pokemon Name: " + pokemonData[0]);
+					System.out.println("Pokemon healthpoints: " + pokemonData[1]);
+					System.out.println("Pokemon attackpoints: " + pokemonData[2]);
+					System.out.println("Pokemon specialattackpoints: " + pokemonData[3]);
+					System.out.println("Pokemon specialdefensepoints: " + pokemonData[4]);
+					System.out.println("Pokemon speed: " + pokemonData[5]);
+					System.out.println("Pokemon height: " + pokemonData[6]);
+					System.out.println("Pokemon weight: " + pokemonData[7]);
+					System.out.println("Pokemon basicexp: " + pokemonData[8]);
+					System.out.println("Pokemon abilities: " + pokemonData[9]);
+					System.out.println("Pokemon types: " + pokemonData[10]);
+					System.out.println("Pokemon sprites: " + pokemonData[11]);
+					System.out.println("---------------");
+					
+					return pokemonData;
+				
+			}else {
+				System.out.println("El pokemon no existe en la base de datos");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Oops algo salio mal...");
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	public static void main(String[] args) {
 
 		System.out.println("Main del controller iniciado");
-		
-		
-		
-		/*
-		 * for (Pokemon P :
-		 * generatePokemons("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200")) {
-		 * 
-		 * addPokemonToDatabase( P.getPokemonName(), P.getPokemonURL(),
-		 * P.getPokemonStats()[0], P.getPokemonStats()[1], P.getPokemonStats()[2],
-		 * P.getPokemonStats()[3], P.getPokemonStats()[4], P.getPokemonExpBase(),
-		 * P.getPokemonHeight(), P.getPokemonWeight(),
-		 * P.getPokemonAbilities().toString(), P.getPokemonPicsURL().toString(),
-		 * P.getPokemonForms().toString(), P.getPokemonSpawnPoints().toString(),
-		 * P.getPokemonTypes().toString() ); }
-		 */
-
+		getPokemonDatafromDB(1111);
 	}
 
 }

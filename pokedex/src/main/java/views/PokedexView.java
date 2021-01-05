@@ -10,6 +10,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import controller.Controller;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,6 +21,10 @@ import java.awt.Font;
 
 public class PokedexView extends JPanel {
 
+	private int pokemonMinID = 1111;
+	private int pokemonMaxID = 3101;
+	private int pokemonID = pokemonMinID;
+	private String[] pokemonData = Controller.getPokemonDatafromDB(pokemonID);
 
 	/**
 	 * Create the panel.
@@ -36,25 +43,26 @@ public class PokedexView extends JPanel {
 			}
 		});
 
+		JLabel lblStatsTitle = new JLabel("Statistics");
+		lblStatsTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblStatsTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStatsTitle.setBounds(365, 131, 231, 30);
+		add(lblStatsTitle);
+
 		JLabel lblSpecialAttackTitle = new JLabel("Special Attack: ");
 		lblSpecialAttackTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSpecialAttackTitle.setBounds(491, 228, 104, 13);
+		lblSpecialAttackTitle.setBounds(491, 205, 104, 13);
 		add(lblSpecialAttackTitle);
 
 		JLabel lblSpecialDefenseTitle = new JLabel("Special defense: ");
 		lblSpecialDefenseTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSpecialDefenseTitle.setBounds(377, 228, 104, 13);
+		lblSpecialDefenseTitle.setBounds(377, 205, 104, 13);
 		add(lblSpecialDefenseTitle);
 
 		JLabel lblSpeedTitle = new JLabel("Speed:");
 		lblSpeedTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSpeedTitle.setBounds(491, 205, 45, 13);
+		lblSpeedTitle.setBounds(438, 251, 45, 13);
 		add(lblSpeedTitle);
-
-		JLabel lblDefenseTitle = new JLabel("Defense: ");
-		lblDefenseTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblDefenseTitle.setBounds(377, 205, 60, 13);
-		add(lblDefenseTitle);
 
 		JLabel lblAttackTitle = new JLabel("Attack:");
 		lblAttackTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -66,13 +74,7 @@ public class PokedexView extends JPanel {
 		lblHealthPointsTitle.setBounds(377, 182, 45, 13);
 		add(lblHealthPointsTitle);
 
-		JLabel lblStatsTitle = new JLabel("Statistics");
-		lblStatsTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblStatsTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatsTitle.setBounds(365, 131, 231, 30);
-		add(lblStatsTitle);
-
-		JLabel lblPokemonName = new JLabel("Name");
+		JLabel lblPokemonName = new JLabel(pokemonData[0]);
 		lblPokemonName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPokemonName.setBounds(90, 387, 114, 30);
 		add(lblPokemonName);
@@ -96,63 +98,97 @@ public class PokedexView extends JPanel {
 
 		JLabel lblHeightTitle = new JLabel("Height: ");
 		lblHeightTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblHeightTitle.setBounds(377, 251, 45, 13);
+		lblHeightTitle.setBounds(377, 228, 45, 13);
 		add(lblHeightTitle);
 
 		JLabel lblWeightTitle = new JLabel("Weight:");
 		lblWeightTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblWeightTitle.setBounds(491, 251, 45, 13);
+		lblWeightTitle.setBounds(491, 228, 45, 13);
 		add(lblWeightTitle);
+
+		JLabel lblHealthPointsNumber = new JLabel(pokemonData[1]);
+		lblHealthPointsNumber.setBounds(399, 183, 45, 13);
+		add(lblHealthPointsNumber);
+
+		JLabel lblSpecialDefenseNumber = new JLabel(pokemonData[4]);
+		lblSpecialDefenseNumber.setBounds(473, 206, 45, 13);
+		add(lblSpecialDefenseNumber);
+
+		JLabel lblHeightNumber = new JLabel(pokemonData[6]);
+		lblHeightNumber.setBounds(428, 228, 45, 13);
+		add(lblHeightNumber);
+
+		JLabel lblWeightNumber = new JLabel(pokemonData[7]);
+		lblWeightNumber.setBounds(535, 229, 45, 13);
+		add(lblWeightNumber);
+
+		JLabel lblSpecialAttackNumber = new JLabel(pokemonData[3]);
+		lblSpecialAttackNumber.setBounds(578, 206, 45, 13);
+		add(lblSpecialAttackNumber);
+
+		JLabel lblSpeedNumber = new JLabel(pokemonData[5]);
+		lblSpeedNumber.setBounds(486, 252, 45, 13);
+		add(lblSpeedNumber);
+
+		JLabel lblAttackNumber = new JLabel(pokemonData[2]);
+		lblAttackNumber.setBounds(535, 183, 45, 13);
+		add(lblAttackNumber);
+
+		JLabel lblAbilities = new JLabel("Abilities");
+		lblAbilities.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAbilities.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAbilities.setBounds(365, 274, 114, 50);
+		add(lblAbilities);
+
+		JLabel lblAbilitie1 = new JLabel("First abilitie");
+		lblAbilitie1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAbilitie1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblAbilitie1.setBounds(378, 314, 82, 21);
+		add(lblAbilitie1);
+
+		JLabel lblAbilitie2 = new JLabel("Second Abilitie");
+		lblAbilitie2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAbilitie2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblAbilitie2.setBounds(378, 338, 82, 21);
+		add(lblAbilitie2);
+
+		JLabel lblAbilitie3 = new JLabel("Third Abilitie");
+		lblAbilitie3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAbilitie3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblAbilitie3.setBounds(378, 363, 82, 21);
+		add(lblAbilitie3);
+
+		JLabel lblTypes = new JLabel("Types");
+		lblTypes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTypes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTypes.setBounds(480, 274, 114, 50);
+		add(lblTypes);
+
+		JLabel lblType1 = new JLabel("Type 1");
+		lblType1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblType1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblType1.setBounds(496, 324, 82, 21);
+		add(lblType1);
+
+		JLabel lblType2 = new JLabel("Type 2");
+		lblType2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblType2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblType2.setBounds(496, 348, 82, 21);
+		add(lblType2);
 		try {
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/Lr4arcd.png"))));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		JLabel lblHealthPointsNumber = new JLabel("0");
-		lblHealthPointsNumber.setBounds(399, 183, 45, 13);
-		add(lblHealthPointsNumber);
-		
-		JLabel lblDefensePointsNumber = new JLabel("0");
-		lblDefensePointsNumber.setBounds(428, 205, 45, 13);
-		add(lblDefensePointsNumber);
-		
-		JLabel lblSpecialDefenseNumber = new JLabel("0");
-		lblSpecialDefenseNumber.setBounds(467, 229, 45, 13);
-		add(lblSpecialDefenseNumber);
-		
-		JLabel lblHeightNumber = new JLabel("0");
-		lblHeightNumber.setBounds(417, 251, 45, 13);
-		add(lblHeightNumber);
-		
-		JLabel lblWeightNumber = new JLabel("0");
-		lblWeightNumber.setBounds(535, 252, 45, 13);
-		add(lblWeightNumber);
-		
-		JLabel lblSpecialAttackNumber = new JLabel("0");
-		lblSpecialAttackNumber.setBounds(578, 229, 45, 13);
-		add(lblSpecialAttackNumber);
-		
-		JLabel lblSpeedNumber = new JLabel("0");
-		lblSpeedNumber.setBounds(535, 206, 45, 13);
-		add(lblSpeedNumber);
-						
-						JLabel lblAttackNumber = new JLabel("0");
-						lblAttackNumber.setBounds(535, 183, 45, 13);
-						add(lblAttackNumber);
-						lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/Lr4arcd.png"))));
-						lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
-						
-								lblBackground.setBounds(0, 0, 718, 469);
-								
-										// End -- Background
-								
-										add(lblBackground);
+		lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
+
+		lblBackground.setBounds(0, 0, 718, 469);
+
+		// End -- Background
+
+		add(lblBackground);
 
 	}
-	
-	public 
+
 }

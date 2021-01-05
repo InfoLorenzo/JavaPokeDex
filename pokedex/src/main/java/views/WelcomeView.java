@@ -158,6 +158,7 @@ public class WelcomeView extends JPanel {
 		MainWindow.getLayeredPanel().revalidate();
 
 		MainWindow.getLayeredPanel().repaint();
+		setInvisible();
 
 	}
 

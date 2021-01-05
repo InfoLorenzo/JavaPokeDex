@@ -20,7 +20,8 @@ public class MainWindow {
 	JPanel loginview;
 	JPanel registerview;
 	JPanel welcomeview;
-
+	JPanel PokedexView;
+	
 	static JLayeredPane layeredPane;
 
 	public static JLayeredPane getLayeredPanel() {
@@ -36,13 +37,16 @@ public class MainWindow {
 			public void run() {
 				try {
 					MainWindow window = new MainWindow();
+
 					window.frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
+
 	/**
 	 * Create the application.
 	 */
@@ -72,20 +76,25 @@ public class MainWindow {
 		welcomeview = new WelcomeView();
 
 		welcomeview.setBounds(0, 0, 710, 444);
-		
+
 		layeredPane.add(welcomeview);
-		
+
 		registerview = new RegisterView();
 
 		registerview.setBounds(0, 0, 710, 444);
 
 		layeredPane.add(registerview);
-		
-		
+
 		loginview = new LoginView();
 
 		loginview.setBounds(0, 0, 710, 444);
 
 		layeredPane.add(loginview);
+
+		PokedexView = new PokedexView();
+
+		PokedexView.setBounds(0, 0, 710, 444);
+
+		layeredPane.add(PokedexView);
 	}
 }
