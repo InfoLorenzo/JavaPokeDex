@@ -63,37 +63,37 @@ public class MainWindow {
 	private void initialize() {
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 724, 481);
+		frame.setBounds(100, 100, 729, 498);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		frame.setResizable(false);
 		layeredPane = new JLayeredPane();
 
-		layeredPane.setBounds(0, 0, 710, 444);
+		layeredPane.setBounds(0, 0, 729, 498);
 
 		frame.getContentPane().add(layeredPane);
 
 		welcomeview = new WelcomeView();
 
-		welcomeview.setBounds(0, 0, 710, 444);
+		welcomeview.setBounds(0, 0, 729, 498);
 
 		layeredPane.add(welcomeview);
 
 		registerview = new RegisterView();
 
-		registerview.setBounds(0, 0, 710, 444);
+		registerview.setBounds(0, 0, 729, 498);
 
 		layeredPane.add(registerview);
 
 		loginview = new LoginView();
 
-		loginview.setBounds(0, 0, 710, 444);
+		loginview.setBounds(0, 0, 729, 498);
 
 		layeredPane.add(loginview);
 
 		PokedexView = new PokedexView();
 
-		PokedexView.setBounds(0, 0, 710, 444);
+		PokedexView.setBounds(0, 0, 729, 498);
 
 		layeredPane.add(PokedexView);
 	}

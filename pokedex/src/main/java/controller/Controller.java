@@ -21,12 +21,13 @@ import views.modals.LoginUnsuccessful;
 import controller.HttpRequests;
 
 public class Controller {
-	
+
 	private static LoginUnsuccessful failedRequestDataModal;
 
 	public Controller() {
 
 	}
+
 	public static String[] userlogin = new String[2];
 
 	private static Connection connectToDatabase() {
@@ -82,8 +83,8 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
-	public static boolean checkUserExist( String username) {
+
+	public static boolean checkUserExist(String username) {
 
 		String sqlPokemon = "SELECT `username`, `nickname` FROM `heroku_414700429a65082`.`users` WHERE `username`='"
 				+ username + "';";
@@ -99,36 +100,36 @@ public class Controller {
 
 		try {
 			ResultSet rs = statement.executeQuery();
-			
+
 			if (rs.next()) {
 				System.out.println("El usuario existe en la base de datos");
 				System.out.println();
-				
-				while(rs.next()){
+
+				while (rs.next()) {
 					System.out.println("---------------");
 					System.out.println(rs.getString("username"));
 					System.out.println("---------------");
 
 				}
 				return true;
-			}else {
+			} else {
 				System.out.println("El usuario no existe en la base de datos");
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println("Oops algo salio mal...");
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
-	public static boolean checkUserLogin( String username,String password) {
+	public static boolean checkUserLogin(String username, String password) {
 
 		if (checkUserExist(username)) {
-			
+
 			String sqlPokemon = "SELECT `username`, `password`,`nickname` FROM `heroku_414700429a65082`.`users` WHERE `username`='"
-					+ username + "' AND `password`='"+password+"';";
+					+ username + "' AND `password`='" + password + "';";
 
 			PreparedStatement statement = null;
 
@@ -140,39 +141,37 @@ public class Controller {
 
 			try {
 				ResultSet rs = statement.executeQuery();
-				
+
 				if (rs.next()) {
 					System.out.println("Los datos son correctos");
 					System.out.println();
-					
+
 					userlogin[0] = rs.getString("username");
 					userlogin[1] = rs.getString("nickname");
-					
-		
+
 					System.out.println("Username: " + userlogin[0]);
 					System.out.println("Nickname: " + userlogin[1]);
 
 					return true;
-				}else {
+				} else {
 					failedRequestDataModal = new LoginUnsuccessful();
 					failedRequestDataModal.newScreen();
 					System.out.println("Los datos no son correctos");
 					return false;
 				}
-				
+
 			} catch (SQLException e) {
 				System.out.println("Oops algo salio mal...");
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			failedRequestDataModal = new LoginUnsuccessful();
 			failedRequestDataModal.newScreen();
 		}
-		
+
 		return false;
 	}
 
-	
 	public static boolean isEmpty(String textInput) {
 
 		if (textInput.equalsIgnoreCase("") || textInput.equalsIgnoreCase(" ") || textInput == null) {
@@ -327,13 +326,13 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static String[] getPokemonDatafromDB(int id) {
-		String sqlPokemon = "SELECT `name`, `healthpoints`, `attackpoints`, `specialattackpoints`, `specialdefensepoints`, `speed`, `height`, `weight`, `basicexp`, `abilities`, `types`, `sprites` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='"
+		String sqlPokemon = "SELECT `name`, `healthpoints`, `attackpoints`, `specialattackpoints`, `specialdefensepoints`, `speed`, `height`, `weight`, `basicexp` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='"
 				+ id + "';";
 
 		PreparedStatement statement = null;
-		String[] pokemonData = new String[12];
+		String[] pokemonData = new String[9];
 		try {
 			statement = connectToDatabase().prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
@@ -343,54 +342,79 @@ public class Controller {
 
 		try {
 			ResultSet rs = statement.executeQuery();
-			
+
 			if (rs.next()) {
 				System.out.println("El pokemon existe en la base de datos");
 				System.out.println();
-				
-				
-					
 
-					
-					pokemonData[0] = rs.getString("name");
-					pokemonData[1] = rs.getString("healthpoints");
-					pokemonData[2] = rs.getString("attackpoints");
-					pokemonData[3] = rs.getString("specialattackpoints");
-					pokemonData[4] = rs.getString("specialdefensepoints");
-					pokemonData[5] = rs.getString("speed");
-					pokemonData[6] = rs.getString("height");
-					pokemonData[7] = rs.getString("weight");
-					pokemonData[8] = rs.getString("basicexp");
-					pokemonData[9] = rs.getString("abilities");
-					pokemonData[10] = rs.getString("types");
-					pokemonData[11] = rs.getString("sprites");
-					
-					System.out.println("---------------");
-					System.out.println("Pokemon Name: " + pokemonData[0]);
-					System.out.println("Pokemon healthpoints: " + pokemonData[1]);
-					System.out.println("Pokemon attackpoints: " + pokemonData[2]);
-					System.out.println("Pokemon specialattackpoints: " + pokemonData[3]);
-					System.out.println("Pokemon specialdefensepoints: " + pokemonData[4]);
-					System.out.println("Pokemon speed: " + pokemonData[5]);
-					System.out.println("Pokemon height: " + pokemonData[6]);
-					System.out.println("Pokemon weight: " + pokemonData[7]);
-					System.out.println("Pokemon basicexp: " + pokemonData[8]);
-					System.out.println("Pokemon abilities: " + pokemonData[9]);
-					System.out.println("Pokemon types: " + pokemonData[10]);
-					System.out.println("Pokemon sprites: " + pokemonData[11]);
-					System.out.println("---------------");
-					
-					return pokemonData;
-				
-			}else {
+				pokemonData[0] = rs.getString("name");
+				pokemonData[1] = rs.getString("healthpoints");
+				pokemonData[2] = rs.getString("attackpoints");
+				pokemonData[3] = rs.getString("specialattackpoints");
+				pokemonData[4] = rs.getString("specialdefensepoints");
+				pokemonData[5] = rs.getString("speed");
+				pokemonData[6] = rs.getString("height");
+				pokemonData[7] = rs.getString("weight");
+				pokemonData[8] = rs.getString("basicexp");
+				// pokemonData[9] = rs.getString("abilities");
+				// pokemonData[10] = rs.getString("types");
+				// pokemonData[11] = rs.getString("sprites");
+
+				System.out.println("---------------");
+				System.out.println("Pokemon Name: " + pokemonData[0]);
+				System.out.println("Pokemon healthpoints: " + pokemonData[1]);
+				System.out.println("Pokemon attackpoints: " + pokemonData[2]);
+				System.out.println("Pokemon specialattackpoints: " + pokemonData[3]);
+				System.out.println("Pokemon specialdefensepoints: " + pokemonData[4]);
+				System.out.println("Pokemon speed: " + pokemonData[5]);
+				System.out.println("Pokemon height: " + pokemonData[6]);
+				System.out.println("Pokemon weight: " + pokemonData[7]);
+				System.out.println("Pokemon basicexp: " + pokemonData[8]);
+				System.out.println("---------------");
+
+				return pokemonData;
+
+			} else {
 				System.out.println("El pokemon no existe en la base de datos");
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println("Oops algo salio mal...");
 			e.printStackTrace();
 		}
+
+		return null;
+	}
+
+	public static String[] getPokemonArrayfromDB(int id,String arrayName) {
+		String sqlPokemon = "SELECT `"+ arrayName +"` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='"
+				+ id + "';";
+
+		PreparedStatement statement = null;
+		String[] pokemonArray;
+		String resultString;
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
+		try {
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				resultString = rs.getString(arrayName).substring(1,rs.getString(arrayName).length()-1);
+				
+				pokemonArray = resultString.split(", ");
+				for (String string : pokemonArray) {
+					System.out.println(string);
+				}
+				return pokemonArray;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Oops algo salio mal " + e);
+		}
 		return null;
 	}
 
@@ -398,6 +422,9 @@ public class Controller {
 
 		System.out.println("Main del controller iniciado");
 		getPokemonDatafromDB(1111);
+		getPokemonArrayfromDB(1111,"abilities");
+		getPokemonArrayfromDB(1111,"sprites");
+		getPokemonArrayfromDB(1111,"types");
 	}
 
 }
