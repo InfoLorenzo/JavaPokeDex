@@ -417,13 +417,63 @@ public class Controller {
 		}
 		return null;
 	}
+	
+	public static String[][] getPokemonSpritesDivided(String[] SpritesInput) {
+		int contador1 = 0;
+		int contador2 = 0;
+		int contador3 = 0;
+		int contador4 = 0;
+
+		String[][] pokemonSpritesDivided = new String[4][8];
+		//[0] - Male Shiny
+		//[1] - Male default
+		//[2] - Female Shiny
+		//[3] - Female default
+		
+
+		for (int i = 0; i < SpritesInput.length; i++) {
+			
+			
+			if (SpritesInput[i].contains("female")) {
+				if (SpritesInput[i].contains("shiny")) {
+					System.out.println("Mujer shiny: " + SpritesInput[i]);
+					pokemonSpritesDivided[2][contador1] = SpritesInput[i];
+					contador1++;
+					
+				}else{
+					System.out.println("Mujer default: " + SpritesInput[i]);
+					pokemonSpritesDivided[3][contador2] = SpritesInput[i];
+					contador2++;
+				}
+			}else {
+				if (SpritesInput[i].contains("shiny")) {
+					System.out.println("Hombre shiny: " + SpritesInput[i]);
+					pokemonSpritesDivided[0][contador3] = SpritesInput[i];
+					contador3++;
+				}else {
+					System.out.println("Hombres default: " + SpritesInput[i]);
+					pokemonSpritesDivided[1][contador4] = SpritesInput[i];
+					contador4++;
+				}
+			}
+		
+		}
+		
+			
+			
+			
+			
+		
+		
+		return pokemonSpritesDivided;
+	}
 
 	public static void main(String[] args) {
 
 		System.out.println("Main del controller iniciado");
 		getPokemonDatafromDB(1111);
 		getPokemonArrayfromDB(1111,"abilities");
-		getPokemonArrayfromDB(1111,"sprites");
+		getPokemonSpritesDivided(getPokemonArrayfromDB(1131,"sprites"));
 		getPokemonArrayfromDB(1111,"types");
 	}
 

@@ -11,13 +11,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import org.w3c.dom.css.Counter;
+
 import controller.Controller;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageConsumer;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 
 public class PokedexView extends JPanel {
 
@@ -30,8 +37,10 @@ public class PokedexView extends JPanel {
 	private String[] pokemonAbilities = Controller.getPokemonArrayfromDB(pokemonID, "abilities");
 	private String[] pokemonSprites = Controller.getPokemonArrayfromDB(pokemonID, "sprites");
 	private String[] pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
-	private String pokemonImage = pokemonSprites[2];
-
+	private String[][] pokemonImageDefault = new String[2][];
+	private String[][] pokemonImageShiny = new String[2][];
+	private String[] pokemonImage;
+	private int imagesCounter = 0;
 	private JLabel lblPokemonName;
 	private JLabel lblHealthPointsNumber;
 	private JLabel lblAttackNumber;
@@ -50,7 +59,15 @@ public class PokedexView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+
 	public PokedexView() {
+
+		pokemonImageShiny[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[0];
+		pokemonImageShiny[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[2];
+		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
+		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
+
+		pokemonImage = pokemonImageDefault[0];
 
 		setLayout(null);
 
@@ -61,6 +78,14 @@ public class PokedexView extends JPanel {
 		JButton btnPrevious = new JButton("Previous");
 		btnPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				if (imagesCounter > 0) {
+					imagesCounter--;
+				}
+				System.out.println("Botón de previous image pulsado");
+				System.out.println(imagesCounter);
+				updateViewData();
+
 			}
 		});
 
@@ -96,6 +121,7 @@ public class PokedexView extends JPanel {
 		add(lblHealthPointsTitle);
 
 		lblPokemonName = new JLabel(pokemonData[0]);
+		lblPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblPokemonName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPokemonName.setBounds(90, 387, 114, 30);
 		add(lblPokemonName);
@@ -104,7 +130,7 @@ public class PokedexView extends JPanel {
 
 		try {
 			lblPokemonPic = new JLabel(
-					new ImageIcon(ImageIO.read(new URL(pokemonImage)).getScaledInstance(254, 260, 2)));
+					new ImageIcon(ImageIO.read(new URL(pokemonImage[0])).getScaledInstance(250, 250, 2)));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -120,6 +146,29 @@ public class PokedexView extends JPanel {
 		JButton btnNext = new JButton("Next");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				if (imagesCounter < pokemonImage.length) {
+					System.out.println("El Array de las imagenes de pokemon es: " + pokemonImage.length);
+					System.out.println("EL texto del array["+imagesCounter+"] es : " + pokemonImage[imagesCounter]);
+					
+					
+					System.out.println(pokemonImage[0]);
+
+					System.out.println(pokemonImage[1]);
+
+					System.out.println(pokemonImage[2]);
+
+					System.out.println(pokemonImage[3]);
+
+					if (pokemonImage[imagesCounter+1] != null) {
+						
+						imagesCounter++;
+					}
+					
+				}
+				System.out.println(imagesCounter);
+				updateViewData();
+
 			}
 		});
 		btnNext.setBounds(208, 427, 85, 21);
@@ -128,8 +177,25 @@ public class PokedexView extends JPanel {
 		JButton btnSwitchShiny = new JButton("Shiny");
 		btnSwitchShiny.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				shiny = !shiny;
+
+				if (shiny) {
+					pokemonImage = pokemonImageShiny[0];
+					System.out.println(pokemonImage.toString());
+					System.out.println("Imagen shiny 1: " + pokemonImage[0]);
+					System.out.println("Imagen shiny 2: " + pokemonImage[1]);
+
+					imagesCounter = 0;
+				} else {
+					pokemonImage = pokemonImageDefault[0];
+					System.out.println(pokemonImage.toString());
+					imagesCounter = 0;
+				}
+
 				System.out.println(shiny);
+				
+				updateViewData();
 			}
 		});
 		btnSwitchShiny.setBackground(Color.YELLOW);
@@ -266,6 +332,8 @@ public class PokedexView extends JPanel {
 
 		// End -- Background
 
+		pokemonImage = pokemonImageDefault[0];
+
 		add(lblBackground);
 
 	}
@@ -281,6 +349,8 @@ public class PokedexView extends JPanel {
 			pokemonSprites = Controller.getPokemonArrayfromDB(pokemonID, "sprites");
 			pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
 
+			imagesCounter = 0;
+			
 			updateViewData();
 		}
 	}
@@ -295,11 +365,14 @@ public class PokedexView extends JPanel {
 			pokemonSprites = Controller.getPokemonArrayfromDB(pokemonID, "sprites");
 			pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
 
+			imagesCounter = 0;
+			
 			updateViewData();
 		}
 	}
 
 	public void updateViewData() {
+
 		lblPokemonName.setText(pokemonData[0]);
 		lblHealthPointsNumber.setText(pokemonData[1]);
 		lblAttackNumber.setText(pokemonData[2]);
@@ -326,16 +399,34 @@ public class PokedexView extends JPanel {
 			lblType2.setText(pokemonTypes[1]);
 		}
 
-		pokemonImage = pokemonSprites[2];
+		
+		pokemonImageShiny[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[0];
+		pokemonImageShiny[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[2];
+		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
+		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
 
 		
-
-		lblPokemonPic.setIcon(pokemonImage);
 		
-		System.out.println("pokemon image: " + pokemonImage);
+		ImageIcon imageIcon = null;
+		try {
+			System.out.println(imagesCounter);
+			System.out.println(pokemonImage.length);
+			
+			imageIcon = new ImageIcon(new URL(pokemonImage[imagesCounter]));
+		} catch (MalformedURLException e1) {
+			
+			e1.printStackTrace();
+		}
+		Image image = imageIcon.getImage();
+		Image newimg = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
+		imageIcon = new ImageIcon(newimg);
+
+		lblPokemonPic.setIcon(imageIcon);
+
+		System.out.println("Pokemon image: " + pokemonImageDefault);
 
 		System.out.println("Texto de la pic label: " + lblPokemonPic.getText());
-		
+
 		revalidate();
 		repaint();
 	}
