@@ -82,8 +82,7 @@ public class PokedexView extends JPanel {
 				if (imagesCounter > 0) {
 					imagesCounter--;
 				}
-				System.out.println("Botón de previous image pulsado");
-				System.out.println(imagesCounter);
+				
 				updateViewData();
 
 			}
@@ -148,25 +147,14 @@ public class PokedexView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if (imagesCounter < pokemonImage.length) {
-					System.out.println("El Array de las imagenes de pokemon es: " + pokemonImage.length);
-					System.out.println("EL texto del array["+imagesCounter+"] es : " + pokemonImage[imagesCounter]);
 					
-					
-					System.out.println(pokemonImage[0]);
-
-					System.out.println(pokemonImage[1]);
-
-					System.out.println(pokemonImage[2]);
-
-					System.out.println(pokemonImage[3]);
-
 					if (pokemonImage[imagesCounter+1] != null) {
 						
 						imagesCounter++;
 					}
 					
 				}
-				System.out.println(imagesCounter);
+				
 				updateViewData();
 
 			}
@@ -182,18 +170,13 @@ public class PokedexView extends JPanel {
 
 				if (shiny) {
 					pokemonImage = pokemonImageShiny[0];
-					System.out.println(pokemonImage.toString());
-					System.out.println("Imagen shiny 1: " + pokemonImage[0]);
-					System.out.println("Imagen shiny 2: " + pokemonImage[1]);
 
 					imagesCounter = 0;
 				} else {
 					pokemonImage = pokemonImageDefault[0];
-					System.out.println(pokemonImage.toString());
+
 					imagesCounter = 0;
 				}
-
-				System.out.println(shiny);
 				
 				updateViewData();
 			}
@@ -409,8 +392,7 @@ public class PokedexView extends JPanel {
 		
 		ImageIcon imageIcon = null;
 		try {
-			System.out.println(imagesCounter);
-			System.out.println(pokemonImage.length);
+
 			
 			imageIcon = new ImageIcon(new URL(pokemonImage[imagesCounter]));
 		} catch (MalformedURLException e1) {
@@ -422,10 +404,6 @@ public class PokedexView extends JPanel {
 		imageIcon = new ImageIcon(newimg);
 
 		lblPokemonPic.setIcon(imageIcon);
-
-		System.out.println("Pokemon image: " + pokemonImageDefault);
-
-		System.out.println("Texto de la pic label: " + lblPokemonPic.getText());
 
 		revalidate();
 		repaint();
