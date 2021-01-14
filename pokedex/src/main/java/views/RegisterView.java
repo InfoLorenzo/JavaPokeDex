@@ -21,15 +21,16 @@ import AppPackage.AnimationClass;
 import controller.Controller;
 import views.modals.RegisterSuccessful;
 import views.modals.RegisterUnsuccessful;
+import javax.swing.JPasswordField;
 
 public class RegisterView extends JPanel {
 
-	private JTextField inputusername;
-	private JTextField inputPassword;
+	private JTextField inputUsername;
 	private JTextField inputNickname;
 	private JButton btnreturn;
 	private RegisterUnsuccessful failedRegModal;
 	private RegisterSuccessful SuccessfulRegModal;
+	private JPasswordField inputPassword;
 
 	/**
 	 * Create the panel.
@@ -43,19 +44,7 @@ public class RegisterView extends JPanel {
 		// Start -- Background
 
 		JLabel lblBackground = new JLabel("No hay foto");
-
-		try {
-			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
-			lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		lblBackground.setBounds(0, 0, 718, 469);
+		
 		// End -- Background
 
 		// Start -- Welcome Title
@@ -157,27 +146,14 @@ public class RegisterView extends JPanel {
 
 		// Start -- Username Input
 
-		inputusername = new JTextField();
-		inputusername.setText("");
-		inputusername.setForeground(Color.WHITE);
-		inputusername.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
-		inputusername.setBackground(new Color(255, 205, 0));
-		inputusername.setBounds(352, 227, 221, 43);
+		inputUsername = new JTextField();
+		inputUsername.setText("");
+		inputUsername.setForeground(Color.WHITE);
+		inputUsername.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
+		inputUsername.setBackground(new Color(255, 205, 0));
+		inputUsername.setBounds(352, 227, 221, 43);
 
-		inputusername.setColumns(10);
-
-		// End -- Username Input
-
-		// Start -- Password Input
-
-		inputPassword = new JTextField();
-		inputPassword.setText("");
-		inputPassword.setForeground(Color.WHITE);
-		inputPassword.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
-		inputPassword.setBackground(new Color(255, 205, 0));
-		inputPassword.setBounds(352, 298, 221, 43);
-
-		inputPassword.setColumns(10);
+		inputUsername.setColumns(10);
 
 		// End -- Password Input
 
@@ -204,14 +180,14 @@ public class RegisterView extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!Controller.isEmpty(inputusername.getText()) && !Controller.isEmpty(inputPassword.getText())
+				if (!Controller.isEmpty(inputUsername.getText()) && !Controller.isEmpty(inputPassword.getText())
 						&& !Controller.isEmpty(inputNickname.getText())) {
 
 					System.out.println("Los inputs no están vacios");
 
-					if (!Controller.checkUserExist(inputusername.getText())) {
+					if (!Controller.checkUserExist(inputUsername.getText())) {
 
-						Controller.registerUser(inputNickname.getText(), inputusername.getText(),
+						Controller.registerUser(inputNickname.getText(), inputUsername.getText(),
 								inputPassword.getText());
 						SuccessfulRegModal = new RegisterSuccessful();
 						SuccessfulRegModal.newScreen();
@@ -241,7 +217,7 @@ public class RegisterView extends JPanel {
 		ImageIcon imageforReturn = null;
 		try {
 			imageforReturn = new ImageIcon(ImageIO
-					.read(new URL("https://fontmeme.com/permalink/210102/938402012117d7cf010c59421d232540.png")));
+					.read(new URL("https://fontmeme.com/permalink/210114/e20cc361a851b6737f42fb1a08604fe4.png")));
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -256,7 +232,7 @@ public class RegisterView extends JPanel {
 				System.out.println("Botón de vuelta pulsado");
 				inputNickname.setText("");
 				inputPassword.setText("");
-				inputusername.setText("");
+				inputUsername.setText("");
 
 				setInvisible();
 				MainWindow.getLayeredPanel().getComponent(0).setVisible(true);
@@ -286,11 +262,26 @@ public class RegisterView extends JPanel {
 		add(lblUsername);
 
 		add(inputNickname);
-		add(inputPassword);
-		add(inputusername);
+		add(inputUsername);
 
 		add(lblWelcomeTitle);
-		add(lblBackground);
+		
+		inputPassword = new JPasswordField();
+		inputPassword.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
+		inputPassword.setColumns(10);
+		inputPassword.setBackground(new Color(255, 205, 0));
+		inputPassword.setBounds(352, 298, 221, 43);
+		add(inputPassword);
+		try {
+			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
+		
+				lblBackground.setBounds(0, 0, 718, 469);
+				add(lblBackground);
 
 		// End -- Views order
 
@@ -304,5 +295,4 @@ public class RegisterView extends JPanel {
 	public void setVisible() {
 		this.setVisible(true);
 	}
-
 }

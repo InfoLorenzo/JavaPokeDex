@@ -67,6 +67,7 @@ public class MainWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		
 		layeredPane = new JLayeredPane();
 
 		layeredPane.setBounds(0, 0, 729, 498);
@@ -76,7 +77,9 @@ public class MainWindow {
 		welcomeview = new WelcomeView();
 
 		welcomeview.setBounds(0, 0, 729, 498);
-
+		
+		welcomeview.setVisible(true);
+		
 		layeredPane.add(welcomeview);
 
 		registerview = new RegisterView();
@@ -89,6 +92,8 @@ public class MainWindow {
 
 		loginview.setBounds(0, 0, 729, 498);
 
+		
+		
 		layeredPane.add(loginview);
 
 		PokedexView = new PokedexView();

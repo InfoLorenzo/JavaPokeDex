@@ -21,11 +21,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
 
 public class LoginView extends JPanel {
 	private JTextField inputusername;
-	private JTextField inputPassword;
 	private LoginUnsuccessful failedLoginModal;
+	private JPasswordField inputPassword;
 	/**
 	 * Create the panel.
 	 */
@@ -39,18 +40,6 @@ public class LoginView extends JPanel {
 
 		JLabel lblBackground = new JLabel("No hay foto");
 
-		try {
-			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
-			lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		lblBackground.setBounds(0, 0, 718, 469);
 		// End -- Background
 
 		// Start -- Welcome Title
@@ -117,26 +106,12 @@ public class LoginView extends JPanel {
 		// Start -- Username Input
 
 		inputusername = new JTextField();
-		inputusername.setText("Test1");
 		inputusername.setForeground(Color.WHITE);
 		inputusername.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
 		inputusername.setBackground(new Color(255, 205, 0));
 		inputusername.setBounds(353, 169, 228, 51);
 
 		inputusername.setColumns(10);
-
-		// End -- Username Input
-
-		// Start -- Password Input
-
-		inputPassword = new JTextField();
-		inputPassword.setText("Test1");
-		inputPassword.setForeground(Color.WHITE);
-		inputPassword.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
-		inputPassword.setBackground(new Color(255, 205, 0));
-		inputPassword.setBounds(353, 249, 228, 51);
-
-		inputPassword.setColumns(10);
 
 		// End -- Password Input
 
@@ -164,10 +139,15 @@ public class LoginView extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				
-				if (!Controller.isEmpty(inputPassword.getText()) && !Controller.isEmpty(inputusername.getText())) {
-					Controller.checkUserLogin(inputusername.getText(), inputPassword.getText());
+				if (!Controller.isEmpty(new String(inputPassword.getPassword())) && !Controller.isEmpty(inputusername.getText())) {
+					
+					if (Controller.checkUserLogin(inputusername.getText(), new String(inputPassword.getPassword()))) {
+						
+						setVisible(false);
+						MainWindow.getLayeredPanel().getComponent(3).setVisible(true);
+						MainWindow.getLayeredPanel().revalidate();
+						MainWindow.getLayeredPanel().repaint();
+					}
 				}else {
 					failedLoginModal = new LoginUnsuccessful();
 					failedLoginModal.newScreen();
@@ -187,7 +167,7 @@ public class LoginView extends JPanel {
 		ImageIcon imageforReturn = null;
 		try {
 			imageforReturn = new ImageIcon(ImageIO
-					.read(new URL("https://fontmeme.com/permalink/210102/938402012117d7cf010c59421d232540.png")));
+					.read(new URL("https://fontmeme.com/permalink/210114/e20cc361a851b6737f42fb1a08604fe4.png")));
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -228,12 +208,26 @@ public class LoginView extends JPanel {
 		add(btnreturn);
 		add(lblPassword);
 		add(lblUsername);
-
-		add(inputPassword);
 		add(inputusername);
 
 		add(lblWelcomeTitle);
-		add(lblBackground);
+		
+		inputPassword = new JPasswordField();
+		inputPassword.setForeground(Color.WHITE);
+		inputPassword.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
+		inputPassword.setBackground(new Color(255, 205, 0));
+		inputPassword.setBounds(353, 249, 228, 51);
+		add(inputPassword);
+		try {
+			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
+		
+				lblBackground.setBounds(0, 0, 718, 469);
+				add(lblBackground);
 
 		// End -- Views order
 

@@ -67,8 +67,11 @@ public class PokedexView extends JPanel {
 		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
 		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
 
+		
+		
 		pokemonImage = pokemonImageDefault[0];
 
+		
 		setLayout(null);
 
 		// Start -- Background
@@ -139,7 +142,7 @@ public class PokedexView extends JPanel {
 		lblPokemonPic.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPokemonPic.setBounds(25, 121, 254, 260);
 		add(lblPokemonPic);
-		btnPrevious.setBounds(10, 427, 85, 21);
+		btnPrevious.setBounds(10, 430, 70, 18);
 		add(btnPrevious);
 
 		JButton btnNext = new JButton("Next");
@@ -151,6 +154,7 @@ public class PokedexView extends JPanel {
 					if (pokemonImage[imagesCounter+1] != null) {
 						
 						imagesCounter++;
+						
 					}
 					
 				}
@@ -159,7 +163,7 @@ public class PokedexView extends JPanel {
 
 			}
 		});
-		btnNext.setBounds(208, 427, 85, 21);
+		btnNext.setBounds(222, 430, 70, 18);
 		add(btnNext);
 
 		JButton btnSwitchShiny = new JButton("Shiny");
@@ -182,7 +186,7 @@ public class PokedexView extends JPanel {
 			}
 		});
 		btnSwitchShiny.setBackground(Color.YELLOW);
-		btnSwitchShiny.setBounds(113, 427, 85, 21);
+		btnSwitchShiny.setBounds(114, 430, 70, 18);
 		add(btnSwitchShiny);
 
 		JLabel lblHeightTitle = new JLabel("Height: ");
@@ -258,7 +262,7 @@ public class PokedexView extends JPanel {
 		lblAbilitie3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblAbilitie3.setBounds(378, 363, 82, 21);
 		add(lblAbilitie3);
-
+		
 		JLabel lblTypes = new JLabel("Types");
 		lblTypes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTypes.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -289,17 +293,19 @@ public class PokedexView extends JPanel {
 		JButton btnNextPokemon = new JButton("Next");
 		btnNextPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				nextPokemonData();
+				updateViewData();
 			}
 		});
 		btnNextPokemon.setBounds(511, 427, 85, 21);
 		add(btnNextPokemon);
 
 		JButton btnPreviousPokemon = new JButton("Previous");
-		btnPreviousPokemon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				previousPokemonData();
-			}
+		btnPreviousPokemon.addActionListener(e ->{
+			
+			previousPokemonData();
+			updateViewData();
 		});
 		btnPreviousPokemon.setBounds(365, 427, 85, 21);
 		add(btnPreviousPokemon);
@@ -315,10 +321,12 @@ public class PokedexView extends JPanel {
 
 		// End -- Background
 
-		pokemonImage = pokemonImageDefault[0];
+		
 
 		add(lblBackground);
 
+		
+		setVisible(false);
 	}
 
 	public void nextPokemonData() {
@@ -326,13 +334,23 @@ public class PokedexView extends JPanel {
 		if (pokemonID + 10 <= pokemonMaxID) {
 
 			pokemonID += 10;
-
+			shiny = false;
 			pokemonData = Controller.getPokemonDatafromDB(pokemonID);
 			pokemonAbilities = Controller.getPokemonArrayfromDB(pokemonID, "abilities");
 			pokemonSprites = Controller.getPokemonArrayfromDB(pokemonID, "sprites");
 			pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
 
-			imagesCounter = 0;
+			if (shiny) {
+				pokemonImage = pokemonImageShiny[0];
+
+				imagesCounter = 0;
+			} else {
+				pokemonImage = pokemonImageDefault[0];
+
+				imagesCounter = 0;
+			}
+			
+		
 			
 			updateViewData();
 		}
@@ -382,23 +400,21 @@ public class PokedexView extends JPanel {
 			lblType2.setText(pokemonTypes[1]);
 		}
 
-		
 		pokemonImageShiny[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[0];
 		pokemonImageShiny[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[2];
 		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
 		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
-
-		
 		
 		ImageIcon imageIcon = null;
 		try {
 
-			
 			imageIcon = new ImageIcon(new URL(pokemonImage[imagesCounter]));
+			
 		} catch (MalformedURLException e1) {
 			
 			e1.printStackTrace();
 		}
+		
 		Image image = imageIcon.getImage();
 		Image newimg = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
 		imageIcon = new ImageIcon(newimg);

@@ -84,6 +84,7 @@ public class HttpRequests {
 			URL url = new URL("https://pokeapi.co/api/v2/pokemon");
 			HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 			httpURLConnection.setRequestMethod("POST");
+			
 			// adding header
 			httpURLConnection.setRequestProperty("Auth", "Token");
 			httpURLConnection.setRequestProperty("Data1", "Value1");
@@ -101,14 +102,17 @@ public class HttpRequests {
 			InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 			StringBuilder response = new StringBuilder();
+			
 			while ((line = bufferedReader.readLine()) != null) {
 				response.append(line);
 			}
+			
 			bufferedReader.close();
 			System.out.println("Response : " + response.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 			System.out.println("Error in Making POST Request");
 		}
 	}
@@ -358,7 +362,7 @@ public class HttpRequests {
 
 	public static ArrayList<String> getPokemonbasicSprites(String url) {
 
-		try {
+		
 
 			ArrayList<String> Sprites = new ArrayList<String>();
 
@@ -367,59 +371,25 @@ public class HttpRequests {
 
 			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("back_default"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("back_female"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("back_shiny"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("back_shiny_female"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("front_default"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("front_female"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("front_shiny"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {
 				Sprites.add(obj.getJSONObject("sprites").getString("front_shiny_female"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-
-			for (String s : Sprites) {
-				//System.out.println(s);
-			}
-
+			
 			return Sprites;
-
+			
 		} catch (Exception e) {
 			System.out.println("Error in Making Get Request");
 			System.out.println("The error is: " + e);
 		}
-
+		
 		return null;
+		
 	}
-
+	
 	public static int[] getPokemonStats(String url) {
 
 		int[] pokemonStats = new int[6];

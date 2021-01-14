@@ -425,6 +425,7 @@ public class Controller {
 		int contador4 = 0;
 
 		String[][] pokemonSpritesDivided = new String[4][8];
+		
 		//[0] - Male Shiny
 		//[1] - Male default
 		//[2] - Female Shiny
