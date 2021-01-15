@@ -58,6 +58,8 @@ public class PokedexView extends JPanel {
 	private int widthDataLabels = 100;
 	private int heightDataTitles = 30;
 	private int widthDataTitles = 230;
+	private int titlefontSize = 15;
+	private int textfontSize = 12;
 
 	/**
 	 * Create the panel.
@@ -74,7 +76,7 @@ public class PokedexView extends JPanel {
 		
 		pokemonImage = pokemonImageDefault[0];
 
-		
+		pokemonID += 10;
 		
 		setLayout(null);
 
@@ -96,38 +98,38 @@ public class PokedexView extends JPanel {
 		});
 
 		JLabel lblStatsTitle = new JLabel("Statistics");
-		lblStatsTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblStatsTitle.setFont(new Font("Tahoma", Font.PLAIN, titlefontSize));
 		lblStatsTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStatsTitle.setBounds(365, 131, widthDataTitles, heightDataTitles);
 		add(lblStatsTitle);
 
 		JLabel lblSpecialAttackTitle = new JLabel("Special Attack: ");
-		lblSpecialAttackTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSpecialAttackTitle.setBounds(491, 205, 104, 13);
+		lblSpecialAttackTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblSpecialAttackTitle.setBounds(377, 229, 104, 13);
 		add(lblSpecialAttackTitle);
 
 		JLabel lblSpecialDefenseTitle = new JLabel("Special defense: ");
-		lblSpecialDefenseTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSpecialDefenseTitle.setBounds(377, 205, 104, 13);
+		lblSpecialDefenseTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblSpecialDefenseTitle.setBounds(377, 253, 104, 13);
 		add(lblSpecialDefenseTitle);
 
 		JLabel lblSpeedTitle = new JLabel("Speed:");
-		lblSpeedTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSpeedTitle.setBounds(438, 251, 45, 13);
+		lblSpeedTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblSpeedTitle.setBounds(502, 229, 45, 13);
 		add(lblSpeedTitle);
 
 		JLabel lblAttackTitle = new JLabel("Attack:");
-		lblAttackTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblAttackTitle.setBounds(491, 182, 45, 13);
+		lblAttackTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblAttackTitle.setBounds(502, 182, 45, 13);
 		add(lblAttackTitle);
 
 		JLabel lblHealthPointsTitle = new JLabel("HP: ");
-		lblHealthPointsTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblHealthPointsTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
 		lblHealthPointsTitle.setBounds(377, 182, 45, 13);
 		add(lblHealthPointsTitle);
 
 		lblPokemonName = new JLabel(pokemonData[0]);
-		lblPokemonName.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPokemonName.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
 		lblPokemonName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPokemonName.setBounds(90, 387, 114, 30);
 		add(lblPokemonName);
@@ -142,7 +144,7 @@ public class PokedexView extends JPanel {
 			e1.printStackTrace();
 		}
 
-		lblPokemonPic.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPokemonPic.setFont(new Font("Tahoma", Font.PLAIN, titlefontSize));
 		lblPokemonPic.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPokemonPic.setBounds(25, 121, 254, 260);
 		add(lblPokemonPic);
@@ -194,53 +196,60 @@ public class PokedexView extends JPanel {
 		add(btnSwitchShiny);
 
 		JLabel lblHeightTitle = new JLabel("Height: ");
-		lblHeightTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblHeightTitle.setBounds(377, 228, 45, 13);
+		lblHeightTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblHeightTitle.setBounds(377, 206, 45, 13);
 		add(lblHeightTitle);
 
 		JLabel lblWeightTitle = new JLabel("Weight:");
-		lblWeightTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblWeightTitle.setBounds(491, 228, 45, 13);
+		lblWeightTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblWeightTitle.setBounds(502, 205, 45, 13);
 		add(lblWeightTitle);
 
 		lblHealthPointsNumber = new JLabel(pokemonData[1]);
+		lblHealthPointsNumber.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
 		lblHealthPointsNumber.setBounds(399, 183, 45, 13);
 		add(lblHealthPointsNumber);
 
 		lblSpecialDefenseNumber = new JLabel(pokemonData[4]);
-		lblSpecialDefenseNumber.setBounds(473, 206, 45, 13);
+		lblSpecialDefenseNumber.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblSpecialDefenseNumber.setBounds(473, 254, 45, 13);
 		add(lblSpecialDefenseNumber);
 
 		lblHeightNumber = new JLabel(pokemonData[6]);
-		lblHeightNumber.setBounds(428, 228, 45, 13);
+		lblHeightNumber.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblHeightNumber.setBounds(428, 206, 45, 13);
 		add(lblHeightNumber);
 
 		lblWeightNumber = new JLabel(pokemonData[7]);
-		lblWeightNumber.setBounds(535, 229, 45, 13);
+		lblWeightNumber.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblWeightNumber.setBounds(550, 205, 45, 13);
 		add(lblWeightNumber);
 
 		lblSpecialAttackNumber = new JLabel(pokemonData[3]);
-		lblSpecialAttackNumber.setBounds(578, 206, 45, 13);
+		lblSpecialAttackNumber.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblSpecialAttackNumber.setBounds(464, 230, 45, 13);
 		add(lblSpecialAttackNumber);
 
 		lblSpeedNumber = new JLabel(pokemonData[5]);
-		lblSpeedNumber.setBounds(486, 252, 45, 13);
+		lblSpeedNumber.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblSpeedNumber.setBounds(550, 230, 45, 13);
 		add(lblSpeedNumber);
 
 		lblAttackNumber = new JLabel(pokemonData[2]);
-		lblAttackNumber.setBounds(535, 183, 45, 13);
+		lblAttackNumber.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblAttackNumber.setBounds(550, 183, 45, 13);
 		add(lblAttackNumber);
 
 		JLabel lblAbilities = new JLabel("Abilities");
 		lblAbilities.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAbilities.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAbilities.setBounds(365, 274, widthDataTitles, heightDataTitles);
+		lblAbilities.setFont(new Font("Tahoma", Font.PLAIN, titlefontSize));
+		lblAbilities.setBounds(309, 289, widthDataTitles, heightDataTitles);
 		add(lblAbilities);
 
 		lblAbilitie1 = new JLabel(pokemonAbilities[0]);
 		lblAbilitie1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAbilitie1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblAbilitie1.setBounds(378, 314, 82, 21);
+		lblAbilitie1.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblAbilitie1.setBounds(381, 329, 82, 21);
 		add(lblAbilitie1);
 
 		if (pokemonAbilities.length >= 2) {
@@ -251,8 +260,8 @@ public class PokedexView extends JPanel {
 		}
 
 		lblAbilitie2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAbilitie2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblAbilitie2.setBounds(378, 338, 92, 21);
+		lblAbilitie2.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblAbilitie2.setBounds(378, 368, 92, 21);
 		add(lblAbilitie2);
 
 		if (pokemonAbilities.length >= 3) {
@@ -263,21 +272,21 @@ public class PokedexView extends JPanel {
 		}
 
 		lblAbilitie3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAbilitie3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblAbilitie3.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
 		lblAbilitie3.setBounds(378, 363, 82, 21);
 		add(lblAbilitie3);
 		
 		JLabel lblTypes = new JLabel("Types");
 		lblTypes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTypes.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTypes.setBounds(480, 274, widthDataTitles, heightDataTitles);
+		lblTypes.setFont(new Font("Tahoma", Font.PLAIN, titlefontSize));
+		lblTypes.setBounds(426, 289, widthDataTitles, heightDataTitles);
 		add(lblTypes);
 
 		lblType1 = new JLabel(pokemonTypes[0]);
 
 		lblType1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblType1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblType1.setBounds(496, 324, 82, 21);
+		lblType1.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblType1.setBounds(502, 329, 82, 21);
 		add(lblType1);
 
 		lblType2 = new JLabel(pokemonTypes[1]);
@@ -290,8 +299,8 @@ public class PokedexView extends JPanel {
 		}
 
 		lblType2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblType2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblType2.setBounds(496, 348, 82, 21);
+		lblType2.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
+		lblType2.setBounds(499, 363, 82, 21);
 		add(lblType2);
 
 		JButton btnNextPokemon = new JButton("Next");
@@ -299,7 +308,6 @@ public class PokedexView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				nextPokemonData();
-				updateViewData();
 			}
 		});
 		btnNextPokemon.setBounds(511, 427, 85, 21);
@@ -309,7 +317,6 @@ public class PokedexView extends JPanel {
 		btnPreviousPokemon.addActionListener(e ->{
 			
 			previousPokemonData();
-			updateViewData();
 		});
 		btnPreviousPokemon.setBounds(365, 427, 85, 21);
 		add(btnPreviousPokemon);
@@ -378,6 +385,12 @@ public class PokedexView extends JPanel {
 
 	public void updateViewData() {
 
+
+		pokemonImageShiny[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[0];
+		pokemonImageShiny[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[2];
+		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
+		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
+		
 		lblPokemonName.setText(pokemonData[0]);
 		lblHealthPointsNumber.setText(pokemonData[1]);
 		lblAttackNumber.setText(pokemonData[2]);
@@ -404,10 +417,6 @@ public class PokedexView extends JPanel {
 			lblType2.setText(pokemonTypes[1]);
 		}
 
-		pokemonImageShiny[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[0];
-		pokemonImageShiny[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[2];
-		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
-		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
 		
 		ImageIcon imageIcon = null;
 		try {

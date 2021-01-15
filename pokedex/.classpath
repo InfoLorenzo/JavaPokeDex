@@ -34,8 +34,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/loren/eclipse-workspace/JavaPokeDex/pokedex/src/main/java/libs/AnimatonClass.jar"/>
-	<classpathentry kind="lib" path="C:/Users/loren/eclipse-workspace/JavaPokeDex/pokedex/src/main/java/libs/json-20201115.jar"/>
-	<classpathentry kind="lib" path="C:/Users/loren/eclipse-workspace/JavaPokeDex/pokedex/src/main/java/libs/mysql-connector-java-8.0.22.jar"/>
+	<classpathentry kind="lib" path="src/main/java/libs/AnimatonClass.jar"/>
+	<classpathentry kind="lib" path="src/main/java/libs/json-20201115.jar"/>
+	<classpathentry kind="lib" path="src/main/java/libs/mysql-connector-java-8.0.22.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
