@@ -419,10 +419,10 @@ public class Controller {
 	}
 	
 	public static String[][] getPokemonSpritesDivided(String[] SpritesInput) {
-		int contador1 = 0;
-		int contador2 = 0;
-		int contador3 = 0;
-		int contador4 = 0;
+		int contador1 = 1;
+		int contador2 = 1;
+		int contador3 = 1;
+		int contador4 = 1;
 
 		String[][] pokemonSpritesDivided = new String[4][8];
 		
@@ -439,31 +439,26 @@ public class Controller {
 				if (SpritesInput[i].contains("shiny")) {
 					System.out.println("Mujer shiny: " + SpritesInput[i]);
 					pokemonSpritesDivided[2][contador1] = SpritesInput[i];
-					contador1++;
+					contador1--;
 					
 				}else{
 					System.out.println("Mujer default: " + SpritesInput[i]);
 					pokemonSpritesDivided[3][contador2] = SpritesInput[i];
-					contador2++;
+					contador2--;
 				}
 			}else {
 				if (SpritesInput[i].contains("shiny")) {
 					System.out.println("Hombre shiny: " + SpritesInput[i]);
 					pokemonSpritesDivided[0][contador3] = SpritesInput[i];
-					contador3++;
+					contador3--;
 				}else {
 					System.out.println("Hombres default: " + SpritesInput[i]);
 					pokemonSpritesDivided[1][contador4] = SpritesInput[i];
-					contador4++;
+					contador4--;
 				}
 			}
 		
 		}
-		
-			
-			
-			
-			
 		
 		
 		return pokemonSpritesDivided;

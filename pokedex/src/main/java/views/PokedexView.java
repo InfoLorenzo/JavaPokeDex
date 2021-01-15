@@ -31,7 +31,6 @@ public class PokedexView extends JPanel {
 	private int pokemonMinID = 1111;
 	private int pokemonMaxID = 3101;
 	private int pokemonID = pokemonMinID;
-
 	private boolean shiny = false;
 	private String[] pokemonData = Controller.getPokemonDatafromDB(pokemonID);
 	private String[] pokemonAbilities = Controller.getPokemonArrayfromDB(pokemonID, "abilities");
@@ -55,6 +54,10 @@ public class PokedexView extends JPanel {
 	private JLabel lblType1;
 	private JLabel lblType2;
 	private JLabel lblPokemonPic;
+	private int heightDataLabels = 15;
+	private int widthDataLabels = 100;
+	private int heightDataTitles = 30;
+	private int widthDataTitles = 230;
 
 	/**
 	 * Create the panel.
@@ -71,6 +74,7 @@ public class PokedexView extends JPanel {
 		
 		pokemonImage = pokemonImageDefault[0];
 
+		
 		
 		setLayout(null);
 
@@ -94,7 +98,7 @@ public class PokedexView extends JPanel {
 		JLabel lblStatsTitle = new JLabel("Statistics");
 		lblStatsTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblStatsTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatsTitle.setBounds(365, 131, 231, 30);
+		lblStatsTitle.setBounds(365, 131, widthDataTitles, heightDataTitles);
 		add(lblStatsTitle);
 
 		JLabel lblSpecialAttackTitle = new JLabel("Special Attack: ");
@@ -230,7 +234,7 @@ public class PokedexView extends JPanel {
 		JLabel lblAbilities = new JLabel("Abilities");
 		lblAbilities.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAbilities.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAbilities.setBounds(365, 274, 114, 50);
+		lblAbilities.setBounds(365, 274, widthDataTitles, heightDataTitles);
 		add(lblAbilities);
 
 		lblAbilitie1 = new JLabel(pokemonAbilities[0]);
@@ -266,7 +270,7 @@ public class PokedexView extends JPanel {
 		JLabel lblTypes = new JLabel("Types");
 		lblTypes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTypes.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTypes.setBounds(480, 274, 114, 50);
+		lblTypes.setBounds(480, 274, widthDataTitles, heightDataTitles);
 		add(lblTypes);
 
 		lblType1 = new JLabel(pokemonTypes[0]);
