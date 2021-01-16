@@ -54,6 +54,8 @@ public class PokedexView extends JPanel {
 	private JLabel lblType1;
 	private JLabel lblType2;
 	private JLabel lblPokemonPic;
+	private JButton btnPreviousPokemon;
+	private JButton btnNextPokemon;
 	private int heightDataLabels = 15;
 	private int widthDataLabels = 100;
 	private int heightDataTitles = 30;
@@ -72,12 +74,8 @@ public class PokedexView extends JPanel {
 		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
 		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
 
-		
-		
 		pokemonImage = pokemonImageDefault[0];
 
-		pokemonID += 10;
-		
 		setLayout(null);
 
 		// Start -- Background
@@ -91,7 +89,7 @@ public class PokedexView extends JPanel {
 				if (imagesCounter > 0) {
 					imagesCounter--;
 				}
-				
+
 				updateViewData();
 
 			}
@@ -148,7 +146,7 @@ public class PokedexView extends JPanel {
 		lblPokemonPic.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPokemonPic.setBounds(25, 121, 254, 260);
 		add(lblPokemonPic);
-		btnPrevious.setBounds(10, 430, 70, 18);
+		btnPrevious.setBounds(10, 430, 85, 18);
 		add(btnPrevious);
 
 		JButton btnNext = new JButton("Next");
@@ -156,20 +154,20 @@ public class PokedexView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if (imagesCounter < pokemonImage.length) {
-					
-					if (pokemonImage[imagesCounter+1] != null) {
-						
+
+					if (pokemonImage[imagesCounter + 1] != null) {
+
 						imagesCounter++;
-						
+
 					}
-					
+
 				}
-				
+
 				updateViewData();
 
 			}
 		});
-		btnNext.setBounds(222, 430, 70, 18);
+		btnNext.setBounds(209, 430, 85, 18);
 		add(btnNext);
 
 		JButton btnSwitchShiny = new JButton("Shiny");
@@ -178,21 +176,11 @@ public class PokedexView extends JPanel {
 
 				shiny = !shiny;
 
-				if (shiny) {
-					pokemonImage = pokemonImageShiny[0];
-
-					imagesCounter = 0;
-				} else {
-					pokemonImage = pokemonImageDefault[0];
-
-					imagesCounter = 0;
-				}
-				
 				updateViewData();
 			}
 		});
 		btnSwitchShiny.setBackground(Color.YELLOW);
-		btnSwitchShiny.setBounds(114, 430, 70, 18);
+		btnSwitchShiny.setBounds(110, 430, 85, 18);
 		add(btnSwitchShiny);
 
 		JLabel lblHeightTitle = new JLabel("Height: ");
@@ -249,7 +237,7 @@ public class PokedexView extends JPanel {
 		lblAbilitie1 = new JLabel(pokemonAbilities[0]);
 		lblAbilitie1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAbilitie1.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
-		lblAbilitie1.setBounds(381, 329, 82, 21);
+		lblAbilitie1.setBounds(381, 320, 82, 21);
 		add(lblAbilitie1);
 
 		if (pokemonAbilities.length >= 2) {
@@ -261,7 +249,7 @@ public class PokedexView extends JPanel {
 
 		lblAbilitie2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAbilitie2.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
-		lblAbilitie2.setBounds(378, 368, 92, 21);
+		lblAbilitie2.setBounds(378, 350, 92, 21);
 		add(lblAbilitie2);
 
 		if (pokemonAbilities.length >= 3) {
@@ -273,9 +261,9 @@ public class PokedexView extends JPanel {
 
 		lblAbilitie3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAbilitie3.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
-		lblAbilitie3.setBounds(378, 363, 82, 21);
+		lblAbilitie3.setBounds(378, 380, 82, 21);
 		add(lblAbilitie3);
-		
+
 		JLabel lblTypes = new JLabel("Types");
 		lblTypes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTypes.setFont(new Font("Tahoma", Font.PLAIN, titlefontSize));
@@ -303,20 +291,24 @@ public class PokedexView extends JPanel {
 		lblType2.setBounds(499, 363, 82, 21);
 		add(lblType2);
 
-		JButton btnNextPokemon = new JButton("Next");
+		btnNextPokemon = new JButton("Next");
 		btnNextPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				btnNextPokemon.setEnabled(false);
+
 				nextPokemonData();
+				btnNextPokemon.setEnabled(true);
+
 			}
 		});
 		btnNextPokemon.setBounds(511, 427, 85, 21);
 		add(btnNextPokemon);
 
-		JButton btnPreviousPokemon = new JButton("Previous");
-		btnPreviousPokemon.addActionListener(e ->{
-			
+		btnPreviousPokemon = new JButton("Previous");
+		btnPreviousPokemon.addActionListener(e -> {
+			btnPreviousPokemon.setEnabled(false);
 			previousPokemonData();
+			btnPreviousPokemon.setEnabled(true);
 		});
 		btnPreviousPokemon.setBounds(365, 427, 85, 21);
 		add(btnPreviousPokemon);
@@ -332,44 +324,43 @@ public class PokedexView extends JPanel {
 
 		// End -- Background
 
-		
-
 		add(lblBackground);
 
-		
 		setVisible(false);
 	}
 
 	public void nextPokemonData() {
 
 		if (pokemonID + 10 <= pokemonMaxID) {
-
-			pokemonID += 10;
+			
+			
+			
+			
 			shiny = false;
+			
+			pokemonID += 10;
+
 			pokemonData = Controller.getPokemonDatafromDB(pokemonID);
 			pokemonAbilities = Controller.getPokemonArrayfromDB(pokemonID, "abilities");
 			pokemonSprites = Controller.getPokemonArrayfromDB(pokemonID, "sprites");
 			pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
 
-			if (shiny) {
-				pokemonImage = pokemonImageShiny[0];
+			imagesCounter = 0;
 
-				imagesCounter = 0;
-			} else {
-				pokemonImage = pokemonImageDefault[0];
-
-				imagesCounter = 0;
-			}
-			
-		
-			
 			updateViewData();
+			
+			
+			
 		}
 	}
 
 	public void previousPokemonData() {
+		
 		if (pokemonID - 10 >= pokemonMinID) {
-
+			
+		
+			
+			shiny = false;
 			pokemonID -= 10;
 
 			pokemonData = Controller.getPokemonDatafromDB(pokemonID);
@@ -378,19 +369,28 @@ public class PokedexView extends JPanel {
 			pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
 
 			imagesCounter = 0;
-			
+
 			updateViewData();
+			
+			
+
 		}
 	}
 
 	public void updateViewData() {
 
+		lblAbilitie1.setText("");
+		lblAbilitie2.setText("");
+		lblAbilitie3.setText("");
+
+		lblType1.setText("");
+		lblType2.setText("");
 
 		pokemonImageShiny[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[0];
 		pokemonImageShiny[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[2];
 		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
 		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
-		
+
 		lblPokemonName.setText(pokemonData[0]);
 		lblHealthPointsNumber.setText(pokemonData[1]);
 		lblAttackNumber.setText(pokemonData[2]);
@@ -417,17 +417,24 @@ public class PokedexView extends JPanel {
 			lblType2.setText(pokemonTypes[1]);
 		}
 
-		
+		if (shiny) {
+			pokemonImage = pokemonImageShiny[0];
+
+		} else {
+			pokemonImage = pokemonImageDefault[0];
+
+		}
+
 		ImageIcon imageIcon = null;
 		try {
 
 			imageIcon = new ImageIcon(new URL(pokemonImage[imagesCounter]));
-			
+
 		} catch (MalformedURLException e1) {
-			
+
 			e1.printStackTrace();
 		}
-		
+
 		Image image = imageIcon.getImage();
 		Image newimg = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
 		imageIcon = new ImageIcon(newimg);
