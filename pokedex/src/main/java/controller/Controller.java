@@ -463,6 +463,10 @@ public class Controller {
 		
 		return pokemonSpritesDivided;
 	}
+	
+	public static void updatePokemonOnDB (String name, double hp, double attack, double height, double weight, double specialAttack, double specialDefense, double speed) {
+		
+	}
 
 	public static void main(String[] args) {
 

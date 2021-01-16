@@ -78,7 +78,7 @@ public class MainWindow {
 
 		welcomeview.setBounds(0, 0, 729, 498);
 		
-		welcomeview.setVisible(true);
+		//welcomeview.setVisible(true);
 		
 		layeredPane.add(welcomeview);
 
@@ -91,8 +91,6 @@ public class MainWindow {
 		loginview = new LoginView();
 
 		loginview.setBounds(0, 0, 729, 498);
-
-		
 		
 		layeredPane.add(loginview);
 
@@ -101,5 +99,8 @@ public class MainWindow {
 		PokedexView.setBounds(0, 0, 729, 498);
 
 		layeredPane.add(PokedexView);
+		
+		PokedexView.setVisible(true);
+
 	}
 }
