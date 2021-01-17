@@ -360,18 +360,6 @@ public class Controller {
 				// pokemonData[10] = rs.getString("types");
 				// pokemonData[11] = rs.getString("sprites");
 
-				System.out.println("---------------");
-				System.out.println("Pokemon Name: " + pokemonData[0]);
-				System.out.println("Pokemon healthpoints: " + pokemonData[1]);
-				System.out.println("Pokemon attackpoints: " + pokemonData[2]);
-				System.out.println("Pokemon specialattackpoints: " + pokemonData[3]);
-				System.out.println("Pokemon specialdefensepoints: " + pokemonData[4]);
-				System.out.println("Pokemon speed: " + pokemonData[5]);
-				System.out.println("Pokemon height: " + pokemonData[6]);
-				System.out.println("Pokemon weight: " + pokemonData[7]);
-				System.out.println("Pokemon basicexp: " + pokemonData[8]);
-				System.out.println("---------------");
-
 				return pokemonData;
 
 			} else {
@@ -437,22 +425,22 @@ public class Controller {
 			
 			if (SpritesInput[i].contains("female")) {
 				if (SpritesInput[i].contains("shiny")) {
-					System.out.println("Mujer shiny: " + SpritesInput[i]);
+				
 					pokemonSpritesDivided[2][contador1] = SpritesInput[i];
 					contador1--;
 					
 				}else{
-					System.out.println("Mujer default: " + SpritesInput[i]);
+					
 					pokemonSpritesDivided[3][contador2] = SpritesInput[i];
 					contador2--;
 				}
 			}else {
 				if (SpritesInput[i].contains("shiny")) {
-					System.out.println("Hombre shiny: " + SpritesInput[i]);
+					
 					pokemonSpritesDivided[0][contador3] = SpritesInput[i];
 					contador3--;
 				}else {
-					System.out.println("Hombres default: " + SpritesInput[i]);
+					
 					pokemonSpritesDivided[1][contador4] = SpritesInput[i];
 					contador4--;
 				}
