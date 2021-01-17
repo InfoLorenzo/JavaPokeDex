@@ -73,7 +73,13 @@ public class PokedexView extends JPanel {
 	private JTextField textFieldAttack;
 	private JTextField textFieldWeight;
 	private JTextField textFieldSpeed;
+	private JTextField textFieldAbility1;
+	private JTextField textFieldAbility2;
+	private JTextField textFieldAbility3;
+	private JTextField textFieldType1;
+	private JTextField textFieldType2;
 	private JButton btnEditActualPokemon;
+
 	/**
 	 * Create the panel.
 	 */
@@ -308,14 +314,14 @@ public class PokedexView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				editModeStatus = !editModeStatus;
-				
+
 				if (editModeStatus) {
 					btnEditActualPokemon.setText("Finish");
 
-				}else {
+				} else {
 					btnEditActualPokemon.setText("Edit");
 				}
-				
+
 				switchEditMode();
 			}
 		});
@@ -333,10 +339,22 @@ public class PokedexView extends JPanel {
 		textFieldSpecialDefense.setBounds(473, 254, widthNumberLabels, heightNumberLabels);
 		textFieldAttack = new JTextField(lblAttackNumber.getText());
 		textFieldAttack.setBounds(550, 183, widthNumberLabels, heightNumberLabels);
-		textFieldWeight = new JTextField(lblHealthPointsNumber.getText());
+		textFieldWeight = new JTextField(lblWeightNumber.getText());
 		textFieldWeight.setBounds(550, 205, widthNumberLabels, heightNumberLabels);
 		textFieldSpeed = new JTextField(lblSpeedNumber.getText());
 		textFieldSpeed.setBounds(550, 230, widthNumberLabels, heightNumberLabels);
+
+		textFieldAbility1 = new JTextField(lblAbilitie1.getText());
+		textFieldAbility1.setBounds(381, 320, 82, 21);
+		textFieldAbility2 = new JTextField(lblAbilitie2.getText());
+		textFieldAbility2.setBounds(378, 350, 92, 21);
+		textFieldAbility3 = new JTextField(lblAbilitie3.getText());
+		textFieldAbility3.setBounds(378, 380, 82, 21);
+
+		textFieldType1 = new JTextField(lblType1.getText());
+		textFieldType1.setBounds(502, 329, 82, 21);
+		textFieldType2 = new JTextField(lblType2.getText());
+		textFieldType2.setBounds(499, 363, 82, 21);
 
 		add(textFieldHP);
 		add(textFieldHeight);
@@ -344,8 +362,11 @@ public class PokedexView extends JPanel {
 		add(textFieldSpecialDefense);
 		add(textFieldAttack);
 		add(textFieldWeight);
-		add(textFieldSpeed);
-
+		add(textFieldAbility1);
+		add(textFieldAbility2);
+		add(textFieldAbility3);
+		add(textFieldType1);
+		add(textFieldType2);
 
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/Lr4arcd.png"))));
@@ -358,12 +379,11 @@ public class PokedexView extends JPanel {
 		lblBackground.setBounds(0, 0, 718, 469);
 
 		add(lblBackground);
-
+		
 		updateViewData();
 		switchEditMode();
-		
+
 		setVisible(false);
-		
 
 	}
 
@@ -477,6 +497,47 @@ public class PokedexView extends JPanel {
 
 	public void switchEditMode() {
 
+		System.out.println(editModeStatus);
+		
+		if (!editModeStatus) {
+
+			System.out.println("Ha entrado en el if");
+			
+			if (!textFieldHP.getText().equals(lblHealthPointsNumber.getText())
+					|| !textFieldSpecialAttack.getText().equals(lblSpecialAttackNumber.getText())
+					|| !textFieldSpecialDefense.getText().equals(lblSpecialDefenseNumber.getText())
+					|| !textFieldAttack.getText().equals(lblAttackNumber.getText())
+					|| !textFieldHeight.getText().equals(lblHeightNumber.getText())
+					|| !textFieldWeight.getText().equals(lblWeightNumber.getText())
+					|| !textFieldSpeed.getText().equals(lblSpeedNumber.getText())
+					|| !textFieldAbility1.getText().equals(lblAbilitie1.getText())
+					|| !textFieldAbility2.getText().equals(lblAbilitie2.getText())
+					|| !textFieldAbility3.getText().equals(lblAbilitie3.getText())
+					|| !textFieldType1.getText().equals(lblType1.getText())
+					|| !textFieldType2.getText().equals(lblType2.getText())) {
+
+				
+				Controller.updatePokemonOnDB(pokemonID, lblPokemonName.getText(),
+						Integer.parseInt(textFieldHP.getText()),
+						Integer.parseInt(textFieldAttack.getText()),
+						Integer.parseInt(textFieldHeight.getText()),
+						Integer.parseInt(textFieldWeight.getText()),
+						Integer.parseInt(textFieldSpecialAttack.getText()),
+						Integer.parseInt(textFieldSpecialDefense.getText()),
+						Integer.parseInt(textFieldSpeed.getText()));
+				
+				
+
+			}
+			
+			pokemonData = Controller.getPokemonDatafromDB(pokemonID);
+			pokemonAbilities = Controller.getPokemonArrayfromDB(pokemonID, "abilities");
+			pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
+			
+			updateViewData();
+
+		}
+		
 		textFieldHP.setVisible(editModeStatus);
 		textFieldHeight.setVisible(editModeStatus);
 		textFieldSpecialAttack.setVisible(editModeStatus);
@@ -484,6 +545,11 @@ public class PokedexView extends JPanel {
 		textFieldAttack.setVisible(editModeStatus);
 		textFieldWeight.setVisible(editModeStatus);
 		textFieldSpeed.setVisible(editModeStatus);
+		textFieldAbility1.setVisible(editModeStatus);
+		textFieldAbility2.setVisible(editModeStatus);
+		textFieldAbility3.setVisible(editModeStatus);
+		textFieldType1.setVisible(editModeStatus);
+		textFieldType2.setVisible(editModeStatus);
 
 		lblHealthPointsNumber.setVisible(!editModeStatus);
 		lblHeightNumber.setVisible(!editModeStatus);
@@ -492,20 +558,24 @@ public class PokedexView extends JPanel {
 		lblAttackNumber.setVisible(!editModeStatus);
 		lblWeightNumber.setVisible(!editModeStatus);
 		lblSpeedNumber.setVisible(!editModeStatus);
+		lblAbilitie1.setVisible(!editModeStatus);
+		lblAbilitie2.setVisible(!editModeStatus);
+		lblAbilitie3.setVisible(!editModeStatus);
+		lblType1.setVisible(!editModeStatus);
+		lblType2.setVisible(!editModeStatus);
 
 		textFieldHP.setText(lblHealthPointsNumber.getText());
-
 		textFieldHeight.setText(lblHeightNumber.getText());
-
 		textFieldSpecialAttack.setText(lblSpecialAttackNumber.getText());
-
 		textFieldSpecialDefense.setText(lblSpecialDefenseNumber.getText());
-
 		textFieldAttack.setText(lblAttackNumber.getText());
-
 		textFieldWeight.setText(lblWeightNumber.getText());
-
 		textFieldSpeed.setText(lblSpeedNumber.getText());
+		textFieldAbility1.setText(lblAbilitie1.getText());
+		textFieldAbility2.setText(lblAbilitie2.getText());
+		textFieldAbility3.setText(lblAbilitie3.getText());
+		textFieldType1.setText(lblType1.getText());
+		textFieldType2.setText(lblType2.getText());
 
 	}
 }

@@ -353,8 +353,8 @@ public class Controller {
 				pokemonData[3] = rs.getString("specialattackpoints");
 				pokemonData[4] = rs.getString("specialdefensepoints");
 				pokemonData[5] = rs.getString("speed");
-				pokemonData[6] = rs.getString("height");
-				pokemonData[7] = rs.getString("weight");
+				pokemonData[6] = rs.getString("height").substring(0,rs.getString("height").length()-2);
+				pokemonData[7] = rs.getString("weight").substring(0,rs.getString("weight").length()-2);
 				pokemonData[8] = rs.getString("basicexp");
 				// pokemonData[9] = rs.getString("abilities");
 				// pokemonData[10] = rs.getString("types");
@@ -464,17 +464,57 @@ public class Controller {
 		return pokemonSpritesDivided;
 	}
 	
-	public static void updatePokemonOnDB (String name, double hp, double attack, double height, double weight, double specialAttack, double specialDefense, double speed) {
+	public static void updatePokemonOnDB (int ID,String name, int healthPoints, int attackPoints, int height, int weight, int specialAttackPoints, int specialDefensePoints, int speed) {
 		
+		String url = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_414700429a65082";
+		String username = "b0124af284507d";
+		String password = "c7610f50";
+
+		try {
+			Connection connection = DriverManager.getConnection(url, username, password);
+
+			System.out.println("La conexión fue correcta");
+
+			String sqlPokemon = "UPDATE `heroku_414700429a65082`.`pokemon` SET name = '" + name +
+					"', healthpoints = " + healthPoints + 
+					", attackpoints = " + attackPoints + 
+					", specialAttackpoints = " + specialAttackPoints + 
+					", specialdefensepoints = " + specialDefensePoints + 
+					", speed = " + speed + 
+					", height = " + height + 
+					", weight = " + weight +
+					" WHERE ID = " + ID;
+
+			PreparedStatement statement = connection.prepareStatement(sqlPokemon);
+			//statement.setString(11, abilities);
+			//statement.setString(15, types);
+
+			int rows = statement.executeUpdate();
+
+			if (rows > 0) {
+				System.out.println("A rows has been updated");
+			}
+
+			statement.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			System.out.println("Oops algo salio mal...");
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
 
 		System.out.println("Main del controller iniciado");
+		/*
 		getPokemonDatafromDB(1111);
 		getPokemonArrayfromDB(1111,"abilities");
 		getPokemonSpritesDivided(getPokemonArrayfromDB(1131,"sprites"));
 		getPokemonArrayfromDB(1111,"types");
+		*/
+		
+		updatePokemonOnDB(1111,"bulbasaur",55,49,49,65,65,64,7);
 	}
 
 }
