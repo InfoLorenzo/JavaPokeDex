@@ -35,7 +35,6 @@ public class PokedexView extends JPanel {
 	private int pokemonID = pokemonMinID;
 	private boolean shiny = false;
 	private String[] pokemonData = Controller.getPokemonDatafromDB(pokemonID);
-	//private String[] pokemonData = {"name","22","22","22","22","22","22","22","22"};
 	private String[] pokemonAbilities = Controller.getPokemonArrayfromDB(pokemonID, "abilities");
 	private String[] pokemonSprites = Controller.getPokemonArrayfromDB(pokemonID, "sprites");
 	private String[] pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
@@ -152,12 +151,12 @@ public class PokedexView extends JPanel {
 
 		JLabel lblSpeedTitle = new JLabel("Speed:");
 		lblSpeedTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
-		lblSpeedTitle.setBounds(502, 229, widthDataLabels, heightDataLabels);
+		lblSpeedTitle.setBounds(515, 229, widthDataLabels, heightDataLabels);
 		add(lblSpeedTitle);
 
 		JLabel lblAttackTitle = new JLabel("Attack:");
 		lblAttackTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
-		lblAttackTitle.setBounds(502, 182, widthDataLabels, heightDataLabels);
+		lblAttackTitle.setBounds(515, 182, widthDataLabels, heightDataLabels);
 		add(lblAttackTitle);
 
 		JLabel lblHealthPointsTitle = new JLabel("Health: ");
@@ -215,7 +214,7 @@ public class PokedexView extends JPanel {
 
 		JLabel lblWeightTitle = new JLabel("Weight:");
 		lblWeightTitle.setFont(new Font("Tahoma", Font.PLAIN, textfontSize));
-		lblWeightTitle.setBounds(502, 205, widthDataLabels, heightDataLabels);
+		lblWeightTitle.setBounds(515, 205, widthDataLabels, heightDataLabels);
 		add(lblWeightTitle);
 
 		lblHealthPointsNumber = new JLabel(pokemonData[1]);
@@ -228,16 +227,16 @@ public class PokedexView extends JPanel {
 		lblHeightNumber.setBounds(428, 206, widthNumberLabels, heightNumberLabels);
 
 		lblWeightNumber = new JLabel(pokemonData[7]);
-		lblWeightNumber.setBounds(550, 205, widthNumberLabels, heightNumberLabels);
+		lblWeightNumber.setBounds(560, 205, widthNumberLabels, heightNumberLabels);
 
 		lblSpecialAttackNumber = new JLabel(pokemonData[3]);
 		lblSpecialAttackNumber.setBounds(464, 230, widthNumberLabels, heightNumberLabels);
 
 		lblSpeedNumber = new JLabel(pokemonData[5]);
-		lblSpeedNumber.setBounds(550, 230, widthNumberLabels, heightNumberLabels);
+		lblSpeedNumber.setBounds(560, 230, widthNumberLabels, heightNumberLabels);
 
 		lblAttackNumber = new JLabel(pokemonData[2]);
-		lblAttackNumber.setBounds(550, 183, widthNumberLabels, heightNumberLabels);
+		lblAttackNumber.setBounds(560, 183, widthNumberLabels, heightNumberLabels);
 
 		JLabel lblAbilities = new JLabel("Abilities");
 		lblAbilities.setHorizontalAlignment(SwingConstants.CENTER);
@@ -686,8 +685,6 @@ public class PokedexView extends JPanel {
 	public void switchCreateNewPokemon() {
 
 		emptyStatus = false;
-		
-		
 
 			for (int i = 0; i < pokemondataViewTextFields.size(); i++) {
 				if (pokemondataViewTextFields.get(i).getText().isBlank()) {
@@ -704,10 +701,11 @@ public class PokedexView extends JPanel {
 					}
 				}
 			}
-
+			
 			System.out.println(emptyStatus);
 
-			if (emptyStatus) {
+			if (!emptyStatus) {
+				
 				
 				Controller.addPokemonToDatabase(
 						textFieldPokemonName.getText(),
@@ -729,13 +727,10 @@ public class PokedexView extends JPanel {
 			
 			}
 			
-			cleanAllInfo();
-			
 			updateViewData();
 			
 			changeVisibilityAllDataInputs(creatorModeStatus);
 			
-			//btnEditActualPokemon.setVisible(!creatorModeStatus);
 			btnNextPokemon.setVisible(!creatorModeStatus);
 			btnPreviousPokemon.setVisible(!creatorModeStatus);
 			btnPrevious.setVisible(!creatorModeStatus);
@@ -745,6 +740,9 @@ public class PokedexView extends JPanel {
 			changeVisibilityAllDatalabels(!creatorModeStatus);
 
 			lblPokemonPic.setVisible(!creatorModeStatus);
-
+			
+			if (creatorModeStatus) {
+				cleanAllInfo();
+			}
 	}
 }
