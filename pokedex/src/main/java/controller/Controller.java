@@ -449,7 +449,21 @@ public class Controller {
 		return pokemonSpritesDivided;
 	}
 	
-	public static void updatePokemonOnDB (int ID,String name, int healthPoints, int attackPoints, int height, int weight, int specialAttackPoints, int specialDefensePoints, int speed) {
+	public static void updatePokemonOnDB (
+			int ID,
+			String name, 
+			int healthPoints, 
+			int attackPoints, 
+			int height, 
+			int weight, 
+			int specialAttackPoints, 
+			int specialDefensePoints, 
+			int speed, 
+			String abilitie1, 
+			String abilitie2, 
+			String abilitie3, 
+			String type1, 
+			String type2) {
 		
 		String url = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_414700429a65082";
 		String username = "b0124af284507d";
@@ -468,11 +482,11 @@ public class Controller {
 					", speed = " + speed + 
 					", height = " + height + 
 					", weight = " + weight +
+					", abilities = '[" + abilitie1 + ", " + abilitie2 + ", " + abilitie3 + "]'"+
+					", types = '[" + type1 + ", " + type2 + "]'"+
 					" WHERE ID = " + ID;
 
 			PreparedStatement statement = connection.prepareStatement(sqlPokemon);
-			//statement.setString(11, abilities);
-			//statement.setString(15, types);
 
 			int rows = statement.executeUpdate();
 
@@ -494,6 +508,7 @@ public class Controller {
 	public static void main(String[] args) {
 
 		System.out.println("Main del controller iniciado");
+		
 		/*
 		getPokemonDatafromDB(1111);
 		getPokemonArrayfromDB(1111,"abilities");
@@ -501,7 +516,7 @@ public class Controller {
 		getPokemonArrayfromDB(1111,"types");
 		*/
 		
-		updatePokemonOnDB(1111,"bulbasaur",55,49,49,65,65,64,7);
+		//updatePokemonOnDB(1111,"bulbasaur",55,49,49,65,65,64,7);
 	}
 
 }

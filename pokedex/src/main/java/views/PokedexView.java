@@ -59,6 +59,9 @@ public class PokedexView extends JPanel {
 	private JLabel lblPokemonPic;
 	private JButton btnPreviousPokemon;
 	private JButton btnNextPokemon;
+	private JButton btnSwitchShiny;
+	private JButton btnPrevious;
+	private JButton btnNext;
 	private int heightDataLabels = 15;
 	private int widthDataLabels = 100;
 	private int heightDataTitles = 30;
@@ -69,6 +72,7 @@ public class PokedexView extends JPanel {
 	private int textfontSize = 12;
 	private boolean editModeStatus = false;
 	private boolean creatorModeStatus = false;
+	private boolean emptyStatus = false;
 	private JTextField textFieldHP;
 	private JTextField textFieldHeight;
 	private JTextField textFieldSpecialAttack;
@@ -117,7 +121,7 @@ public class PokedexView extends JPanel {
 
 		JLabel lblBackground = new JLabel("No hay foto");
 
-		JButton btnPrevious = new JButton("Previous");
+		btnPrevious = new JButton("Previous");
 		btnPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -170,7 +174,7 @@ public class PokedexView extends JPanel {
 		btnPrevious.setBounds(10, 430, 85, 18);
 		add(btnPrevious);
 
-		JButton btnNext = new JButton("Next");
+		btnNext = new JButton("Next");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -191,7 +195,7 @@ public class PokedexView extends JPanel {
 		btnNext.setBounds(209, 430, 85, 18);
 		add(btnNext);
 
-		JButton btnSwitchShiny = new JButton("Shiny");
+		btnSwitchShiny = new JButton("Shiny");
 		btnSwitchShiny.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -320,11 +324,11 @@ public class PokedexView extends JPanel {
 		textFieldSpecialDefense = new JTextField(lblSpecialDefenseNumber.getText());
 		textFieldSpecialDefense.setBounds(473, 254, widthNumberLabels, heightNumberLabels);
 		textFieldAttack = new JTextField(lblAttackNumber.getText());
-		textFieldAttack.setBounds(550, 183, widthNumberLabels, heightNumberLabels);
+		textFieldAttack.setBounds(555, 183, widthNumberLabels, heightNumberLabels);
 		textFieldWeight = new JTextField(lblWeightNumber.getText());
-		textFieldWeight.setBounds(550, 205, widthNumberLabels, heightNumberLabels);
+		textFieldWeight.setBounds(555, 205, widthNumberLabels, heightNumberLabels);
 		textFieldSpeed = new JTextField(lblSpeedNumber.getText());
-		textFieldSpeed.setBounds(550, 230, widthNumberLabels, heightNumberLabels);
+		textFieldSpeed.setBounds(555, 230, widthNumberLabels, heightNumberLabels);
 
 		textFieldAbility1 = new JTextField(lblAbilitie1.getText());
 		textFieldAbility1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -347,16 +351,25 @@ public class PokedexView extends JPanel {
 		textFieldPokemonName.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldPokemonName.setBounds(90, 389, 114, 30);
 
-		JButton btnNewButton = new JButton("New Pokemon");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnNewPokemon = new JButton("New Pokemon");
+		btnNewPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				creatorModeStatus = !creatorModeStatus;
+				
+				if (creatorModeStatus) {
+					btnNewPokemon.setText("Creating");
+
+				} else {
+					btnNewPokemon.setText("New Pokemon");
+				}
+				
 				switchCreateNewPokemon();
 			}
 		});
 
-		btnNewButton.setBounds(488, 10, 114, 21);
-		add(btnNewButton);
+		btnNewPokemon.setBounds(468, 10, 124, 21);
+		add(btnNewPokemon);
 
 		textFieldPokemonDefaultFrontSprite = new JTextField();
 		textFieldPokemonDefaultFrontSprite.setHorizontalAlignment(SwingConstants.CENTER);
@@ -591,10 +604,6 @@ public class PokedexView extends JPanel {
 		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
 		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
 
-		for (int i = 0; i < pokemonData.length; i++) {
-			System.out.println("Habilidad " + i + " : " + pokemonData[i]);
-		}
-
 		for (int i = 0; i < pokemondataViewTextLabels.size(); i++) {
 			pokemondataViewTextLabels.get(i).setText(pokemonData[i]);
 			pokemondataViewTextFields.get(i).setText(pokemonData[i]);
@@ -647,27 +656,26 @@ public class PokedexView extends JPanel {
 		System.out.println(editModeStatus);
 
 		
-
-		for (int i = 0; i < pokemondataViewTextLabels.size(); i++) {
-			if (!pokemondataViewTextLabels.get(i).getText().equals(pokemondataViewTextFields.get(i).getText())) {
-				System.out.println("El texto no coincide");
-				System.out.println(pokemondataViewTextLabels.get(i).getText());
-				System.out.println(pokemondataViewTextFields.get(i).getText());
-				
-				Controller.updatePokemonOnDB(pokemonID, textFieldPokemonName.getText(),
-						Integer.parseInt(textFieldHP.getText()),
-						Integer.parseInt(textFieldAttack.getText()),
-						Integer.parseInt(textFieldHeight.getText()),
-						Integer.parseInt(textFieldWeight.getText()),
-						Integer.parseInt(textFieldSpecialAttack.getText()),
-						Integer.parseInt(textFieldSpecialDefense.getText()),
-						Integer.parseInt(textFieldSpeed.getText()));
-
-			}
+		if (!editModeStatus) {
+			Controller.updatePokemonOnDB(
+					pokemonID,
+					textFieldPokemonName.getText(),
+					Integer.parseInt(textFieldHP.getText()),
+					Integer.parseInt(textFieldAttack.getText()),
+					Integer.parseInt(textFieldHeight.getText()),
+					Integer.parseInt(textFieldWeight.getText()),
+					Integer.parseInt(textFieldSpecialAttack.getText()),
+					Integer.parseInt(textFieldSpecialDefense.getText()),
+					Integer.parseInt(textFieldSpeed.getText()),
+					textFieldAbility1.getText(),
+					textFieldAbility2.getText(),
+					textFieldAbility3.getText(),
+					textFieldType1.getText(),
+					textFieldType2.getText()
+					);
 		}
 					
 		updateViewData();
-
 
 		changeVisibilityAllDataInputs(editModeStatus);
 
@@ -677,82 +685,66 @@ public class PokedexView extends JPanel {
 
 	public void switchCreateNewPokemon() {
 
-		abilities = new ArrayList<String>();
-		sprites = new ArrayList<String>();
-		// emptyStatus = true;
-		if (!creatorModeStatus) {
+		emptyStatus = false;
+		
+		
 
-			for (int i = 0; i < pokemonAbilities.length; i++) {
-
+			for (int i = 0; i < pokemondataViewTextFields.size(); i++) {
+				if (pokemondataViewTextFields.get(i).getText().isBlank()) {
+					emptyStatus = true;
+				}
+				if (i+1 <= pokemonAbilitiesViewTextFields.size()) {
+					if (pokemonAbilitiesViewTextFields.get(i).getText().isBlank()) {
+						emptyStatus = true;
+					}
+				}
+				if (i+1 <= pokemonTypesViewTextFields.size()) {
+					if (pokemonTypesViewTextFields.get(i).getText().isBlank()) {
+						emptyStatus = true;
+					}
+				}
 			}
 
-			/*
-			 * for (JTextField textField : allViewTextFields) { if
-			 * (textField.getText().isBlank() || textField.getText().isEmpty()) {
-			 * emptyStatus = true; } }
-			 */
+			System.out.println(emptyStatus);
 
-			/*
-			 * 
-			 * if (!textFieldHP.getText().equals("") &&
-			 * !textFieldPokemonName.getText().equals("") &&
-			 * !textFieldSpecialAttack.getText().equals("") &&
-			 * !textFieldSpecialDefense.getText().equals("") &&
-			 * !textFieldAttack.getText().equals("") &&
-			 * !textFieldHeight.getText().equals("") &&
-			 * !textFieldWeight.getText().equals("") && !textFieldSpeed.getText().equals("")
-			 * && !textFieldAbility1.getText().equals("") &&
-			 * !textFieldAbility2.getText().equals("") &&
-			 * !textFieldAbility3.getText().equals("") &&
-			 * !textFieldType1.getText().equals("") && !textFieldType2.getText().equals(""))
-			 * {
-			 * 
-			 * if (!textFieldAbility1.getText().equals("")) {
-			 * abilities.add(lblAbilitie1.getText()); } if
-			 * (!textFieldAbility2.getText().equals("")) {
-			 * abilities.add(lblAbilitie2.getText()); } if
-			 * (!textFieldAbility3.getText().equals("")) {
-			 * abilities.add(lblAbilitie2.getText()); } if
-			 * (!textFieldPokemonDefaultBackSprite.getText().equals("")) {
-			 * sprites.add(lblAbilitie1.getText()); } if
-			 * (!textFieldPokemonDefaultFrontSprite.getText().equals("")) {
-			 * sprites.add(lblAbilitie2.getText()); } if
-			 * (!textFieldPokemonShinyBackSprite.getText().equals("")) {
-			 * sprites.add(lblAbilitie2.getText()); } if
-			 * (!textFieldPokemonShinyFrontSprite.getText().equals("")) {
-			 * sprites.add(lblAbilitie2.getText()); }
-			 * 
-			 * 
-			 * Controller.addPokemonToDatabase(textFieldPokemonName.getText(),"No - URL",
-			 * Integer.parseInt(textFieldHP.getText()),
-			 * Integer.parseInt(textFieldAttack.getText()),
-			 * Integer.parseInt(textFieldSpecialAttack.getText()),
-			 * Integer.parseInt(textFieldSpecialDefense.getText()),
-			 * Integer.parseInt(textFieldSpeed.getText()),
-			 * Integer.parseInt(textFieldHeight.getText()),
-			 * Integer.parseInt(textFieldWeight.getText()),0, "["+abilities.toString()+"]",
-			 * "sprites","forms","spawnPoints","types");
-			 * 
-			 * }
-			 * 
-			 * 
-			 * }
-			 */
-			System.out.println("Habilidades" + abilities);
-
-			textFieldPokemonShinyBackSprite.setText("Back Shiny Sprite");
-			textFieldPokemonShinyFrontSprite.setText("Front Shiny Sprite");
-			textFieldPokemonDefaultBackSprite.setText("Back Default Sprite");
-			textFieldPokemonDefaultFrontSprite.setText("Front Default Sprite");
-
+			if (emptyStatus) {
+				
+				Controller.addPokemonToDatabase(
+						textFieldPokemonName.getText(),
+						"pokeprofileURL",
+						Integer.parseInt(textFieldHP.getText()),
+						Integer.parseInt(textFieldAttack.getText()),
+						Integer.parseInt(textFieldSpecialAttack.getText()),
+						Integer.parseInt(textFieldSpecialDefense.getText()),
+						Integer.parseInt(textFieldSpeed.getText()),
+						Integer.parseInt(textFieldHeight.getText()),
+						Integer.parseInt(textFieldWeight.getText()),
+						0,
+						"[" + textFieldAbility1.getText() + ", " + textFieldAbility2.getText() + ", " + textFieldAbility3.getText() + "]",
+						"[" + textFieldPokemonDefaultFrontSprite.getText() + ", " + textFieldPokemonDefaultBackSprite.getText() + ", " + textFieldPokemonShinyFrontSprite.getText() + ", " + textFieldPokemonShinyBackSprite.getText() +  "]",
+						"forms",
+						"spawnPoints",
+						"[" + textFieldType1.getText() + ", " + textFieldType2.getText() +  "]"
+						);
+			
+			}
+			
+			cleanAllInfo();
+			
+			updateViewData();
+			
+			changeVisibilityAllDataInputs(creatorModeStatus);
+			
+			//btnEditActualPokemon.setVisible(!creatorModeStatus);
+			btnNextPokemon.setVisible(!creatorModeStatus);
+			btnPreviousPokemon.setVisible(!creatorModeStatus);
+			btnPrevious.setVisible(!creatorModeStatus);
+			btnNext.setVisible(!creatorModeStatus);
+			btnSwitchShiny.setVisible(!creatorModeStatus);
+			
 			changeVisibilityAllDatalabels(!creatorModeStatus);
 
-			lblPokemonPic.setVisible(!editModeStatus);
+			lblPokemonPic.setVisible(!creatorModeStatus);
 
-			changeVisibilityAllDataInputs(creatorModeStatus);
-
-			cleanAllInfo();
-
-		}
 	}
 }
