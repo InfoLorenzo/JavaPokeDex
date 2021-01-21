@@ -356,9 +356,6 @@ public class Controller {
 				pokemonData[6] = rs.getString("height").substring(0,rs.getString("height").length()-2);
 				pokemonData[7] = rs.getString("weight").substring(0,rs.getString("weight").length()-2);
 				pokemonData[8] = rs.getString("basicexp");
-				// pokemonData[9] = rs.getString("abilities");
-				// pokemonData[10] = rs.getString("types");
-				// pokemonData[11] = rs.getString("sprites");
 
 				return pokemonData;
 
@@ -491,6 +488,8 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+	
+
 
 	public static void main(String[] args) {
 
