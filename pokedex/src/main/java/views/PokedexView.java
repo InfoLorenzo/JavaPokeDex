@@ -28,10 +28,13 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class PokedexView extends JPanel {
 
-	private int pokemonMinID = Controller.getMinIDOnTable("pokemon");
+	private int pokemonMinID = Controller.getInstance().getMinIDOnTable("pokemon");
 	private int pokemonMaxID;
 	private int pokemonID = pokemonMinID;
 	private boolean shiny = false;
@@ -93,6 +96,7 @@ public class PokedexView extends JPanel {
 	private JTextField textFieldPokemonDefaultBackSprite;
 	private JTextField textFieldPokemonShinyFrontSprite;
 	private JTextField textFieldPokemonShinyBackSprite;
+	private JMenuItem menuItemFind;
 	private ArrayList<String> abilities;
 	private ArrayList<String> sprites;
 	private ArrayList<JLabel> pokemondataViewTextLabels = new ArrayList<JLabel>();
@@ -488,24 +492,35 @@ public class PokedexView extends JPanel {
 		JButton btnDeletePokemon = new JButton("Delete");
 		btnDeletePokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Controller.deleteOnDB("pokemon",pokemonID);
+				Controller.getInstance().deleteOnDB("pokemon",pokemonID);
 				updateViewData();
 			}
 		});
 		btnDeletePokemon.setBounds(623, 39, 85, 21);
 		add(btnDeletePokemon);
+
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(350, 0, 50, 22);
+		add(menuBar);
+		
+		JMenu mnNewMenu = new JMenu("Menu");
+		menuBar.add(mnNewMenu);
+		
+		menuItemFind = new JMenuItem("Find ");
+		mnNewMenu.add(menuItemFind);
+		//menuItemFind.addActionListener(this);
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/Lr4arcd.png"))));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-		lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
-
-		lblBackground.setBounds(0, 0, 718, 469);
-
-		add(lblBackground);
+		
+				lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
+				
+						lblBackground.setBounds(0, 0, 718, 469);
+						
+								add(lblBackground);
 
 		changeVisibilityAllDataInputs(false);
 
@@ -524,15 +539,15 @@ public class PokedexView extends JPanel {
 			pokemonID += 10;
 
 			imagesCounter = 0;
-
-			while (Controller.getPokemonDatafromDB(pokemonID)==null) {
+			/*
+			while (Controller.getInstance().getPokemonDatafromDB(pokemonID)==null) {
 				
 				if (pokemonID+10 <= pokemonMaxID) {
 					pokemonID += 10;
 				}
 				
 			}
-			
+			*/
 			updateViewData();
 
 		}
@@ -546,15 +561,15 @@ public class PokedexView extends JPanel {
 			pokemonID -= 10;
 
 			imagesCounter = 0;
-
-			while (Controller.getPokemonDatafromDB(pokemonID)==null) {
+/*
+			while (Controller.getInstance().getPokemonDatafromDB(pokemonID)==null) {
 				
 				if (pokemonID-10 >= pokemonMinID) {
 					pokemonID -= 10;
 				}
 				
 			}
-		
+		*/
 			updateViewData();
 
 		}
@@ -618,10 +633,11 @@ public class PokedexView extends JPanel {
 	}
 
 	public void updateViewData() {
-
-		Controller.getMaxRowsOnTable("pokemon");
 		
-		while (Controller.getPokemonDatafromDB(pokemonID)==null) {
+		Controller.getInstance().getMaxRowsOnTable("pokemon");
+		
+		/*
+		while (Controller.getInstance().getPokemonDatafromDB(pokemonID)==null) {
 			
 			if (pokemonID-10 >= pokemonMinID) {
 				pokemonID -= 10;
@@ -630,17 +646,17 @@ public class PokedexView extends JPanel {
 			}
 			
 		}
-		
-		pokemonMinID = Controller.getMinIDOnTable("pokemon");
-		pokemonMaxID = Controller.getMaxRowsOnTable("pokemon");
-		pokemonData = Controller.getPokemonDatafromDB(pokemonID);
-		pokemonAbilities = Controller.getPokemonArrayfromDB(pokemonID, "abilities");
-		pokemonTypes = Controller.getPokemonArrayfromDB(pokemonID, "types");
-		pokemonSprites = Controller.getPokemonArrayfromDB(pokemonID, "sprites");
-		pokemonImageShiny[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[0];
-		pokemonImageShiny[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[2];
-		pokemonImageDefault[0] = Controller.getPokemonSpritesDivided(pokemonSprites)[1];
-		pokemonImageDefault[1] = Controller.getPokemonSpritesDivided(pokemonSprites)[3];
+		*/
+		pokemonMinID = Controller.getInstance().getInstance().getMinIDOnTable("pokemon");
+		pokemonMaxID = Controller.getInstance().getMaxRowsOnTable("pokemon");
+		pokemonData = Controller.getInstance().getPokemonDatafromDB(pokemonID);
+		pokemonAbilities = Controller.getInstance().getPokemonArrayfromDB(pokemonID, "abilities");
+		pokemonTypes = Controller.getInstance().getPokemonArrayfromDB(pokemonID, "types");
+		pokemonSprites = Controller.getInstance().getPokemonArrayfromDB(pokemonID, "sprites");
+		pokemonImageShiny[0] = Controller.getInstance().getPokemonSpritesDivided(pokemonSprites)[0];
+		pokemonImageShiny[1] = Controller.getInstance().getPokemonSpritesDivided(pokemonSprites)[2];
+		pokemonImageDefault[0] = Controller.getInstance().getPokemonSpritesDivided(pokemonSprites)[1];
+		pokemonImageDefault[1] = Controller.getInstance().getPokemonSpritesDivided(pokemonSprites)[3];
 		
 		if (pokemonID >= (pokemonMaxID*10)+pokemonMinID) {
 		lblMinMaxID.setText(Integer.toString(pokemonMaxID));
@@ -703,7 +719,7 @@ public class PokedexView extends JPanel {
 		System.out.println(editModeStatus);
 
 		if (!editModeStatus) {
-			Controller.updatePokemonOnDB(pokemonID, textFieldPokemonName.getText(),
+			Controller.getInstance().updatePokemonOnDB(pokemonID, textFieldPokemonName.getText(),
 					Integer.parseInt(textFieldHP.getText()), Integer.parseInt(textFieldAttack.getText()),
 					Integer.parseInt(textFieldHeight.getText()), Integer.parseInt(textFieldWeight.getText()),
 					Integer.parseInt(textFieldSpecialAttack.getText()),
@@ -744,7 +760,7 @@ public class PokedexView extends JPanel {
 
 		if (!emptyStatus) {
 
-			Controller.addPokemonToDatabase(textFieldPokemonName.getText(), "pokeprofileURL",
+			Controller.getInstance().addPokemonToDatabase(textFieldPokemonName.getText(), "pokeprofileURL",
 					Integer.parseInt(textFieldHP.getText()), Integer.parseInt(textFieldAttack.getText()),
 					Integer.parseInt(textFieldSpecialAttack.getText()),
 					Integer.parseInt(textFieldSpecialDefense.getText()), Integer.parseInt(textFieldSpeed.getText()),
@@ -775,6 +791,12 @@ public class PokedexView extends JPanel {
 
 		if (creatorModeStatus) {
 			cleanAllInfo();
+		}
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == menuItemFind ) {
+			
 		}
 	}
 }

@@ -24,13 +24,27 @@ public class Controller {
 
 	private static LoginUnsuccessful failedRequestDataModal;
 
-	public Controller() {
+	private static Controller instance;
 
+	private Connection connection;
+	
+	private Controller() {
+		connection = connectToDatabase();
+	}
+	
+	static {
+		instance = new Controller();
+	}
+	
+	public static Controller getInstance() {
+		
+		return instance;
+		
 	}
 
-	public static String[] userlogin = new String[2];
+	public String[] userlogin = new String[2];
 
-	private static Connection connectToDatabase() {
+	private Connection connectToDatabase() {
 
 		String databaseURL = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_414700429a65082";
 		String databaseUsername = "b0124af284507d";
@@ -54,7 +68,7 @@ public class Controller {
 
 	}
 
-	public static void registerUser(String nickname, String username, String password) {
+	public void registerUser(String nickname, String username, String password) {
 
 		String sqlPokemon = "INSERT INTO `heroku_414700429a65082`.`users` (`username`, `password`, `nickname`) VALUES (?, ?,?);";
 
@@ -84,7 +98,7 @@ public class Controller {
 		}
 	}
 
-	public static boolean checkUserExist(String username) {
+	public boolean checkUserExist(String username) {
 
 		String sqlPokemon = "SELECT `username`, `nickname` FROM `heroku_414700429a65082`.`users` WHERE `username`='"
 				+ username + "';";
@@ -124,7 +138,7 @@ public class Controller {
 		return false;
 	}
 
-	public static boolean checkUserLogin(String username, String password) {
+	public boolean checkUserLogin(String username, String password) {
 
 		if (checkUserExist(username)) {
 
@@ -172,7 +186,7 @@ public class Controller {
 		return false;
 	}
 
-	public static boolean isEmpty(String textInput) {
+	public boolean isEmpty(String textInput) {
 
 		if (textInput.equalsIgnoreCase("") || textInput.equalsIgnoreCase(" ") || textInput == null) {
 			return true;
@@ -279,7 +293,7 @@ public class Controller {
 
 	}
 
-	public static void addPokemonToDatabase(String name, String pokeprofileURL, int healthPoints, int attackPoints,
+	public void addPokemonToDatabase(String name, String pokeprofileURL, int healthPoints, int attackPoints,
 			int specialAttackPoints, int specialDefensePoints, int speed, int height, int weight, int basicExp,
 			String abilities, String sprites, String forms, String spawnPoints, String types) {
 
@@ -327,7 +341,7 @@ public class Controller {
 		}
 	}
 
-	public static String[] getPokemonDatafromDB(int id) {
+	public String[] getPokemonDatafromDB(int id) {
 		String sqlPokemon = "SELECT `name`, `healthpoints`, `attackpoints`, `specialattackpoints`, `specialdefensepoints`, `speed`, `height`, `weight`, `basicexp` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='"
 				+ id + "';";
 
@@ -371,7 +385,7 @@ public class Controller {
 		return null;
 	}
 
-	public static String[] getPokemonArrayfromDB(int id,String arrayName) {
+	public String[] getPokemonArrayfromDB(int id,String arrayName) {
 		String sqlPokemon = "SELECT `"+ arrayName +"` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='"
 				+ id + "';";
 
@@ -403,7 +417,7 @@ public class Controller {
 		return null;
 	}
 	
-	public static String[][] getPokemonSpritesDivided(String[] SpritesInput) {
+	public String[][] getPokemonSpritesDivided(String[] SpritesInput) {
 		int contador1 = 1;
 		int contador2 = 1;
 		int contador3 = 1;
@@ -503,7 +517,7 @@ public class Controller {
 		}
 	}
 	
-	public static int getMaxRowsOnTable(String tablename) {
+	public int getMaxRowsOnTable(String tablename) {
 		String sqlPokemon = "SELECT COUNT(*) FROM `heroku_414700429a65082`.`"+tablename+"`;";
 
 		PreparedStatement statement = null;
@@ -529,7 +543,7 @@ public class Controller {
 		return (Integer) null;
 	}
 	
-	public static int getMinIDOnTable(String tablename) {
+	public int getMinIDOnTable(String tablename) {
 		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`"+tablename+"`;";
 
 		PreparedStatement statement = null;
@@ -554,7 +568,7 @@ public class Controller {
 		return -1;
 	}
 	
-	public static boolean deleteOnDB(String tablename, int ID) {
+	public boolean deleteOnDB(String tablename, int ID) {
 		
 		String sqlPokemon = "Delete FROM `heroku_414700429a65082`.`"+tablename+"` WHERE ID = '"+ ID + "';";
 
@@ -575,24 +589,6 @@ public class Controller {
 			System.out.println("Oops algo salio mal " + e);
 		}
 		return false;
-	}
-
-	public static void main(String[] args) {
-
-		System.out.println("Main del controller iniciado");
-		
-		/*
-		getPokemonDatafromDB(1111);
-		getPokemonArrayfromDB(1111,"abilities");
-		getPokemonSpritesDivided(getPokemonArrayfromDB(1131,"sprites"));
-		getPokemonArrayfromDB(1111,"types");
-		*/
-		
-		//updatePokemonOnDB(1111,"bulbasaur",55,49,49,65,65,64,7);
-		//getMinIDOnTable("pokemon");
-		
-		System.out.println(Controller.getPokemonDatafromDB(1111));
-		
 	}
 
 }
