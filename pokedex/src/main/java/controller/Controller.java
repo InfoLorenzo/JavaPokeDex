@@ -503,7 +503,79 @@ public class Controller {
 		}
 	}
 	
+	public static int getMaxRowsOnTable(String tablename) {
+		String sqlPokemon = "SELECT COUNT(*) FROM `heroku_414700429a65082`.`"+tablename+"`;";
 
+		PreparedStatement statement = null;
+		String[] pokemonArray;
+		String resultString;
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				
+				return rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Oops algo salio mal " + e);
+		}
+		return (Integer) null;
+	}
+	
+	public static int getMinIDOnTable(String tablename) {
+		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`"+tablename+"`;";
+
+		PreparedStatement statement = null;
+		String[] pokemonArray;
+		String resultString;
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				
+				return Integer.parseInt(rs.getString("ID"));
+			}
+		} catch (Exception e) {
+			System.out.println("Oops algo salio mal " + e);
+		}
+		return -1;
+	}
+	
+	public static boolean deleteOnDB(String tablename, int ID) {
+		
+		String sqlPokemon = "Delete FROM `heroku_414700429a65082`.`"+tablename+"` WHERE ID = '"+ ID + "';";
+
+		PreparedStatement statement = null;
+		String[] pokemonArray;
+		String resultString;
+		try {
+			statement = connectToDatabase().prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			int rs = statement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("Oops algo salio mal " + e);
+		}
+		return false;
+	}
 
 	public static void main(String[] args) {
 
@@ -517,6 +589,10 @@ public class Controller {
 		*/
 		
 		//updatePokemonOnDB(1111,"bulbasaur",55,49,49,65,65,64,7);
+		//getMinIDOnTable("pokemon");
+		
+		System.out.println(Controller.getPokemonDatafromDB(1111));
+		
 	}
 
 }
