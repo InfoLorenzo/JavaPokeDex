@@ -180,14 +180,14 @@ public class RegisterView extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!Controller.isEmpty(inputUsername.getText()) && !Controller.isEmpty(inputPassword.getText())
-						&& !Controller.isEmpty(inputNickname.getText())) {
+				if (!Controller.getInstance().isEmpty(inputUsername.getText()) && !Controller.getInstance().isEmpty(inputPassword.getText())
+						&& !Controller.getInstance().isEmpty(inputNickname.getText())) {
 
 					System.out.println("Los inputs no están vacios");
 
-					if (!Controller.checkUserExist(inputUsername.getText())) {
+					if (!Controller.getInstance().checkUserExist(inputUsername.getText())) {
 
-						Controller.registerUser(inputNickname.getText(), inputUsername.getText(),
+						Controller.getInstance().registerUser(inputNickname.getText(), inputUsername.getText(),
 								inputPassword.getText());
 						SuccessfulRegModal = new RegisterSuccessful();
 						SuccessfulRegModal.newScreen();

@@ -14,6 +14,7 @@ public class RegisterSuccessful {
 	/**
 	 * Launch the application.
 	 */
+	
 	public void newScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -30,6 +31,7 @@ public class RegisterSuccessful {
 	/**
 	 * Create the application.
 	 */
+	
 	public RegisterSuccessful() {
 		initialize();
 	}
@@ -37,6 +39,7 @@ public class RegisterSuccessful {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);

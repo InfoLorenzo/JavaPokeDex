@@ -17,6 +17,7 @@ import org.w3c.dom.css.Counter;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import controller.Controller;
+import views.modals.LoginUnsuccessful;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -510,12 +511,26 @@ public class PokedexView extends JPanel {
 		menuBar.setBounds(350, 0, 50, 22);
 		add(menuBar);
 
-		JMenu mnNewMenu = new JMenu("Menu");
-		menuBar.add(mnNewMenu);
-
+		JMenu mnMenu = new JMenu("Menu");
+		menuBar.add(mnMenu);
+		
+		
+		
 		menuItemFind = new JMenuItem("Find ");
-		mnNewMenu.add(menuItemFind);
-		// menuItemFind.addActionListener(this);
+		
+		menuItemFind.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent ev) {
+        	System.out.println("Mono");        
+        	
+        	
+        	
+        	FindView findModal = new FindView();
+        	findModal.newScreen();
+        	
+        	
+        }
+    });
+		mnMenu.add(menuItemFind);
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/Lr4arcd.png"))));
 		} catch (IOException e1) {
@@ -534,6 +549,8 @@ public class PokedexView extends JPanel {
 
 		setVisible(false);
 
+		
+		
 	}
 
 	public void nextPokemonData() {
@@ -800,7 +817,7 @@ public class PokedexView extends JPanel {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == menuItemFind) {
-
+			System.out.println("Menu llamado");
 		}
 	}
 }

@@ -139,9 +139,9 @@ public class LoginView extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!Controller.isEmpty(new String(inputPassword.getPassword())) && !Controller.isEmpty(inputusername.getText())) {
+				if (!Controller.getInstance().isEmpty(new String(inputPassword.getPassword())) && !Controller.getInstance().isEmpty(inputusername.getText())) {
 					
-					if (Controller.checkUserLogin(inputusername.getText(), new String(inputPassword.getPassword()))) {
+					if (Controller.getInstance().checkUserLogin(inputusername.getText(), new String(inputPassword.getPassword()))) {
 						
 						setVisible(false);
 						MainWindow.getLayeredPanel().getComponent(3).setVisible(true);

@@ -27,20 +27,20 @@ public class Controller {
 	private static Controller instance;
 
 	private Connection connection;
-	
+
 	private Controller() {
 		connection = connectToDatabase();
 	}
-	
+
 	static {
 		instance = new Controller();
 	}
-	
+
 	public static Controller getInstance() {
-		
+
 		System.out.println(instance.connection);
 		return instance;
-		
+
 	}
 
 	public String[] userlogin = new String[2];
@@ -57,9 +57,9 @@ public class Controller {
 			connection = DriverManager.getConnection(databaseURL, databaseUsername, databasePassword);
 
 			System.out.println("La conexión fue correcta");
-			
+
 			return connection;
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -300,9 +300,7 @@ public class Controller {
 			int specialAttackPoints, int specialDefensePoints, int speed, int height, int weight, int basicExp,
 			String abilities, String sprites, String forms, String spawnPoints, String types) {
 
-
 		try {
-			
 
 			System.out.println("La conexión fue correcta");
 
@@ -364,8 +362,8 @@ public class Controller {
 				pokemonData[3] = rs.getString("specialattackpoints");
 				pokemonData[4] = rs.getString("specialdefensepoints");
 				pokemonData[5] = rs.getString("speed");
-				pokemonData[6] = rs.getString("height").substring(0,rs.getString("height").length()-2);
-				pokemonData[7] = rs.getString("weight").substring(0,rs.getString("weight").length()-2);
+				pokemonData[6] = rs.getString("height").substring(0, rs.getString("height").length() - 2);
+				pokemonData[7] = rs.getString("weight").substring(0, rs.getString("weight").length() - 2);
 				pokemonData[8] = rs.getString("basicexp");
 
 				return pokemonData;
@@ -382,9 +380,9 @@ public class Controller {
 		return null;
 	}
 
-	public String[] getPokemonArrayfromDB(int id,String arrayName) {
-		String sqlPokemon = "SELECT `"+ arrayName +"` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='"
-				+ id + "';";
+	public String[] getPokemonArrayfromDB(int id, String arrayName) {
+		String sqlPokemon = "SELECT `" + arrayName + "` FROM `heroku_414700429a65082`.`pokemon` WHERE `ID`='" + id
+				+ "';";
 
 		PreparedStatement statement = null;
 		String[] pokemonArray;
@@ -395,96 +393,76 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
-				resultString = rs.getString(arrayName).substring(1,rs.getString(arrayName).length()-1);
-				
+				resultString = rs.getString(arrayName).substring(1, rs.getString(arrayName).length() - 1);
+
 				pokemonArray = resultString.split(", ");
 				for (String string : pokemonArray) {
 					System.out.println(string);
 				}
 				return pokemonArray;
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println("Oops algo salio mal " + e);
 		}
 		return null;
 	}
-	
+
 	public ArrayList[] getPokemonSprites(String[] SpritesInput) {
 
 		ArrayList[] pokemonSpritesDivided = new ArrayList[2];
 		pokemonSpritesDivided[0] = new ArrayList<String>();
 		pokemonSpritesDivided[1] = new ArrayList<String>();
-		
-		//[0] - Male Shiny
-		//[1] - Male default
-		//[2] - Female Shiny
-		//[3] - Female default
-		
+
+		// [0] - Male Shiny
+		// [1] - Male default
+		// [2] - Female Shiny
+		// [3] - Female default
 
 		for (int i = 0; i < SpritesInput.length; i++) {
-			
+
 			if (SpritesInput[i].contains("PokeAPI")) {
 				if (SpritesInput[i].contains("shiny")) {
 					pokemonSpritesDivided[0].add(SpritesInput[i]);
 					System.out.println("Imagen Shiny: " + SpritesInput[i]);
-				}else {
+				} else {
 					pokemonSpritesDivided[1].add(SpritesInput[i]);
 					System.out.println("Imagen Default: " + SpritesInput[i]);
 
 				}
-			}else {
+			} else {
 				pokemonSpritesDivided[1].add(SpritesInput[i]);
 				System.out.println("Imagen Default Sin nada: " + SpritesInput[i]);
 
 			}
-			
+
 		}
-		
-		
+
 		return pokemonSpritesDivided;
 	}
-	
-	public void updatePokemonOnDB (
-			int ID,
-			String name, 
-			int healthPoints, 
-			int attackPoints, 
-			int height, 
-			int weight, 
-			int specialAttackPoints, 
-			int specialDefensePoints, 
-			int speed, 
-			String abilitie1, 
-			String abilitie2, 
-			String abilitie3, 
-			String type1, 
-			String type2) {
-		
+
+	public void updatePokemonOnDB(int ID, String name, int healthPoints, int attackPoints, int height, int weight,
+			int specialAttackPoints, int specialDefensePoints, int speed, String abilitie1, String abilitie2,
+			String abilitie3, String type1, String type2) {
+
 		String url = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_414700429a65082";
 		String username = "b0124af284507d";
 		String password = "c7610f50";
 
 		try {
-			
 
 			System.out.println("La conexión fue correcta");
 
-			String sqlPokemon = "UPDATE `heroku_414700429a65082`.`pokemon` SET name = '" + name +
-					"', healthpoints = " + healthPoints + 
-					", attackpoints = " + attackPoints + 
-					", specialAttackpoints = " + specialAttackPoints + 
-					", specialdefensepoints = " + specialDefensePoints + 
-					", speed = " + speed + 
-					", height = " + height + 
-					", weight = " + weight +
-					", abilities = '[" + abilitie1 + ", " + abilitie2 + ", " + abilitie3 + "]'"+
-					", types = '[" + type1 + ", " + type2 + "]'"+
-					" WHERE ID = " + ID;
+			String sqlPokemon = "UPDATE `heroku_414700429a65082`.`pokemon` SET name = '" + name + "', healthpoints = "
+					+ healthPoints + ", attackpoints = " + attackPoints + ", specialAttackpoints = "
+					+ specialAttackPoints + ", specialdefensepoints = " + specialDefensePoints + ", speed = " + speed
+					+ ", height = " + height + ", weight = " + weight + ", abilities = '[" + abilitie1 + ", "
+					+ abilitie2 + ", " + abilitie3 + "]'" + ", types = '[" + type1 + ", " + type2 + "]'"
+					+ " WHERE ID = " + ID;
 
 			PreparedStatement statement = connection.prepareStatement(sqlPokemon);
 
@@ -499,9 +477,9 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public int getMaxRowsOnTable(String tablename) {
-		String sqlPokemon = "SELECT COUNT(*) FROM `heroku_414700429a65082`.`"+tablename+"`;";
+		String sqlPokemon = "SELECT COUNT(*) FROM `heroku_414700429a65082`.`" + tablename + "`;";
 
 		PreparedStatement statement = null;
 
@@ -511,22 +489,22 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
-				
+
 				return rs.getInt(1);
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println("Oops algo salio mal " + e);
 		}
 		return (Integer) null;
 	}
-	
+
 	public int getMinIDOnTable(String tablename) {
-		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`"+tablename+"`;";
+		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`" + tablename + "`;";
 
 		PreparedStatement statement = null;
 
@@ -536,11 +514,11 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
-				
+
 				return Integer.parseInt(rs.getString("ID"));
 			}
 		} catch (Exception e) {
@@ -548,10 +526,10 @@ public class Controller {
 		}
 		return -1;
 	}
-	
+
 	public boolean deleteOnDB(String tablename, int ID) {
-		
-		String sqlPokemon = "Delete FROM `heroku_414700429a65082`.`"+tablename+"` WHERE ID = '"+ ID + "';";
+
+		String sqlPokemon = "Delete FROM `heroku_414700429a65082`.`" + tablename + "` WHERE ID = '" + ID + "';";
 
 		PreparedStatement statement = null;
 		try {
@@ -560,7 +538,7 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			int rs = statement.executeUpdate();
 			return true;
@@ -569,12 +547,11 @@ public class Controller {
 		}
 		return false;
 	}
-	
+
 	public int[] getPokemonIDsFromDB() {
-		
+
 		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`pokemon`;";
 
-		
 		PreparedStatement statement = null;
 		int[] pokemonIDs = new int[getMaxRowsOnTable("pokemon")];
 		int contador = 0;
@@ -584,25 +561,153 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				pokemonIDs[contador] = Integer.parseInt(rs.getString("id"));
-				
+
 				System.out.println(pokemonIDs[contador]);
 				contador++;
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println("Oops algo salio mal " + e);
 		}
-		
-		
+
 		return pokemonIDs;
+
+	}
+
+	public int[] getPokemonThroughtQueryFromDB(String name, String type, String ability) {
+
+		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`pokemon`";
+
+		String nameQuery = "";
+		String typesQuery = "";
+		String abilitiesQuery = "";
+		String[] types;
+		String[] abilities;
+		ArrayList<String> queriesArray = new ArrayList<String>();
+		int queries = 0;
+
+		if (!name.isBlank()) {
+
+			nameQuery = " name like '%" + name + "%' ";
+
+			queriesArray.add(nameQuery);
+
+		}
+
+		if (!type.isBlank()) {
+
+			if (type.contains(",")) {
+
+				types = type.split(",");
+
+				for (String s : types) {
+					if (s != types[types.length - 1]) {
+						typesQuery = typesQuery.concat(" types like '%" + s + "%' OR");
+
+					} else {
+						typesQuery = typesQuery.concat(" types like '%" + s + "%'");
+
+					}
+
+				}
+
+			} else {
+
+				typesQuery = typesQuery.concat(" types like '%" + type + "%' ");
+
+			}
+
+			typesQuery.substring(0, typesQuery.length() - 2);
+
+			queriesArray.add(typesQuery);
+
+		}
+
+		if (!ability.isBlank()) {
+
+			if (ability.contains(",")) {
+
+				abilities = ability.split(",");
+
+				for (String s : abilities) {
+					if (s != abilities[abilities.length - 1]) {
+						abilitiesQuery = abilitiesQuery.concat(" abilities like '%" + s + "%' OR");
+					} else {
+						abilitiesQuery = abilitiesQuery.concat(" abilities like '%" + s + "%'");
+					}
+				}
+			} else {
+				abilitiesQuery = abilitiesQuery.concat(" abilities like '%" + type + "%' ");
+			}
+
+			if (queriesArray.size() > 0) {
+				sqlPokemon = sqlPokemon.concat(" WHERE");
+			}
+
+			queriesArray.add(abilitiesQuery);
+
+			
+		}
 		
+		System.out.println(nameQuery);
+		System.out.println(typesQuery);
+		System.out.println(abilitiesQuery);
+
+		for (String string : queriesArray) {
+			if (string != queriesArray.get(queriesArray.size() - 1)) {
+				sqlPokemon = sqlPokemon.concat(string + "AND");
+			} else {
+				sqlPokemon = sqlPokemon.concat(string);
+
+			}
+		}
+		
+		sqlPokemon = sqlPokemon.concat(";");
+
+		System.out.println(sqlPokemon);
+
+
+		PreparedStatement statement = null;
+
+		int[] pokemonIDs;
+
+		int contador = 0;
+
+		try {
+			statement = connection.prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block e1.printStackTrace();
+		}
+
+		try {
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				
+				//pokemonIDs[contador] = Integer.parseInt(rs.getString("id"));
+
+				System.out.println(rs.getString("id"));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Oops algo salio mal " + e);
+		}
+
+
+		System.out.println(sqlPokemon);
+
+		return null;
+
+	}
+
+	public static void main(String[] args) {
+
+		getInstance().getPokemonThroughtQueryFromDB("cha", "a", "a");
+
 	}
 
 }
-
-
