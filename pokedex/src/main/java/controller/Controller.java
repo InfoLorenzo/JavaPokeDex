@@ -38,6 +38,7 @@ public class Controller {
 	
 	public static Controller getInstance() {
 		
+		System.out.println(instance.connection);
 		return instance;
 		
 	}
@@ -56,7 +57,9 @@ public class Controller {
 			connection = DriverManager.getConnection(databaseURL, databaseUsername, databasePassword);
 
 			System.out.println("La conexión fue correcta");
+			
 			return connection;
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -329,9 +332,6 @@ public class Controller {
 				System.out.println("A rows has been inserted");
 			}
 
-			statement.close();
-			connection.close();
-
 		} catch (SQLException e) {
 			System.out.println("Oops algo salio mal...");
 			e.printStackTrace();
@@ -414,13 +414,11 @@ public class Controller {
 		return null;
 	}
 	
-	public String[][] getPokemonSpritesDivided(String[] SpritesInput) {
-		int contador1 = 1;
-		int contador2 = 1;
-		int contador3 = 1;
-		int contador4 = 1;
+	public ArrayList[] getPokemonSprites(String[] SpritesInput) {
 
-		String[][] pokemonSpritesDivided = new String[4][8];
+		ArrayList[] pokemonSpritesDivided = new ArrayList[2];
+		pokemonSpritesDivided[0] = new ArrayList<String>();
+		pokemonSpritesDivided[1] = new ArrayList<String>();
 		
 		//[0] - Male Shiny
 		//[1] - Male default
@@ -430,30 +428,21 @@ public class Controller {
 
 		for (int i = 0; i < SpritesInput.length; i++) {
 			
-			
-			if (SpritesInput[i].contains("female")) {
+			if (SpritesInput[i].contains("PokeAPI")) {
 				if (SpritesInput[i].contains("shiny")) {
-				
-					pokemonSpritesDivided[2][contador1] = SpritesInput[i];
-					contador1--;
-					
-				}else{
-					
-					pokemonSpritesDivided[3][contador2] = SpritesInput[i];
-					contador2--;
+					pokemonSpritesDivided[0].add(SpritesInput[i]);
+					System.out.println("Imagen Shiny: " + SpritesInput[i]);
+				}else {
+					pokemonSpritesDivided[1].add(SpritesInput[i]);
+					System.out.println("Imagen Default: " + SpritesInput[i]);
+
 				}
 			}else {
-				if (SpritesInput[i].contains("shiny")) {
-					
-					pokemonSpritesDivided[0][contador3] = SpritesInput[i];
-					contador3--;
-				}else {
-					
-					pokemonSpritesDivided[1][contador4] = SpritesInput[i];
-					contador4--;
-				}
+				pokemonSpritesDivided[1].add(SpritesInput[i]);
+				System.out.println("Imagen Default Sin nada: " + SpritesInput[i]);
+
 			}
-		
+			
 		}
 		
 		
@@ -505,9 +494,6 @@ public class Controller {
 				System.out.println("A rows has been updated");
 			}
 
-			statement.close();
-			connection.close();
-
 		} catch (SQLException e) {
 			System.out.println("Oops algo salio mal...");
 			e.printStackTrace();
@@ -518,8 +504,7 @@ public class Controller {
 		String sqlPokemon = "SELECT COUNT(*) FROM `heroku_414700429a65082`.`"+tablename+"`;";
 
 		PreparedStatement statement = null;
-		String[] pokemonArray;
-		String resultString;
+
 		try {
 			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
@@ -544,8 +529,7 @@ public class Controller {
 		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`"+tablename+"`;";
 
 		PreparedStatement statement = null;
-		String[] pokemonArray;
-		String resultString;
+
 		try {
 			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
@@ -570,8 +554,6 @@ public class Controller {
 		String sqlPokemon = "Delete FROM `heroku_414700429a65082`.`"+tablename+"` WHERE ID = '"+ ID + "';";
 
 		PreparedStatement statement = null;
-		String[] pokemonArray;
-		String resultString;
 		try {
 			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
@@ -587,5 +569,40 @@ public class Controller {
 		}
 		return false;
 	}
+	
+	public int[] getPokemonIDsFromDB() {
+		
+		String sqlPokemon = "SELECT * FROM `heroku_414700429a65082`.`pokemon`;";
+
+		
+		PreparedStatement statement = null;
+		int[] pokemonIDs = new int[getMaxRowsOnTable("pokemon")];
+		int contador = 0;
+		try {
+			statement = connection.prepareStatement(sqlPokemon);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				pokemonIDs[contador] = Integer.parseInt(rs.getString("id"));
+				
+				System.out.println(pokemonIDs[contador]);
+				contador++;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Oops algo salio mal " + e);
+		}
+		
+		
+		return pokemonIDs;
+		
+	}
 
 }
+
+

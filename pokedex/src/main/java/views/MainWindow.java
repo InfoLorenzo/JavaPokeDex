@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+
+import controller.Controller;
+
 import javax.swing.JLabel;
 import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
@@ -53,6 +56,7 @@ public class MainWindow {
 
 	public MainWindow() {
 		initialize();
+	
 		System.out.println("Hola main window iniciada");
 	}
 
