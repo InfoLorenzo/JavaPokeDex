@@ -664,8 +664,6 @@ public class PokedexView extends JPanel {
 		lblMinMaxID.setText( (int)Math.floor((pokemonID-pokemonMinID)/10) + "/" + pokemonMaxID);
 		}
 			
-		
-		
 
 		for (int i = 0; i < pokemondataViewTextLabels.size(); i++) {
 			pokemondataViewTextLabels.get(i).setText(pokemonData[i]);

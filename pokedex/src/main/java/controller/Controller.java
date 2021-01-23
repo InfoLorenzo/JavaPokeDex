@@ -74,7 +74,7 @@ public class Controller {
 
 		PreparedStatement statement = null;
 		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
+			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -106,7 +106,7 @@ public class Controller {
 		PreparedStatement statement = null;
 
 		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
+			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -148,7 +148,7 @@ public class Controller {
 			PreparedStatement statement = null;
 
 			try {
-				statement = connectToDatabase().prepareStatement(sqlPokemon);
+				statement = connection.prepareStatement(sqlPokemon);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -195,7 +195,7 @@ public class Controller {
 		return false;
 	}
 
-	public static ArrayList<Pokemon> generatePokemons(String apilistofPokemons) {
+	public ArrayList<Pokemon> generatePokemons(String apilistofPokemons) {
 
 		ArrayList<Pokemon> PokeLista = new ArrayList<Pokemon>();
 		Pokemon poke;
@@ -297,12 +297,9 @@ public class Controller {
 			int specialAttackPoints, int specialDefensePoints, int speed, int height, int weight, int basicExp,
 			String abilities, String sprites, String forms, String spawnPoints, String types) {
 
-		String url = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_414700429a65082";
-		String username = "b0124af284507d";
-		String password = "c7610f50";
 
 		try {
-			Connection connection = DriverManager.getConnection(url, username, password);
+			
 
 			System.out.println("La conexión fue correcta");
 
@@ -348,7 +345,7 @@ public class Controller {
 		PreparedStatement statement = null;
 		String[] pokemonData = new String[9];
 		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
+			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -393,7 +390,7 @@ public class Controller {
 		String[] pokemonArray;
 		String resultString;
 		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
+			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -463,7 +460,7 @@ public class Controller {
 		return pokemonSpritesDivided;
 	}
 	
-	public static void updatePokemonOnDB (
+	public void updatePokemonOnDB (
 			int ID,
 			String name, 
 			int healthPoints, 
@@ -484,7 +481,7 @@ public class Controller {
 		String password = "c7610f50";
 
 		try {
-			Connection connection = DriverManager.getConnection(url, username, password);
+			
 
 			System.out.println("La conexión fue correcta");
 
@@ -524,7 +521,7 @@ public class Controller {
 		String[] pokemonArray;
 		String resultString;
 		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
+			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -550,7 +547,7 @@ public class Controller {
 		String[] pokemonArray;
 		String resultString;
 		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
+			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -576,7 +573,7 @@ public class Controller {
 		String[] pokemonArray;
 		String resultString;
 		try {
-			statement = connectToDatabase().prepareStatement(sqlPokemon);
+			statement = connection.prepareStatement(sqlPokemon);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
