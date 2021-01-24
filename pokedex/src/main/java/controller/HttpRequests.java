@@ -1,20 +1,14 @@
 package controller;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.json.*;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import models.Pokemon;
 
@@ -24,42 +18,12 @@ public class HttpRequests {
 	private static String mainApiUrl = "https://pokeapi.co/api/v2/pokemon?limit=1";
 	private static String pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/1/";
 
-	public HttpRequests() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public static void main(String args[]) {
-		//System.out.println("HTTP Request Example ");
-		// Making Get Request
-		//System.out.println(sendGetRequest(mainApiUrl).toString());
-		// Making Post Request
-		// sendPOSTRequest();
-		// Parse Json Reponse
-		//System.out.println(getPokemonName(pokemonApiUrl));
-		//System.out.println("\n\n\n\n\n\n");
-		getPokemonAbilities(pokemonApiUrl);
-		getPokemonExp(pokemonApiUrl);
-		getPokemonForms(pokemonApiUrl);
-		getPokemonSpawnPlaces(pokemonApiUrl);
-		getPokemonHeight(pokemonApiUrl);
-		getPokemonbasicSprites(pokemonApiUrl);
-		//System.out.println("Las stats del pokemon son:");
-		for (int i : getPokemonStats(pokemonApiUrl)) {
-			//System.out.println(i);
-		}
-		for (String string : getPokemonTypes(pokemonApiUrl)) {
-			//System.out.println(string);
-		}
-
-	}
-
-	public static String sendGetRequest(String apiURL) { // Me ha obligado a hacerla estática y no se el porqué
+	public static String sendGetRequest(String apiURL) {
 		try {
 			URL url = new URL(apiURL);
 			HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 			httpURLConnection.setRequestMethod("GET");
 
-			// adding header
 			String line = "";
 			InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -68,7 +32,6 @@ public class HttpRequests {
 				response.append(line);
 			}
 			bufferedReader.close();
-			// System.out.println("Response : " + response.toString());
 
 			return response.toString();
 		} catch (Exception e) {
@@ -84,13 +47,11 @@ public class HttpRequests {
 			URL url = new URL("https://pokeapi.co/api/v2/pokemon");
 			HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 			httpURLConnection.setRequestMethod("POST");
-			
-			// adding header
+
 			httpURLConnection.setRequestProperty("Auth", "Token");
 			httpURLConnection.setRequestProperty("Data1", "Value1");
 			httpURLConnection.setDoOutput(true);
 
-			// Adding Post Data
 			OutputStream outputStream = httpURLConnection.getOutputStream();
 			outputStream.write(post_data.getBytes());
 			outputStream.flush();
@@ -102,17 +63,17 @@ public class HttpRequests {
 			InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 			StringBuilder response = new StringBuilder();
-			
+
 			while ((line = bufferedReader.readLine()) != null) {
 				response.append(line);
 			}
-			
+
 			bufferedReader.close();
 			System.out.println("Response : " + response.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			System.out.println("Error in Making POST Request");
 		}
 	}
@@ -141,10 +102,11 @@ public class HttpRequests {
 			System.out.println("Error in Making Get Request");
 			System.out.println("The error is: " + e);
 		}
-		
+
 		return basicData;
 
 	}
+
 	public static ArrayList<String> getPokemonURLs(String url) {
 
 		ArrayList<String> urlsArray = new ArrayList<String>();
@@ -154,12 +116,11 @@ public class HttpRequests {
 			String jsonString = sendGetRequest(url);
 			JSONObject obj = new JSONObject(jsonString);
 			JSONArray arr = obj.getJSONArray("results");
-			
+
 			for (int i = 0; i < arr.length(); i++)
-				
+
 			{
 
-				
 				urlsArray.add(arr.getJSONObject(i).getString("url"));
 
 			}
@@ -169,11 +130,11 @@ public class HttpRequests {
 			System.out.println("Error in Making Get Request");
 			System.out.println("The error is: " + e);
 		}
-		
+
 		return urlsArray;
 
 	}
-	
+
 	public static String getPokemonName(String url) {
 
 		String Pokemonname = null;
@@ -189,14 +150,12 @@ public class HttpRequests {
 			System.out.println("Error in Making Get Request");
 			System.out.println("The error is: " + e);
 		}
-		
+
 		return Pokemonname;
 
 	}
 
 	public static ArrayList<String> getPokemonAbilities(String url) {
-
-		// Devuelve el nombre de las habilidades del pokemon
 
 		try {
 			String abilitie;
@@ -227,8 +186,6 @@ public class HttpRequests {
 	}
 
 	public static int getPokemonExp(String url) {
-
-		// Si devuelve -1 es que dio error
 
 		try {
 			int pokemonExp;
@@ -263,7 +220,6 @@ public class HttpRequests {
 
 			{
 				form = arr.getJSONObject(i).getString("name");
-				//System.out.println(form);
 				forms.add(form);
 			}
 
@@ -292,7 +248,6 @@ public class HttpRequests {
 
 			{
 				version = arr.getJSONObject(i).getJSONObject("version").getString("name");
-				//System.out.println(version);
 				versions.add("Pokemon " + version);
 			}
 
@@ -324,7 +279,6 @@ public class HttpRequests {
 
 			{
 				ecounterPlace = encountersJSON.getJSONObject(i).getJSONObject("location_area").getString("name");
-				//System.out.println(ecounterPlace);
 				ecounterPlaces.add("Pokemon " + ecounterPlace);
 			}
 
@@ -340,15 +294,11 @@ public class HttpRequests {
 
 	public static int getPokemonHeight(String url) {
 
-		// Si devuelve -1 es que dio error
-
 		try {
 			int pokemonExp;
 
 			String jsonString = sendGetRequest(url);
 			JSONObject obj = new JSONObject(jsonString);
-
-			//System.out.println("La altura del pokemon introducido es: " + obj.get("height"));
 
 			return (int) obj.getInt("height");
 
@@ -362,45 +312,43 @@ public class HttpRequests {
 
 	public static ArrayList<String> getPokemonbasicSprites(String url) {
 
-		
+		ArrayList<String> Sprites = new ArrayList<String>();
 
-			ArrayList<String> Sprites = new ArrayList<String>();
+		String jsonString = sendGetRequest(url);
+		JSONObject obj = new JSONObject(jsonString);
 
-			String jsonString = sendGetRequest(url);
-			JSONObject obj = new JSONObject(jsonString);
+		try {
+			Sprites.add(obj.getJSONObject("sprites").getString("back_default"));
+			Sprites.add(obj.getJSONObject("sprites").getString("back_female"));
+			Sprites.add(obj.getJSONObject("sprites").getString("back_shiny"));
+			Sprites.add(obj.getJSONObject("sprites").getString("back_shiny_female"));
+			Sprites.add(obj.getJSONObject("sprites").getString("front_default"));
+			Sprites.add(obj.getJSONObject("sprites").getString("front_female"));
+			Sprites.add(obj.getJSONObject("sprites").getString("front_shiny"));
+			Sprites.add(obj.getJSONObject("sprites").getString("front_shiny_female"));
 
-			try {
-				Sprites.add(obj.getJSONObject("sprites").getString("back_default"));
-				Sprites.add(obj.getJSONObject("sprites").getString("back_female"));
-				Sprites.add(obj.getJSONObject("sprites").getString("back_shiny"));
-				Sprites.add(obj.getJSONObject("sprites").getString("back_shiny_female"));
-				Sprites.add(obj.getJSONObject("sprites").getString("front_default"));
-				Sprites.add(obj.getJSONObject("sprites").getString("front_female"));
-				Sprites.add(obj.getJSONObject("sprites").getString("front_shiny"));
-				Sprites.add(obj.getJSONObject("sprites").getString("front_shiny_female"));
-			
 			return Sprites;
-			
+
 		} catch (Exception e) {
 			System.out.println("Error in Making Get Request");
 			System.out.println("The error is: " + e);
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public static int[] getPokemonStats(String url) {
 
 		int[] pokemonStats = new int[6];
-		
+
 		// pokemonStats[0] = HP
 		// pokemonStats[1] = Attack
 		// pokemonStats[2] = Defense
 		// pokemonStats[3] = Special - Attack
 		// pokemonStats[4] = Special - Defense
 		// pokemonStats[5] = Speed
-		
+
 		try {
 
 			String jsonString = sendGetRequest(url);
@@ -426,8 +374,6 @@ public class HttpRequests {
 	public static ArrayList<String> getPokemonTypes(String url) {
 
 		ArrayList<String> pokemonTypes = new ArrayList<String>();
-
-
 
 		try {
 

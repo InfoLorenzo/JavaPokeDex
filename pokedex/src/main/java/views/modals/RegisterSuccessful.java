@@ -11,10 +11,6 @@ public class RegisterSuccessful {
 
 	private JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
-	
 	public void newScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -27,18 +23,10 @@ public class RegisterSuccessful {
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 */
 	
 	public RegisterSuccessful() {
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	
 	private void initialize() {
 		frame = new JFrame();

@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import AppPackage.AnimationClass;
 import controller.Controller;
 import views.modals.LoginUnsuccessful;
 import javax.swing.JTextField;
@@ -24,25 +23,16 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
 public class LoginView extends JPanel {
+
 	private JTextField inputusername;
 	private LoginUnsuccessful failedLoginModal;
 	private JPasswordField inputPassword;
-	/**
-	 * Create the panel.
-	 */
+
 	public LoginView() {
 
-		AnimationClass animator = new AnimationClass(); // Clase Animaciones
-
-		setLayout(null); // Layout
-
-		// Start -- Background
+		setLayout(null);
 
 		JLabel lblBackground = new JLabel("No hay foto");
-
-		// End -- Background
-
-		// Start -- Welcome Title
 
 		JLabel lblWelcomeTitle = new JLabel("No hay foto");
 
@@ -50,18 +40,12 @@ public class LoginView extends JPanel {
 			lblWelcomeTitle = new JLabel(new ImageIcon(ImageIO
 					.read(new URL("https://fontmeme.com/permalink/201224/b2c3d8668251fdfe9230d4155786026e.png"))));
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		lblWelcomeTitle.setBounds(68, 10, 599, 133);
-
-		// End -- Welcome Title
-
-		// Start -- Username Label
 
 		JLabel lblUsername = new JLabel("No hay foto");
 
@@ -69,10 +53,9 @@ public class LoginView extends JPanel {
 			lblUsername = new JLabel(new ImageIcon(ImageIO
 					.read(new URL("https://fontmeme.com/permalink/201224/1bfe9337cbc33a5e36c40e856c5804d9.png"))));
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -80,30 +63,20 @@ public class LoginView extends JPanel {
 
 		lblUsername.setBounds(122, 169, 221, 51);
 
-		// End -- Username Label
-
-		// Start -- Password Label
-
 		JLabel lblPassword = new JLabel("No hay foto");
 
 		try {
 			lblPassword = new JLabel(new ImageIcon(ImageIO
 					.read(new URL("https://fontmeme.com/permalink/201224/ac72972044190f77e1db6bc5412fdac6.png"))));
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		lblPassword.setVerticalAlignment(SwingConstants.BOTTOM);
 
 		lblPassword.setBounds(122, 230, 221, 70);
-
-		// End -- Password Label
-
-		// Start -- Username Input
 
 		inputusername = new JTextField();
 		inputusername.setForeground(Color.WHITE);
@@ -113,18 +86,12 @@ public class LoginView extends JPanel {
 
 		inputusername.setColumns(10);
 
-		// End -- Password Input
-
-		// Start -- Login Button
-
 		ImageIcon imageForLogin = null;
 		try {
 			imageForLogin = new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/ieD3eRV.png")));
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -137,22 +104,25 @@ public class LoginView extends JPanel {
 		btnLogin.setPreferredSize(new Dimension(78, 76));
 		btnLogin.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnLogin.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				
-				if (!Controller.getInstance().isEmpty(new String(inputPassword.getPassword())) && !Controller.getInstance().isEmpty(inputusername.getText())) {
-					
-					if (Controller.getInstance().checkUserLogin(inputusername.getText(), new String(inputPassword.getPassword()))) {
-						
+
+				if (!Controller.getInstance().isEmpty(new String(inputPassword.getPassword()))
+						&& !Controller.getInstance().isEmpty(inputusername.getText())) {
+
+					if (Controller.getInstance().checkUserLogin(inputusername.getText(),
+							new String(inputPassword.getPassword()))) {
+
 						setVisible(false);
 						MainWindow.getLayeredPanel().getComponent(3).setVisible(true);
 						MainWindow.getLayeredPanel().revalidate();
 						MainWindow.getLayeredPanel().repaint();
 					}
-				}else {
+				} else {
 					failedLoginModal = new LoginUnsuccessful();
 					failedLoginModal.newScreen();
 				}
-				
+
 				System.out.println("Botón login pulsado");
 
 			}
@@ -160,19 +130,13 @@ public class LoginView extends JPanel {
 
 		btnLogin.setBounds(271, 330, 173, 83);
 
-		// End -- Login Button
-
-		// Start -- Return Button
-
 		ImageIcon imageforReturn = null;
 		try {
 			imageforReturn = new ImageIcon(ImageIO
 					.read(new URL("https://fontmeme.com/permalink/210114/e20cc361a851b6737f42fb1a08604fe4.png")));
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -180,7 +144,7 @@ public class LoginView extends JPanel {
 		btnreturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Botón de vuelta pulsado");
-				
+
 				inputPassword.setText("");
 				inputusername.setText("");
 				setInvisible();
@@ -190,7 +154,7 @@ public class LoginView extends JPanel {
 
 			}
 		});
-		
+
 		btnreturn.setPreferredSize(new Dimension(78, 76));
 		btnreturn.setOpaque(false);
 		btnreturn.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -200,10 +164,6 @@ public class LoginView extends JPanel {
 		btnreturn.setBackground(new Color(53, 106, 188));
 		btnreturn.setBounds(10, 10, 151, 76);
 
-		// End -- Return Button
-
-		// Start -- Views order
-
 		add(btnLogin);
 		add(btnreturn);
 		add(lblPassword);
@@ -211,7 +171,7 @@ public class LoginView extends JPanel {
 		add(inputusername);
 
 		add(lblWelcomeTitle);
-		
+
 		inputPassword = new JPasswordField();
 		inputPassword.setForeground(Color.WHITE);
 		inputPassword.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 21));
@@ -221,15 +181,12 @@ public class LoginView extends JPanel {
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
-		
-				lblBackground.setBounds(0, 0, 718, 469);
-				add(lblBackground);
 
-		// End -- Views order
+		lblBackground.setBounds(0, 0, 718, 469);
+		add(lblBackground);
 
 		setInvisible();
 	}

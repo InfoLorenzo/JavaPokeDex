@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -18,11 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+
 
 import controller.Controller;
-import views.modals.LoginUnsuccessful;
-import views.modals.RegisterSuccessful;
 import javax.swing.JTextField;
 import javax.swing.JLayeredPane;
 
@@ -34,10 +31,6 @@ public class FindView extends JFrame {
 	private JTextField textFieldQueryName;
 	private JTextField textFieldQueryTypes;
 	private JTextField textFieldQueryAbilities;
-
-	/**
-	 * Launch the application.
-	 */
 
 	public void newScreen() {
 		EventQueue.invokeLater(new Runnable() {
@@ -52,11 +45,6 @@ public class FindView extends JFrame {
 		});
 
 	}
-
-	/*
-	 * Create the application.
-	 *
-	 */
 
 	public FindView() {
 		initialize();
@@ -80,7 +68,6 @@ public class FindView extends JFrame {
 			lblTitle = new JLabel(new ImageIcon(ImageIO
 					.read(new URL("https://fontmeme.com/permalink/210123/92c7f869ff8e43cce5d3057286d3b4f7.png"))));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		lblTitle.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -92,10 +79,8 @@ public class FindView extends JFrame {
 			imageforReturn = new ImageIcon(ImageIO
 					.read(new URL("https://fontmeme.com/permalink/210114/e20cc361a851b6737f42fb1a08604fe4.png")));
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -118,8 +103,6 @@ public class FindView extends JFrame {
 		btnreturn.setBorderPainted(false);
 		btnreturn.setBackground(new Color(53, 106, 188));
 		btnreturn.setBounds(10, 22, 151, 76);
-
-		
 
 		JLabel lblNameTitle = new JLabel("Name");
 		lblNameTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -152,44 +135,6 @@ public class FindView extends JFrame {
 		btnSubmitFind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-					
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-					System.out.println("Ha entrado en el IF");
-
 					findPanel.setVisible(false);
 					pokedex = new PokedexView(Controller.getInstance().getPokemonThroughtQueryFromDB(textFieldQueryName.getText(), textFieldQueryTypes.getText(), textFieldQueryAbilities.getText()));
 
@@ -212,7 +157,6 @@ public class FindView extends JFrame {
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);

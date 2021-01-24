@@ -30,18 +30,6 @@ public class Pokemon {
 	public void setPokemonForms(ArrayList<String> pokemonForms) {
 		this.pokemonForms = pokemonForms;
 	}
-
-	/**
-	 * @param pokemonName
-	 * @param pokemonURL
-	 * @param pokemonAbilities
-	 * @param pokemonSpawnPoints
-	 * @param pokemonPicsURL
-	 * @param pokemonTypes
-	 * @param pokemonStats
-	 * @param pokemonExpBase
-	 * @param pokemonHeight
-	 */
 	
 	public Pokemon(String pokemonName, String pokemonURL, ArrayList<String> pokemonAbilities,
 			ArrayList<String> pokemonSpawnPoints, ArrayList<String> pokemonPicsURL, ArrayList<String> pokemonTypes,

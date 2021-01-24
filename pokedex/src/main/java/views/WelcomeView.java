@@ -14,22 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import AppPackage.AnimationClass;
-import controller.Controller;
-
 public class WelcomeView extends JPanel {
-
-	/**
-	 * Create the panel.
-	 */
 
 	public WelcomeView() {
 
-		AnimationClass animator = new AnimationClass(); // Clase Animaciones
-
-		setLayout(null); // Layout
-
-		// Start -- Background
+		setLayout(null);
 
 		JLabel lblBackground = new JLabel("No hay foto");
 
@@ -37,28 +26,20 @@ public class WelcomeView extends JPanel {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
 			lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		lblBackground.setBounds(0, 0, 718, 469);
-
-		// End -- Background
-
-		// Start -- Welcome Title
 
 		JLabel lblWelcomeTitle = new JLabel("No hay foto");
 
 		try {
 			lblWelcomeTitle = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/sefSdO8.png"))));
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -66,20 +47,12 @@ public class WelcomeView extends JPanel {
 
 		lblWelcomeTitle.setBounds(-10, 0, 718, 140);
 
-		animator.jLabelYDown(lblWelcomeTitle.getY(), (lblWelcomeTitle.getY() + 60), 15, 2, lblWelcomeTitle);
-
-		// End -- Welcome Title
- 
-		// Start -- Login Button
-
 		ImageIcon imageForLogin = null;
 		try {
 			imageForLogin = new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/ieD3eRV.png")));
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -104,20 +77,12 @@ public class WelcomeView extends JPanel {
 
 		btnLogin.setBounds(116, 241, 158, 76);
 
-		animator.jButtonYDown(btnLogin.getY(), btnLogin.getY() + 40, 15, 2, btnLogin);
-
-		// End -- Login Button
-
-		// Start -- Register Button
-
 		ImageIcon imageForRegister = null;
 		try {
 			imageForRegister = new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/bVt0BOa.png")));
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -143,18 +108,11 @@ public class WelcomeView extends JPanel {
 		btnRegister.setFocusable(false);
 		btnRegister.setBounds(409, 241, 210, 76);
 
-		animator.jButtonYDown(btnRegister.getY(), btnRegister.getY() + 40, 15, 2, btnRegister);
-
-		// End -- Register Button
-
-		// Start -- Views order
-
 		add(lblWelcomeTitle);
 		add(btnRegister);
 		add(btnLogin);
 		add(lblBackground);
 
-		// End -- Views order
 		MainWindow.getLayeredPanel().revalidate();
 
 		MainWindow.getLayeredPanel().repaint();

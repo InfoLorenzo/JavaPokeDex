@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -12,9 +11,6 @@ public class RegisterUnsuccessful {
 
 	private JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
 	public void newScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -23,21 +19,15 @@ public class RegisterUnsuccessful {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-				} 
+				}
 			}
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public RegisterUnsuccessful() {
 		initialize();
-	} 
+	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);

@@ -11,9 +11,6 @@ public class LoginUnsuccessful {
 
 	private JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
 	public void newScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -27,16 +24,10 @@ public class LoginUnsuccessful {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public LoginUnsuccessful() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
