@@ -38,10 +38,10 @@ import javax.swing.JMenuItem;
 public class PokedexView extends JPanel {
 
 	private int contador = 0;
-	private int[] pokemonIDsArray = Controller.getInstance().getPokemonIDsFromDB();
-	private int pokemonMinID = pokemonIDsArray[0];
-	private int pokemonMaxID = pokemonIDsArray[pokemonIDsArray.length-1];
-	private int pokemonID = pokemonMinID;
+	private int[] pokemonIDsArray;
+	private int pokemonMinID;
+	private int pokemonMaxID;
+	private int pokemonID;
 	private boolean shiny = false;
 	private String[] pokemonData;
 	private String[] pokemonAbilities;
@@ -71,6 +71,7 @@ public class PokedexView extends JPanel {
 	private JButton btnSwitchShiny;
 	private JButton btnPrevious;
 	private JButton btnNext;
+	private JButton btnDeletePokemon;
 	private int heightDataLabels = 15;
 	private int widthDataLabels = 100;
 	private int heightDataTitles = 30;
@@ -82,6 +83,7 @@ public class PokedexView extends JPanel {
 	private boolean editModeStatus = false;
 	private boolean creatorModeStatus = false;
 	private boolean emptyStatus = false;
+	private boolean limited;
 	private JSpinner spinner;
 	private JTextField textFieldHP;
 	private JTextField textFieldHeight;
@@ -102,6 +104,7 @@ public class PokedexView extends JPanel {
 	private JTextField textFieldPokemonShinyFrontSprite;
 	private JTextField textFieldPokemonShinyBackSprite;
 	private JMenuItem menuItemFind;
+	private JMenuBar menuBar;
 	private ArrayList<String> abilities;
 	private ArrayList<String> sprites;
 	private ArrayList<JLabel> pokemondataViewTextLabels = new ArrayList<JLabel>();
@@ -118,7 +121,29 @@ public class PokedexView extends JPanel {
 	 */
 
 	public PokedexView() {
+		limited = false;
+		pokemonIDsArray = Controller.getInstance().getPokemonIDsFromDB();
+		pokemonMinID = pokemonIDsArray[0];
+		pokemonMaxID = pokemonIDsArray[pokemonIDsArray.length - 1];
+		pokemonID = pokemonMinID;
+		initialize();
+	}
 
+	public PokedexView(int[] pokemonIDsArray) {
+
+		limited = true;
+		this.pokemonIDsArray = pokemonIDsArray;
+		pokemonMinID = pokemonIDsArray[0];
+		pokemonMaxID = pokemonIDsArray[pokemonIDsArray.length - 1];
+		pokemonID = pokemonMinID;
+		
+		initialize();
+		
+		menuBar.setVisible(false);
+		btnDeletePokemon.setVisible(false);
+	}
+
+	private void initialize() {
 		setLayout(null);
 
 		// Start -- Background
@@ -173,7 +198,7 @@ public class PokedexView extends JPanel {
 		lblPokemonName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPokemonName.setBounds(90, 387, 114, 30);
 
-		lblPokemonPic = new JLabel("No Pic");
+		lblPokemonPic = new JLabel("No Pic"); 
 
 		btnPrevious.setBounds(10, 430, 85, 18);
 		add(btnPrevious);
@@ -182,7 +207,7 @@ public class PokedexView extends JPanel {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (imagesCounter > 0) {
-					if (pokemonImage.get(imagesCounter -1) != null) {
+					if (pokemonImage.get(imagesCounter - 1) != null) {
 
 						imagesCounter--;
 					}
@@ -476,12 +501,12 @@ public class PokedexView extends JPanel {
 		btnFindButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if ((int) spinner.getValue() <= pokemonIDsArray.length-1 && (int) spinner.getValue() >= 0 ) {
+				if ((int) spinner.getValue() <= pokemonIDsArray.length - 1 && (int) spinner.getValue() >= 0) {
 					contador = (int) spinner.getValue();
 					pokemonID = pokemonIDsArray[contador];
 
 				}
-				
+
 				System.out.println(contador);
 				System.out.println(pokemonID);
 
@@ -491,45 +516,40 @@ public class PokedexView extends JPanel {
 		btnFindButton.setBounds(182, 74, 89, 18);
 		add(btnFindButton);
 
-		JButton btnDeletePokemon = new JButton("Delete");
+		btnDeletePokemon = new JButton("Delete");
 		btnDeletePokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Controller.getInstance().deleteOnDB("pokemon", pokemonID);
-				
+
 				if (contador > 0) {
 					previousPokemonData();
-				}else {
+				} else {
 					nextPokemonData();
 				}
-				
+
 			}
 		});
 		btnDeletePokemon.setBounds(623, 39, 85, 21);
 		add(btnDeletePokemon);
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		menuBar.setBounds(350, 0, 50, 22);
 		add(menuBar);
 
 		JMenu mnMenu = new JMenu("Menu");
 		menuBar.add(mnMenu);
-		
-		
-		
+
 		menuItemFind = new JMenuItem("Find ");
-		
+
 		menuItemFind.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent ev) {
-        	System.out.println("Mono");        
-        	
-        	
-        	
-        	FindView findModal = new FindView();
-        	findModal.newScreen();
-        	
-        	
-        }
-    });
+			public void actionPerformed(ActionEvent ev) {
+				System.out.println("Mono");
+
+				FindView findModal = new FindView();
+				findModal.newScreen();
+
+			}
+		});
 		mnMenu.add(menuItemFind);
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/Lr4arcd.png"))));
@@ -549,8 +569,6 @@ public class PokedexView extends JPanel {
 
 		setVisible(false);
 
-		
-		
 	}
 
 	public void nextPokemonData() {
@@ -558,14 +576,13 @@ public class PokedexView extends JPanel {
 		if (pokemonID + 10 <= (pokemonMaxID * 10 + pokemonMinID)) {
 
 			shiny = false;
-			
-			if (contador+1 < pokemonIDsArray.length-1) {
+
+			if (contador < pokemonIDsArray.length - 1) {
 				contador++;
 			}
 
 			pokemonID = pokemonIDsArray[contador];
 
-			
 			imagesCounter = 1;
 			updateViewData();
 
@@ -577,15 +594,13 @@ public class PokedexView extends JPanel {
 		if (pokemonID - 10 >= pokemonMinID) {
 
 			shiny = false;
-			
-			
-			if (contador-1 > 0) {
+
+			if (contador > 0) {
 				contador--;
 			}
 
 			pokemonID = pokemonIDsArray[contador];
 
-			
 			imagesCounter = 1;
 			/*
 			 * while (Controller.getInstance().getPokemonDatafromDB(pokemonID)==null) {
@@ -671,9 +686,13 @@ public class PokedexView extends JPanel {
 		 * 
 		 * }
 		 */
-		pokemonIDsArray = Controller.getInstance().getPokemonIDsFromDB();
+
+		if (!limited) {
+			pokemonIDsArray = Controller.getInstance().getPokemonIDsFromDB();
+		}
+
 		pokemonMinID = pokemonIDsArray[0];
-		pokemonMaxID = pokemonIDsArray[pokemonIDsArray.length-1];
+		pokemonMaxID = pokemonIDsArray[pokemonIDsArray.length - 1];
 		pokemonData = Controller.getInstance().getPokemonDatafromDB(pokemonID);
 		pokemonAbilities = Controller.getInstance().getPokemonArrayfromDB(pokemonID, "abilities");
 		pokemonTypes = Controller.getInstance().getPokemonArrayfromDB(pokemonID, "types");
@@ -681,7 +700,7 @@ public class PokedexView extends JPanel {
 		pokemonImageShiny = Controller.getInstance().getPokemonSprites(pokemonSprites)[0];
 		pokemonImageDefault = Controller.getInstance().getPokemonSprites(pokemonSprites)[1];
 
-		lblMinMaxID.setText(contador + "/" + (pokemonIDsArray.length-1));
+		lblMinMaxID.setText(contador + "/" + (pokemonIDsArray.length - 1));
 
 		for (int i = 0; i < pokemondataViewTextLabels.size(); i++) {
 			pokemondataViewTextLabels.get(i).setText(pokemonData[i]);
@@ -705,7 +724,7 @@ public class PokedexView extends JPanel {
 
 		if (shiny) {
 			pokemonImage = pokemonImageShiny;
-			
+
 			System.out.println("Images Shiny " + pokemonImageShiny.toString());
 
 		} else {
@@ -713,13 +732,12 @@ public class PokedexView extends JPanel {
 
 			System.out.println("Images Default " + pokemonImageDefault.toString());
 
-			
 		}
 
 		ImageIcon imageIcon = null;
 
 		try {
-			
+
 			imageIcon = new ImageIcon(new URL(pokemonImage.get(imagesCounter)));
 
 		} catch (MalformedURLException e1) {

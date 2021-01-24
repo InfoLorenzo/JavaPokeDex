@@ -69,7 +69,7 @@ public class WelcomeView extends JPanel {
 		animator.jLabelYDown(lblWelcomeTitle.getY(), (lblWelcomeTitle.getY() + 60), 15, 2, lblWelcomeTitle);
 
 		// End -- Welcome Title
-
+ 
 		// Start -- Login Button
 
 		ImageIcon imageForLogin = null;

@@ -23,7 +23,7 @@ public class RegisterUnsuccessful {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				} 
 			}
 		});
 	}
@@ -33,7 +33,7 @@ public class RegisterUnsuccessful {
 	 */
 	public RegisterUnsuccessful() {
 		initialize();
-	}
+	} 
 
 	/**
 	 * Initialize the contents of the frame.

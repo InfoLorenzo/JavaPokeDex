@@ -46,7 +46,7 @@ public class MainWindow {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+			} 
 		});
 	}
 
@@ -97,7 +97,7 @@ public class MainWindow {
 		loginview.setBounds(0, 0, 729, 498);
 		
 		layeredPane.add(loginview);
-
+ 
 		PokedexView = new PokedexView();
 
 		PokedexView.setBounds(0, 0, 729, 498);

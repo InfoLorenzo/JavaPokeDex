@@ -642,18 +642,17 @@ public class Controller {
 					}
 				}
 			} else {
-				abilitiesQuery = abilitiesQuery.concat(" abilities like '%" + type + "%' ");
-			}
-
-			if (queriesArray.size() > 0) {
-				sqlPokemon = sqlPokemon.concat(" WHERE");
+				abilitiesQuery = abilitiesQuery.concat(" abilities like '%" + ability + "%' ");
 			}
 
 			queriesArray.add(abilitiesQuery);
 
-			
 		}
-		
+
+		if (queriesArray.size() > 0) {
+			sqlPokemon = sqlPokemon.concat(" WHERE");
+		}
+
 		System.out.println(nameQuery);
 		System.out.println(typesQuery);
 		System.out.println(abilitiesQuery);
@@ -666,39 +665,52 @@ public class Controller {
 
 			}
 		}
-		
+
 		sqlPokemon = sqlPokemon.concat(";");
 
 		System.out.println(sqlPokemon);
 
+		if (queriesArray.size() > 0) {
 
-		PreparedStatement statement = null;
+			PreparedStatement statement = null;
 
-		int[] pokemonIDs;
+			int[] pokemonIDs = null;
 
-		int contador = 0;
+			int contador = 0;
 
-		try {
-			statement = connection.prepareStatement(sqlPokemon);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block e1.printStackTrace();
-		}
-
-		try {
-			ResultSet rs = statement.executeQuery();
-			while (rs.next()) {
-				
-				//pokemonIDs[contador] = Integer.parseInt(rs.getString("id"));
-
-				System.out.println(rs.getString("id"));
+			try {
+				statement = connection.prepareStatement(sqlPokemon, ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block e1.printStackTrace();
 			}
 
-		} catch (Exception e) {
-			System.out.println("Oops algo salio mal " + e);
+			try {
+				ResultSet rs = statement.executeQuery();
+
+				try {
+					rs.last();
+					pokemonIDs = new int[rs.getRow()];
+					rs.beforeFirst();
+				} catch (Exception ex) {
+
+				}
+
+				while (rs.next()) {
+
+					pokemonIDs[contador] = Integer.parseInt(rs.getString("id"));
+
+					contador++;
+				}
+
+				return pokemonIDs;
+				
+			} catch (Exception e) {
+				System.out.println("Oops algo salio mal " + e);
+			}
+
+			System.out.println(sqlPokemon);
 		}
-
-
-		System.out.println(sqlPokemon);
 
 		return null;
 
@@ -706,8 +718,11 @@ public class Controller {
 
 	public static void main(String[] args) {
 
-		getInstance().getPokemonThroughtQueryFromDB("cha", "a", "a");
-
+		
+		for (int n : getInstance().getPokemonThroughtQueryFromDB("", "", "")) {
+			System.out.println(n);
+		}
+		
 	}
 
 }

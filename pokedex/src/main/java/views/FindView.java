@@ -20,13 +20,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controller.Controller;
 import views.modals.LoginUnsuccessful;
 import views.modals.RegisterSuccessful;
 import javax.swing.JTextField;
+import javax.swing.JLayeredPane;
 
 public class FindView extends JFrame {
 
 	private JFrame frame;
+	private JPanel findPanel;
+	private JPanel pokedex;
 	private JTextField textFieldQueryName;
 	private JTextField textFieldQueryTypes;
 	private JTextField textFieldQueryAbilities;
@@ -57,10 +61,16 @@ public class FindView extends JFrame {
 	public FindView() {
 		initialize();
 	}
+	
+	public static JLayeredPane layeredPane = new JLayeredPane();
 
-	private void initialize() {
+	public static JLayeredPane getLayeredPanel() {
+		return layeredPane;
+	}
+
+	private void initialize() { 
 		frame = new JFrame();
-		frame.setBounds(0, 0, 718, 469);
+		frame.setBounds(0, 0, 729, 498);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JLabel lblBackground = new JLabel("No hay foto");
@@ -109,50 +119,96 @@ public class FindView extends JFrame {
 		btnreturn.setBackground(new Color(53, 106, 188));
 		btnreturn.setBounds(10, 22, 151, 76);
 
-		frame.getContentPane().add(btnreturn);
-		frame.getContentPane().add(lblTitle);
+		
 
 		JLabel lblNameTitle = new JLabel("Name");
 		lblNameTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNameTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNameTitle.setBounds(92, 189, 78, 21);
-		frame.getContentPane().add(lblNameTitle);
 
 		JLabel lblAbilitiesTitle = new JLabel("Abilities");
 		lblAbilitiesTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAbilitiesTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblAbilitiesTitle.setBounds(532, 189, 78, 21);
-		frame.getContentPane().add(lblAbilitiesTitle);
 
 		JLabel lblTypesTitle = new JLabel("Types");
 		lblTypesTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTypesTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblTypesTitle.setBounds(307, 189, 78, 21);
-		frame.getContentPane().add(lblTypesTitle);
 
 		textFieldQueryName = new JTextField();
 		textFieldQueryName.setBounds(85, 220, 96, 19);
-		frame.getContentPane().add(textFieldQueryName);
 		textFieldQueryName.setColumns(10);
 
 		textFieldQueryTypes = new JTextField();
 		textFieldQueryTypes.setBounds(299, 220, 96, 19);
-		frame.getContentPane().add(textFieldQueryTypes);
 		textFieldQueryTypes.setColumns(10);
 
 		textFieldQueryAbilities = new JTextField();
 		textFieldQueryAbilities.setBounds(525, 220, 96, 19);
-		frame.getContentPane().add(textFieldQueryAbilities);
 		textFieldQueryAbilities.setColumns(10);
 
 		JButton btnSubmitFind = new JButton("Find");
 		btnSubmitFind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
-		});
+			
+					
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+					System.out.println("Ha entrado en el IF");
+
+					findPanel.setVisible(false);
+					pokedex = new PokedexView(Controller.getInstance().getPokemonThroughtQueryFromDB(textFieldQueryName.getText(), textFieldQueryTypes.getText(), textFieldQueryAbilities.getText()));
+
+					pokedex.setBounds(0, 0, 729, 498);
+
+					getLayeredPanel().removeAll();
+					getLayeredPanel().add(pokedex);
+					
+					pokedex.setVisible(true);
+					
+					validate();
+					repaint();
+				}
+				
+			
+		}); 
 		
 		btnSubmitFind.setBounds(299, 329, 85, 21);
-		frame.getContentPane().add(btnSubmitFind);
+		
 		try {
 			lblBackground = new JLabel(new ImageIcon(ImageIO.read(new URL("https://i.imgur.com/YgfPHRp.png"))));
 		} catch (IOException e1) {
@@ -161,8 +217,38 @@ public class FindView extends JFrame {
 		}
 		lblBackground.setVerticalAlignment(SwingConstants.BOTTOM);
 
-		lblBackground.setBounds(0, 0, 704, 432);
-		frame.getContentPane().add(lblBackground);
+		lblBackground.setBounds(-32, -16, 768, 501);
+		
+		findPanel = new JPanel();
+		findPanel.setBounds(0, 0, 729, 498);
+		
+		findPanel.setLayout(null);
+		
+		
+		findPanel.add(btnSubmitFind);
+		findPanel.add(textFieldQueryAbilities);
+		findPanel.add(textFieldQueryTypes);
+		findPanel.add(textFieldQueryName);
+		findPanel.add(lblTypesTitle);
+		findPanel.add(lblAbilitiesTitle);
+		findPanel.add(lblNameTitle);
+		findPanel.add(btnreturn);
+		findPanel.add(lblTitle);
+		findPanel.add(lblBackground);
+		
 
+		
+		
+	
+		getLayeredPanel().setBounds(0, 0, 729, 498);
+		frame.getContentPane().add(getLayeredPanel());
+		
+		
+		getLayeredPanel().add(findPanel);
+		
+		
+
+		
+		
 	}
 }
